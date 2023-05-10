@@ -1,7 +1,7 @@
 pragma circom 2.0.8;
 
-include "utils.circom";
-include "circomlib/gates.circom";
+include "./utils.circom";
+include "./circomlib/gates.circom";
 
 template sudoku() {
     signal input puzzle[81];

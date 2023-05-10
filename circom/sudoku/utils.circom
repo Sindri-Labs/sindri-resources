@@ -1,7 +1,7 @@
 pragma circom 2.0.8;
 
-include "circomlib/comparators.circom";
-include "circomlib/gates.circom";
+include "./circomlib/comparators.circom";
+include "./circomlib/gates.circom";
 
 /**
  * Check if the puzzle is valid.

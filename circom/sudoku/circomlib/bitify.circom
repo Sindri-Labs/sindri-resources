@@ -18,8 +18,8 @@
 */
 pragma circom 2.0.0;
 
-include "comparators.circom";
-include "aliascheck.circom";
+include "./comparators.circom";
+include "./aliascheck.circom";
 
 
 template Num2Bits(n) {

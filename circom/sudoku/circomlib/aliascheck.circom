@@ -18,7 +18,7 @@
 */
 pragma circom 2.0.0;
 
-include "compconstant.circom";
+include "./compconstant.circom";
 
 
 template AliasCheck() {
