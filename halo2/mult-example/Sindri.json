@@ -1,0 +1,4 @@
+{
+    "package_name": "mult-example",
+    "circuit_path": "mult_example::mult_circ::MyCircuit"
+}
