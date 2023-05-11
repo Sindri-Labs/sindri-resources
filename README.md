@@ -67,6 +67,15 @@ my_repo/
             mod.rs
         circuit.rs
     Cargo.toml
+    Sindri.json
+```
+
+The file `Sindri.json` specifies what you have named your package and how to reference the circuit
+```
+{
+    "package_name": "my-circuit",
+    "circuit_path": "circuit::myCircuit"
+}
 ```
 
 To generate your `tar.gz` upload file, follow the same compression instructions listed for Circom.
