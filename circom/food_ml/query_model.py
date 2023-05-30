@@ -101,13 +101,18 @@ detail_response = requests.get(
         "include_circuit_input": False,
         "include_public": True,
         "include_verification_key": False,
-        "include_proof": False,  
+        "include_proof": True,  
     }
 ).json()
 
 public_output = detail_response["public"]
 regions = ['NorthernEuropean', 'MiddleEastern', 'SouthernEuropean', 'WesternEuropean', 'EasternEuropean', 'LatinAmerican', 'SoutheastAsian', 'EastAsian', 'African', 'NorthAmerican', 'SouthAsian']
 print("   Predicted region: "+regions[int(public_output[0])])
+
+print("   Proof Arguments:")
+print("   Proof ID: "+PROOF_ID)
+print(json.dumps(detail_response["proof"],indent=4))
+print()
 
 print("Verifying proof.")
 verify_request = requests.get(
