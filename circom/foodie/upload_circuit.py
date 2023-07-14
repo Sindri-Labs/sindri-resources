@@ -48,7 +48,7 @@ print("   CIRCUIT_ID: "+CIRCUIT_ID)
 
 print('Uploading.')
 #2. Upload your local (compressed) circuit directory
-files = {"files": open("foodie.tar.gz", "rb")}
+files = {"files": open("../foodie.tar.gz", "rb")}
 # Modify standard header for payload type
 upload_header = HEADERS.copy()
 upload_header["Accept"] = "multipart/form-data" #replace json header 
