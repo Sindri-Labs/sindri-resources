@@ -8,13 +8,13 @@ Sample data for Sindri Labs' Forge API
 
 # Circom
 ## Requirements
-- The main component file of your circom circuit must be named `main.circom`
+- The main component file of your circom circuit must be named `circuit.circom`
 - All code imports must use relative paths
 
 ## Structure
 ```
 my_repo/
-    main.circom
+    circuit.circom
     supplementary.circom
 ```
 ## How to compress properly
@@ -25,19 +25,19 @@ tar -zcvf my_repo.tar.gz my_repo/
 *Note: The `my_repo` portion of `my_repo.tar.gz` may be called anything.*
 
 ## Invalid compression example
-Your repo may only have 1 circom file. Do not compress only the `main.cirom` file. You must still compress the entire repo directory.
+Your repo may only have 1 circom file. Do not compress only the `circuit.cirom` file. You must still compress the entire repo directory.
 
 Example structure (only 1 circom file):
 ```
 my_repo/
-    main.circom
+    circuit.circom
 ```
 
 Invalid compression:
 ```bash
 # INVALID
 cd my_repo/
-tar -zcvf my_repo.tar.gz main.circom
+tar -zcvf my_repo.tar.gz circuit.circom
 ```
 
 
