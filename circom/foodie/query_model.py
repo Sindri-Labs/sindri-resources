@@ -59,7 +59,7 @@ print("Initiating proof.")
 #1. Initiate Proof
 prove_header = HEADERS.copy()
 prove_header["Content-Type"] = "application/x-www-form-urlencoded"
-proof_type = "CPU Groth16 Snarkjs Snarkjs"
+proof_type = json.dumps({"name":"CPU Default"})
  
 proof_response = requests.post(
     URL + f"api/v0/circuit/{args.circuit}/prove",
