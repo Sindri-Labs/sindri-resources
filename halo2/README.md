@@ -24,3 +24,11 @@ See Sindri's GitBook for more complete instructions.
 | quadratic_circuit | 10 | Adapted from [halo2-scaffold](https://github.com/axiom-crypto/halo2-scaffold) | Computes $x^2+72$ with $x$ a public input | 
 | float_radius | 13 | [Fixed point gadget from DCMMC's repo](https://github.com/DCMMC/halo2-scaffold/tree/main/src/gadget) | Computes $\sqrt{x^2+y^2}$ for two private **floating point** inputs
 | axiom_header_goerli | 14 | [axiom-eth repo](https://github.com/axiom-crypto/axiom-eth/tree/axiom-dev-0406) | Produces a ZKP verifying the validity of a sequence of Goerli block headers
+
+## Circuit Requirements
+
+- Our proving package is built with Rust toolchain version `nightly-2022-10-28`.  To ensure compatibility, try compiling your circuit with the same version.
+- Upload all of your circuit code (and auxilliary files) in one compressed gzip tarfile.
+- See the individual version directories (`axiom-v0.2.2/` or `axiom-v0.3.0/`) for specific requirements by circuit type.
+
+
