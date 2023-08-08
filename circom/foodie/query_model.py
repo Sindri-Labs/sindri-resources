@@ -65,7 +65,7 @@ proof_response = requests.post(
     URL + f"api/v0/circuit/{args.circuit}/prove",
     headers=prove_header,
     data={
-        "circuit_input": json.dumps(query),
+        "proof_input": json.dumps(query),
         "prover_implementation": proof_type,
     },
 ).json()
@@ -119,7 +119,7 @@ verify_request = requests.get(
     URL+f"api/v0/proof/{PROOF_ID}/verify",
     headers=HEADERS
     ).json()
-validity = verify_request["valid"]
+validity = verify_request["success"]
 if validity:
     print("   Proof was valid")
 else:
