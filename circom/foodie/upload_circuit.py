@@ -40,7 +40,7 @@ creation_response = requests.post(
     headers=HEADERS,
     data={
         "circuit_name": args.name, 
-        "circuit_type": "Circom"
+        "circuit_type": "Circom C Groth16 bn254"
         },
 ).json()
 CIRCUIT_ID = creation_response.get("circuit_id")
@@ -48,7 +48,7 @@ print("   CIRCUIT_ID: "+CIRCUIT_ID)
 
 print('Uploading.')
 #2. Upload your local (compressed) circuit directory
-files = {"files": open("foodie.tar.gz", "rb")}
+files = {"files": open("../foodie.tar.gz", "rb")}
 # Modify standard header for payload type
 upload_header = HEADERS.copy()
 upload_header["Accept"] = "multipart/form-data" #replace json header 
@@ -75,6 +75,7 @@ for i in range(TIMEOUT):
     if status in ["Ready", "Failed"]:
         print(f"   Circuit poll exited after {i} seconds with status: {status}")
         break
+    time.sleep(1)
 if i==TIMEOUT-1:
     sys.exit("   Circuit compile polling timed out")
 

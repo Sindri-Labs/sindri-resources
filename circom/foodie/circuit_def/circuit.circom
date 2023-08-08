@@ -1,8 +1,8 @@
 pragma circom 2.0.0;
 
-include "../node_modules/circomlib-ml/circuits/ReLU.circom";
-include "../node_modules/circomlib-ml/circuits/Dense.circom";
-include "../node_modules/circomlib-ml/circuits/ArgMax.circom";
+include "ReLU.circom";
+include "Dense.circom";
+include "ArgMax.circom";
 
 template Model() {
 signal input in[374];
