@@ -1,4 +1,5 @@
 {
-    "package_name": "axiom-eth",
-    "circuit_path": "axiom_eth::storage::EthBlockStorageCircuit"
+    "PACKAGE_NAME": "axiom-eth",
+    "CLASS_NAME": "axiom_eth::storage::EthBlockStorageCircuit",
+    "DEGREE": "17"
 }
