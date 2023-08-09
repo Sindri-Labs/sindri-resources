@@ -30,7 +30,8 @@ my_repo/
 The file `Sindri.json` specifies what you have named your package and how to reference the circuit
 ```
 {
-    "package_name": "my-circuit",
-    "circuit_path": "circuit::myCircuit"
+    "PACKAGE_NAME": "my-circuit",
+    "CLASS_NAME": "circuit::myCircuit",
+    "DEGREE": "12"
 }
 ```
