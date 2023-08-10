@@ -1,0 +1,6 @@
+{
+    "PACKAGE_NAME": "quadratic-circuit",
+    "CLASS_NAME": "quadratic_circuit::circuit_def::CircuitInput",
+    "THREAD_BUILDER": "GateThreadBuilder",
+    "DEGREE": "10"
+}
