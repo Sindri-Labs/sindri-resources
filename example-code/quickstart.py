@@ -9,7 +9,6 @@ api_key = ""
 
 API_VERSION = "v1"
 API_URL = f"https://forge.sindri.app/api/{API_VERSION}/"
-API_URL = f"http://localhost/api/{API_VERSION}/"
 
 api_key_querystring = f"?api_key={api_key}"
 headers_json = {"Accept": "application/json"}

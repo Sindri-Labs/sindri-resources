@@ -25,4 +25,4 @@ Circuit proof output signal: 294
 3. Verifing proof...
 Proof was valid
 ```
-Note that the circuit computes the product of two inputs `a=7` and `b=42`, so the output signal should change accordingly when you alter line 76 of `quickstart.py`
+Note that the circuit computes the product of two inputs `a=7` and `b=42`, so the output signal should change accordingly when you alter line 75 of `quickstart.py`
