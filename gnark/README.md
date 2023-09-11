@@ -10,7 +10,7 @@ See Sindri's GitBook for more complete instructions.
 
 ## Available Circuits
 
-### v0.9.1
+### Gnark v0.8.0 (Gnark-Crypto v0.9.1)
 
 | Name | Size (DEGREE) | Original Source | Functionality | 
 | ---- | ---- | --------------- | ------------- | 
@@ -21,7 +21,7 @@ See Sindri's GitBook for more complete instructions.
 ## Circuits Requirements
 - Upload all your go language source code for a circuit
   - include your module definition file `go.mod`
-  - our current prover configuration uses gnark `v0.8.0` and gnark-crypto `v0.9.1`. We cannot gaurantee compatibility with circuits relying on newer features.
+  - our current prover configuration uses gnark `v0.8.0` and gnark-crypto `v0.9.1`. We cannot guarantee compatibility with circuits relying on newer features.
 - Your main circuit struct should be public
 - Indicate the main circuit upon which we build our prover via the `Sindri.json` file
 - Your main circuit should be able to instantiate an assignment for your main circuit from a json path
@@ -29,6 +29,7 @@ See Sindri's GitBook for more complete instructions.
 func FromJson(pathInput string) witness.Witness {}
 ```
 
+### Supporting Files
 The file `Sindri.json` specifies what you have named your package and how to reference the circuit
 ```
 {
@@ -37,6 +38,10 @@ The file `Sindri.json` specifies what you have named your package and how to ref
 }
 ```
 
-To generate your `tar.gz` upload file, follow the same compression instructions listed for Circom.
+### How to compress properly
+To prepare your repo, `my_repo`, for Forge upload, run the following command ***from the parent directory*** of `my_repo`:
+```
+tar -zcvf my_repo.tar.gz my_repo/
+```
+*Note: The `my_repo` portion of `my_repo.tar.gz` may be called anything.*
 
-For greater clarity regarding the above, examine the gnark examples provided in this repo.
