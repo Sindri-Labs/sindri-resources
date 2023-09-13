@@ -121,8 +121,4 @@ response = requests.get(
     API_URL + f"proof/{proof_id}/verify" + api_key_querystring, headers=headers_json
 )
 assert response.status_code == 200, f"Expected status code 200, received {response.status_code}."
-valid_proof = response.json()["success"]  # boolean
-if valid_proof:
-    print("Proof was valid")
-else:
-    print("Proof was not valid")
+print(response.json())
