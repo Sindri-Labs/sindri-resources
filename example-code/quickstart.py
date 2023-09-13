@@ -114,11 +114,3 @@ else:
     # Retrieve output from the proof
     public_output = response.json()["public"]
     print(f"Circuit proof output signal: {public_output[0]}")
-
-# Verify proof
-print("3. Verifing proof...")
-response = requests.get(
-    API_URL + f"proof/{proof_id}/verify" + api_key_querystring, headers=headers_json
-)
-assert response.status_code == 200, f"Expected status code 200, received {response.status_code}."
-print(response.json())
