@@ -1,11 +1,12 @@
 import json
+import os
 import sys
 import time
 
 import requests  # pip install requests
 
 # NOTE: Provide your API Key here
-api_key = ""
+api_key = os.getenv("FORGE_API_KEY", "")
 
 API_VERSION = "v1"
 API_URL = f"https://forge.sindri.app/api/{API_VERSION}/"
@@ -29,7 +30,7 @@ assert response.status_code == 201, f"Expected status code 201, received {respon
 circuit_id = response.json().get("circuit_id")  # Obtain circuit_id
 
 # Load the circuit .tar.gz file
-files = {"files": open("../circom/multiplier2.tar.gz", "rb")}
+files = {"files": open(os.path.join("..", "circom", "multiplier2.tar.gz"), "rb")}
 
 # Upload the circuit file
 response = requests.post(
