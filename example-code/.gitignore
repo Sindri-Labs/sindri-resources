@@ -1,0 +1,10 @@
+# Ignore JavaScript dependency/module files.
+/node_modules/
+/package-lock.json
+/package.json
+
+# Ignore Python dependency/package files.
+/.venv/
+/poetry.lock
+/pyproject.toml
+/requirements.txt
