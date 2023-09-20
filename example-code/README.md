@@ -22,7 +22,7 @@ You can then either set a `FORGE_API_KEY` environment variable with your API key
 
 * Install Python 3.
 * Install the python [requests library](https://pypi.org/project/requests/).
-* Inside of this directory (`example-code`), invoke the python script in the command line via `FORGEAPI_KEY=<your-api-key python3 quickstart.py`.
+* Inside of this directory (`example-code`), invoke the python script in the command line via `FORGE_API_KEY=<your-api-key python3 quickstart.py`.
 
 ### Expected Outcome
 
