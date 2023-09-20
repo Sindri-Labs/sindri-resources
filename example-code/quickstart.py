@@ -6,7 +6,7 @@ import time
 import requests  # pip install requests
 
 # NOTE: Provide your API Key here
-api_key = os.getenv("FORGE_API_KEY", "")
+API_KEY = os.getenv("FORGE_API_KEY", "")
 
 API_VERSION = "v1"
 API_URL = f"https://forge.sindri.app/api/{API_VERSION}/"
