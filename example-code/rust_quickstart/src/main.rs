@@ -46,7 +46,7 @@ async fn poll_status(
 #[tokio::main]
 async fn main() {
     // NOTE: Provide your API Key here
-    let api_key = "bjZtEQeFWXAAnNI26LYW6S2Ro46lTC7E";
+    let api_key = "";
     
     let api_version = "v1";
     let api_url = format!("https://forge.sindri.app/api/{api_version}/");
