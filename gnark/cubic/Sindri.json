@@ -1,4 +1,7 @@
 {
     "PACKAGE_NAME": "cubic",
-    "CIRCUIT_NAME": "Circuit"
+    "CIRCUIT_NAME": "Circuit",
+    "VERSION": "8.1",
+    "CURVE_NAME": "bn254",
+    "PROVING_SCHEME": "Groth16"
 }
