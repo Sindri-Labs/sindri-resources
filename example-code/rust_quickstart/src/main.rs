@@ -1,6 +1,8 @@
+use std::env;
 use std::fs::File;
 use std::io::Read;
 use std::time::Duration;
+use std::collections::HashMap;
 use serde::Deserialize;
 
 use reqwest::{
@@ -9,16 +11,23 @@ use reqwest::{
     multipart::Part
 };
 
+
 // Structs to decode JSON endpoint responses
 #[derive(Debug,Clone,Deserialize)]
 pub struct CreateResponse {
     circuit_id: String,
 }
 
+#[derive(Debug,Clone,Deserialize)]
+pub struct PollResponse {
+    status: String,
+}
+
 // Functions which return Reqwest Header
 fn headers_json() -> HeaderMap {
     let mut headers_json = HeaderMap::new();
     headers_json.insert("Accept", "application/json".parse().unwrap());
+    headers_json.insert("Content-Type", "application/x-www-form-urlencoded".parse().unwrap());
     headers_json
 }
 fn headers_multipart() -> HeaderMap {
@@ -30,28 +39,50 @@ fn headers_multipart() -> HeaderMap {
 
 // Polling loop while circuit compile or proof is in progress
 async fn poll_status(
-    timeout: u8,
-    task_type: &str
+    endpoint: String, 
+    api_url: &String,
+    api_key_querystring: &String,
+    timeout: i64,
+    client: &reqwest::Client
 ) {
     for _i in 1..timeout {
 
+        let response = client
+        .get(format!("{api_url}{endpoint}{api_key_querystring}"))
+        .headers(headers_json())
+        .send()
+        .await
+        .unwrap();
+        assert_eq!(&response.status().as_u16(), &200u16, "Expected status code 201");
+    
+        let status = response.json::<PollResponse>().await.unwrap().status;
+        if status == "Failed" {
+            println!("fail");
+            std::process::exit(1);
+        }
+        else if status == "Ready" {
+            println!("ready");
+            return
+        }
+        
         // early out logic when status in {Ready, Failed}
         tokio::time::sleep(Duration::from_secs(1)).await;
     }
 
-    println!("{} polling timed out",task_type);
+    println!("polling timed out");
     std::process::exit(1);
 }
 
 #[tokio::main]
 async fn main() {
-    // NOTE: Provide your API Key here
-    let api_key = "";
-    
-    let api_version = "v1";
-    let api_url = format!("https://forge.sindri.app/api/{api_version}/");
-    let api_key_querystring = format!("?api_key={api_key}");
 
+    let api_key: String = env::var("FORGE_API_KEY").unwrap();
+    let api_key_querystring: String = format!("?api_key={api_key}");
+    
+    let api_version: &str = "v1";
+    let api_url: String = format!("https://forge.sindri.app/api/{api_version}/");
+    
+    /* 
     // Create new circuit
     println!("1. Creating circuit...");
     let client = reqwest::Client::new();
@@ -67,7 +98,7 @@ async fn main() {
         .unwrap();
     assert_eq!(&response.status().as_u16(), &201u16, "Expected status code 201");
     let circuit_id = response.json::<CreateResponse>().await.unwrap().circuit_id; // Obtain circuit_id
-
+    println!("{:?}",&circuit_id);
     // Load the circuit .tar.gz file and load as multipart form
     let mut file = File::open("../../circom/multiplier2.tar.gz").unwrap();
     let mut contents = Vec::new();
@@ -95,7 +126,28 @@ async fn main() {
     .unwrap();
     assert_eq!(&response.status().as_u16(), &201u16, "Expected status code 201");
 
-    // Poll circuit detail unitl it has a status of Ready or Failed
-    //poll_status(60, "compile").await;
+    // Poll circuit detail until it has a status of Ready or Failed
+    poll_status(
+        format!("circuit/{circuit_id}/detail"),
+        &api_url,
+        &api_key_querystring,
+        600,
+        &client).await;
+    */
+    let circuit_id = "3949cb08-99f2-4ab6-923f-d74de823e35a";
+    let client = reqwest::Client::new();
+    let mut proof_input = HashMap::new();
+    proof_input.insert("a", "7");
+    proof_input.insert("b", "42");
+
+    let response = client
+    .post(format!("{api_url}circuit/{circuit_id}/prove{api_key_querystring}"))
+    .headers(headers_json())
+    .form(&proof_input)
+    .send()
+    .await
+    .unwrap();
+    assert_eq!(&response.status().as_u16(), &201u16, "Expected status code 201");
+
 
 }
