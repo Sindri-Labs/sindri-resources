@@ -1,19 +1,20 @@
-use std::env;
-use std::fs::File;
-use std::io::Read;
-use std::time::Duration;
+use std::{
+    env,
+    fs::File,
+    io::Read,
+    time::Duration
+};
 use serde::Deserialize;
-
 use reqwest::{
-    header::HeaderMap,
     Client, 
+    header::HeaderMap,
     multipart::Part
 };
 
 
 // Structs to decode JSON endpoint responses
 #[derive(Debug,Clone,Deserialize)]
-pub struct CreateResponse {
+pub struct CircuitResponse {
     circuit_id: String,
 }
 
@@ -25,16 +26,13 @@ pub struct ProofResponse {
 #[derive(Debug,Clone,Deserialize)]
 pub struct PollResponse {
     status: String,
+    public: Option<Vec<String>>
 }
 
 // Functions which return Reqwest Header
 fn headers_json() -> HeaderMap {
     let mut headers_json = HeaderMap::new();
     headers_json.insert("Accept", "application/json".parse().unwrap());
-    //headers_json.insert(
-    //    "content-Type",
-    //    "application/json".parse().unwrap(),
-    //);
     headers_json
 }
 fn headers_multipart() -> HeaderMap {
@@ -49,10 +47,10 @@ async fn poll_status(
     endpoint: String, 
     api_url: &String,
     api_key_querystring: &String,
-    timeout: i64,
-    client: &reqwest::Client
-) {
-    for _i in 1..timeout {
+    timeout: i64
+) -> PollResponse {
+    let client = Client::new();
+    for i in 1..timeout {
 
         let response = client
         .get(format!("{api_url}{endpoint}{api_key_querystring}"))
@@ -62,21 +60,17 @@ async fn poll_status(
         .unwrap();
         assert_eq!(&response.status().as_u16(), &200u16, "Expected status code 201");
     
-        let status = response.json::<PollResponse>().await.unwrap().status;
-        if status == "Failed" {
-            println!("fail");
-            std::process::exit(1);
-        }
-        else if status == "Ready" {
-            println!("ready");
-            return
+        let data = response.json::<PollResponse>().await.unwrap();
+        let status = &data.status;
+        if ["Failed", "Ready"].contains(&status.as_str()) {
+            println!("Polling exited after {} seconds with status: {}", i, &status);
+            return data
         }
         
-        // early out logic when status in {Ready, Failed}
         tokio::time::sleep(Duration::from_secs(1)).await;
     }
 
-    println!("polling timed out");
+    println!("Polling timed out after {} seconds", timeout);
     std::process::exit(1);
 }
 
@@ -89,10 +83,9 @@ async fn main() {
     let api_version: &str = "v1";
     let api_url: String = format!("https://forge.sindri.app/api/{api_version}/");
     
-    
     // Create new circuit
     println!("1. Creating circuit...");
-    let client = reqwest::Client::new();
+    let client = Client::new();
     let mut response = client
         .post(format!("{api_url}circuit/create{api_key_querystring}"))
         .headers(headers_json())
@@ -104,9 +97,9 @@ async fn main() {
         .await
         .unwrap();
     assert_eq!(&response.status().as_u16(), &201u16, "Expected status code 201");
-    let circuit_id = response.json::<CreateResponse>().await.unwrap().circuit_id; // Obtain circuit_id
-    println!("{:?}",&circuit_id);
-    // Load the circuit .tar.gz file and load as multipart form
+    let circuit_id = response.json::<CircuitResponse>().await.unwrap().circuit_id; 
+
+    // Load the circuit .tar.gz file and create multipart form
     let mut file = File::open("../../circom/multiplier2.tar.gz").unwrap();
     let mut contents = Vec::new();
     file.read_to_end(&mut contents).expect("Unable to read tar file");
@@ -134,14 +127,20 @@ async fn main() {
     assert_eq!(&response.status().as_u16(), &201u16, "Expected status code 201");
 
     // Poll circuit detail until it has a status of Ready or Failed
-    poll_status(
+    let circuit_data = poll_status(
         format!("circuit/{circuit_id}/detail"),
         &api_url,
         &api_key_querystring,
-        600,
-        &client).await;
-    
-    let proof_input = r#"{"a": 7, "b": 47}"#;
+        600).await;
+    if circuit_data.status == "Failed" {
+        println!("Circuit compilation failed.");
+        std::process::exit(1);
+    }
+    println!("Circuit compilation succeeded!");    
+
+    // Initiate proof generation.
+    println!("2. Proving circuit...");
+    let proof_input = r#"{"a": 7, "b": 42}"#;
     let map = serde_json::json!({"proof_input": proof_input});
 
     let response = client
@@ -154,14 +153,20 @@ async fn main() {
     assert_eq!(&response.status().as_u16(), &201u16, "Expected status code 201");
     
     let proof_id = response.json::<ProofResponse>().await.unwrap().proof_id;
+
     // Poll proof detail until it has a status of Ready or Failed
-    poll_status(
+    let proof_data = poll_status(
         format!("proof/{proof_id}/detail"),
         &api_url,
         &api_key_querystring,
-        600,
-        &client).await;
+        600).await;
+    if &proof_data.status == "Failed" {
+        println!("Proving failed.");
+        std::process::exit(1);
+    }
 
-    
-    
+    // Retrieve output from the proof.
+    let output_signal = proof_data.public.unwrap_or(["none".to_owned()].to_vec());
+    println!("Circuit proof output signal: {}", output_signal.first().unwrap());
+
 }
