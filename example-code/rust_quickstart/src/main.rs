@@ -2,7 +2,6 @@ use std::env;
 use std::fs::File;
 use std::io::Read;
 use std::time::Duration;
-use std::collections::HashMap;
 use serde::Deserialize;
 
 use reqwest::{
@@ -19,6 +18,11 @@ pub struct CreateResponse {
 }
 
 #[derive(Debug,Clone,Deserialize)]
+pub struct ProofResponse {
+    proof_id: String,
+}
+
+#[derive(Debug,Clone,Deserialize)]
 pub struct PollResponse {
     status: String,
 }
@@ -27,7 +31,10 @@ pub struct PollResponse {
 fn headers_json() -> HeaderMap {
     let mut headers_json = HeaderMap::new();
     headers_json.insert("Accept", "application/json".parse().unwrap());
-    headers_json.insert("Content-Type", "application/x-www-form-urlencoded".parse().unwrap());
+    //headers_json.insert(
+    //    "content-Type",
+    //    "application/json".parse().unwrap(),
+    //);
     headers_json
 }
 fn headers_multipart() -> HeaderMap {
@@ -82,7 +89,7 @@ async fn main() {
     let api_version: &str = "v1";
     let api_url: String = format!("https://forge.sindri.app/api/{api_version}/");
     
-    /* 
+    
     // Create new circuit
     println!("1. Creating circuit...");
     let client = reqwest::Client::new();
@@ -133,21 +140,28 @@ async fn main() {
         &api_key_querystring,
         600,
         &client).await;
-    */
-    let circuit_id = "3949cb08-99f2-4ab6-923f-d74de823e35a";
-    let client = reqwest::Client::new();
-    let mut proof_input = HashMap::new();
-    proof_input.insert("a", "7");
-    proof_input.insert("b", "42");
+    
+    let proof_input = r#"{"a": 7, "b": 47}"#;
+    let map = serde_json::json!({"proof_input": proof_input});
 
     let response = client
     .post(format!("{api_url}circuit/{circuit_id}/prove{api_key_querystring}"))
     .headers(headers_json())
-    .form(&proof_input)
+    .json(&map)
     .send()
     .await
     .unwrap();
     assert_eq!(&response.status().as_u16(), &201u16, "Expected status code 201");
+    
+    let proof_id = response.json::<ProofResponse>().await.unwrap().proof_id;
+    // Poll proof detail until it has a status of Ready or Failed
+    poll_status(
+        format!("proof/{proof_id}/detail"),
+        &api_url,
+        &api_key_querystring,
+        600,
+        &client).await;
 
-
+    
+    
 }
