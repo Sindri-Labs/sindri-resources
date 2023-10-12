@@ -47,7 +47,7 @@ async function main() {
       API_URL + "/circuit/create" + apiKeyQueryString,
       {
         circuit_name: "multiplier_example",
-        circuit_type: "Circom C Groth16 bn254",
+        circuit_type: "Circom",
       },
       { headers: headersUrlEncode, validateStatus: (status) => status === 201 },
     );

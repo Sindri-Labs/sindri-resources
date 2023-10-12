@@ -40,7 +40,7 @@ creation_response = requests.post(
     headers=HEADERS,
     data={
         "circuit_name": args.name, 
-        "circuit_type": "Circom C Groth16 bn254"
+        "circuit_type": "Circom"
         },
 ).json()
 CIRCUIT_ID = creation_response.get("circuit_id")

@@ -24,7 +24,7 @@ print("1. Creating circuit...")
 response = requests.post(
     API_URL + "circuit/create" + api_key_querystring,
     headers=headers_json,
-    data={"circuit_name": "multiplier_example", "circuit_type": "Circom C Groth16 bn254"},
+    data={"circuit_name": "multiplier_example", "circuit_type": "Circom"},
 )
 assert response.status_code == 201, f"Expected status code 201, received {response.status_code}."
 circuit_id = response.json().get("circuit_id")  # Obtain circuit_id
