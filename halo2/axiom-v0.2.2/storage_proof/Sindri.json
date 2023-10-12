@@ -1,5 +1,6 @@
 {
     "PACKAGE_NAME": "axiom-eth",
     "CLASS_NAME": "axiom_eth::storage::EthBlockStorageCircuit",
-    "DEGREE": "17"
+    "DEGREE": "17",
+    "HALO2_BASE_VSN": "0.2.2"
 }

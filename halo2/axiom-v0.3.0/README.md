@@ -37,6 +37,7 @@ The file `Sindri.json` specifies what you have named your package and how to ref
     "CLASS_NAME": "circuit::myCircuit",
     "DEGREE": "12",
     "THREAD_BUILDER": "GateThreadBuilder",
+    "HALO2_BASE_VSN": "0.3.0"
 }
 ```
 The file `config.json` specifies any environment variables that are necessary to define your circuit configuration.  For example, in the `float_radius` circuit we have
