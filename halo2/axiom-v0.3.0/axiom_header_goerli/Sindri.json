@@ -3,5 +3,5 @@
     "CLASS_NAME": "axiom_eth::block_header::EthBlockHeaderChainCircuit",
     "THREAD_BUILDER": "RlcThreadBuilder",
     "DEGREE": "14",
-    "HALO2_BASE_VSN": "0.3.0"
+    "HALO2_BASE_VERSION": "0.3.0"
 }

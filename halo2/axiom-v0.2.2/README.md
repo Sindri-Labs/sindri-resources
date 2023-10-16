@@ -33,6 +33,6 @@ The file `Sindri.json` specifies what you have named your package and how to ref
     "PACKAGE_NAME": "my-circuit",
     "CLASS_NAME": "circuit::myCircuit",
     "DEGREE": "12",
-    "HALO2_BASE_VSN": "0.2.2"
+    "HALO2_BASE_VERSION": "0.2.2"
 }
 ```
