@@ -3,8 +3,8 @@ module github.com/sindri-labs/gnark-scaffold/example/compress
 go 1.19
 
 require (
-	github.com/consensys/gnark v0.8.0
-	github.com/consensys/gnark-crypto v0.9.1
+	github.com/consensys/gnark v0.9.0
+	github.com/consensys/gnark-crypto v0.11.2
 )
 
 require (
