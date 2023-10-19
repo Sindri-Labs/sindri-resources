@@ -17,11 +17,17 @@ See Sindri's GitBook for more complete instructions.
 | cubic | 3 | [Gnark Github Examples](https://github.com/Consensys/gnark/blob/master/examples/cubic/cubic.go) | Checks $x^3 + x + 5 == y$ for public $y$ and private $x$|
 | poseidon | 214 | [Vocdoni's Gnark Primitives](https://github.com/vocdoni/gnark-crypto-primitives/tree/main) | Computes the Poseidon hash of a preimage  |
 
+### Gnark v0.9.0 (Gnark-Crypto v0.11.2)
+| Name | Size (DEGREE) | Original Source | Functionality | 
+| ---- | ---- | --------------- | ------------- | 
+| cubic_v9 | 3 | [Gnark Github Examples](https://github.com/Consensys/gnark/blob/master/examples/cubic/cubic.go) | Checks $x^3 + x + 5 == y$ for public $y$ and private $x$|
+| poseidon_v9 | 214 | [Vocdoni's Gnark Primitives](https://github.com/vocdoni/gnark-crypto-primitives/tree/main) | Computes the Poseidon hash of a preimage  |
+
 
 ## Circuits Requirements
 - Upload all your go language source code for a circuit
   - include your module definition file `go.mod`
-  - our current prover configuration uses gnark `v0.8.1` and gnark-crypto `v0.9.1`. We cannot guarantee compatibility with circuits relying on newer features.
+  - our current prover configuration uses gnark `v0.8.1` (gnark-crypto `v0.9.1`) and gnark `v0.9.0` (gnark-crypto `v0.11.2`). We cannot guarantee compatibility with circuits relying on newer features.
 - Your main circuit struct should be public
 - Indicate the main circuit upon which we build our prover via the `Sindri.json` file
 - Your main circuit should be able to instantiate an assignment for your main circuit from a json path
@@ -35,7 +41,7 @@ The file `Sindri.json` specifies what you have named your package and how to ref
 {
     "PACKAGE_NAME": "PackageName",
     "CIRCUIT_NAME": "MainCircuitDef",
-    "VERSION": "8.1",
+    "VERSION": "0.8.1",
     "CURVE_NAME": "bn254",
     "PROVING_SCHEME": "Groth16"
 }
@@ -53,8 +59,8 @@ The file `Sindri.json` specifies what you have named your package and how to ref
 | `CURVE_NAME`      | BLS24-315       |  Coming Soon   | 
 | `CURVE_NAME`      | BW6-633      |  Coming Soon   | 
 | `CURVE_NAME`      | BW6-761       |  Coming Soon   | 
-| `VERSION`      | (Gnark) 8.1       |  ✅   | 
-| `VERSION`      | (Gnark) 9.0-alpha       |  Coming Soon   | 
+| `VERSION`      | (Gnark) 0.8.1       |  ✅   | 
+| `VERSION`      | (Gnark) 0.9.0       |  ✅   | 
 
 ### How to compress properly
 To prepare your repo, `my_repo`, for Forge upload, run the following command ***from the parent directory*** of `my_repo`:
