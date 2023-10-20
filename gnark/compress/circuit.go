@@ -12,32 +12,32 @@ import (
 )
 
 type Circuit struct {
-	X [100]frontend.Variable
-	Y [200]frontend.Variable `gnark:",public"`
+	Original   [100]frontend.Variable
+	Compressed [200]frontend.Variable `gnark:",public"`
 }
 
 func (circuit *Circuit) Define(api frontend.API) error {
 
-	y_current_symbol := circuit.Y[0]
-	y_multiplicity := circuit.Y[1]
-	y_left := circuit.Y
+	symbol := circuit.Compressed[0]
+	multiplicity := circuit.Compressed[1]
+	y_left := circuit.Compressed
 
 	for i := 0; i < 100; i++ {
 		//ensure equality at i-th position
-		api.AssertIsEqual(circuit.X[i], y_current_symbol)
+		api.AssertIsEqual(circuit.Original[i], symbol)
 
 		// decrement multiplicity counter
-		y_multiplicity = api.Sub(y_multiplicity, 1)
+		multiplicity = api.Sub(multiplicity, 1)
 
 		// if counter is at zero, chomp two from compressed list
 		for i := 0; i < 198; i++ {
-			y_left[i] = api.Select(api.IsZero(y_multiplicity), y_left[i+2], y_left[i])
+			y_left[i] = api.Select(api.IsZero(multiplicity), y_left[i+2], y_left[i])
 		}
-		y_left[198] = api.Select(api.IsZero(y_multiplicity), frontend.Variable(0), y_left[198])
-		y_left[199] = api.Select(api.IsZero(y_multiplicity), frontend.Variable(0), y_left[199])
-		y_multiplicity = api.Select(api.IsZero(y_multiplicity), y_left[1], y_multiplicity)
+		y_left[198] = api.Select(api.IsZero(multiplicity), frontend.Variable(0), y_left[198])
+		y_left[199] = api.Select(api.IsZero(multiplicity), frontend.Variable(0), y_left[199])
+		multiplicity = api.Select(api.IsZero(multiplicity), y_left[1], multiplicity)
 
-		y_current_symbol = y_left[0]
+		symbol = y_left[0]
 	}
 
 	return nil
@@ -117,8 +117,8 @@ func FromJson(pathInput string) witness.Witness {
 	}
 
 	assignment := Circuit{
-		X: original,
-		Y: compressed,
+		Original:   original,
+		Compressed: compressed,
 	}
 
 	w, err := frontend.NewWitness(&assignment, ecc.BN254.ScalarField())
