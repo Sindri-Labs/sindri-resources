@@ -1,10 +1,9 @@
 ## Compression Circuit
 
-This circuit is built with Gnark frontend v0.9.0 and currently accepts two inputs similar to 
+This circuit is built with Gnark frontend v0.9.0 and accepts a string as input
 ```
 {
     "original": "aaabbcccccc", 
-    "compressed": "a3b2c6"
 }
 ```
 
@@ -21,11 +20,5 @@ Note that the inputs to the circuit are not the strings represented in this JSON
 "X": [97,97,97,98,98,99,99,99,99,99,99,0,0,0,...],
 "Y": [97,3,98,2,99,6,0,0,...]
 ```
-to the circuit and that is what `FromJson` does.
+to the circuit and that is what `FromJson` does.  See docs for more information.
 
-### TODO LIST
-
-- [ ] Compute the compressed representation within `FromJson` so that the proof input is only one string
-- [ ] Incorporate a hash of the original string which is another public variable returned to the user
-- [ ] Give circuit internal & external signals better names
-- [ ] Explore how large we can make the strings before the circuit becomes huge (currently max length of x is 100 and we have 80K constraints)
