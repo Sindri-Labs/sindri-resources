@@ -75,33 +75,50 @@ func FromJson(pathInput string) witness.Witness {
 
 	// send original to list of integers
 	chars := []rune(data["original"].(string))
-	XtoFE := [100]frontend.Variable{}
+	original := [100]frontend.Variable{}
+	compressed := [200]frontend.Variable{}
+	preImage := []byte(data["original"].(string))
+
+	prev_x := int(chars[0])
+	multiplicity := 0
+	y_idx := 0
+
 	for i := 0; i < 100; i++ {
 		if i < len(chars) {
-			XtoFE[i] = frontend.Variable(chars[i])
-		} else { // pad with zeros
-			XtoFE[i] = frontend.Variable(0)
-		}
-	}
+			original[i] = frontend.Variable(chars[i])
 
-	// send y to list of integers
-	chars = []rune(data["compressed"].(string))
-	YtoFE := [200]frontend.Variable{}
-	for i := 0; i < 200; i++ {
-		if i < len(chars) {
-			if i%2 == 0 { // symbol
-				YtoFE[i] = frontend.Variable(chars[i])
-			} else { // multiplicity
-				YtoFE[i] = frontend.Variable(chars[i] - 48)
+			if int(chars[i]) != prev_x {
+				compressed[y_idx] = frontend.Variable(prev_x)
+				y_idx = y_idx + 1
+				compressed[y_idx] = frontend.Variable(multiplicity)
+				y_idx = y_idx + 1
+
+				multiplicity = 1
+			} else {
+				multiplicity = multiplicity + 1
 			}
-		} else { // pad with zeros
-			YtoFE[i] = frontend.Variable(0)
+			prev_x = int(chars[i])
+		} else if i == len(chars) {
+			compressed[y_idx] = frontend.Variable(prev_x)
+			y_idx = y_idx + 1
+			compressed[y_idx] = frontend.Variable(multiplicity)
+			y_idx = y_idx + 1
+
+			original[i] = frontend.Variable(0)
+			preImage = append(preImage, 0)
+		} else { // pad original with zeros to length 100
+			original[i] = frontend.Variable(0)
+			preImage = append(preImage, 0)
+		}
+		// pad compressed array to length 200
+		for i := y_idx; i < 200; i++ {
+			compressed[i] = frontend.Variable(0)
 		}
 	}
 
 	assignment := Circuit{
-		X: XtoFE,
-		Y: YtoFE,
+		X: original,
+		Y: compressed,
 	}
 
 	w, err := frontend.NewWitness(&assignment, ecc.BN254.ScalarField())
