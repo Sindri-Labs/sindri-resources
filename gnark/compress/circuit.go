@@ -3,30 +3,20 @@ package compress
 import (
 	"encoding/json"
 	"fmt"
-	"math/big"
 	"os"
 	"path/filepath"
 
 	"github.com/consensys/gnark-crypto/ecc"
 	"github.com/consensys/gnark/backend/witness"
 	"github.com/consensys/gnark/frontend"
-
-	bn254 "github.com/consensys/gnark-crypto/ecc/bn254/fr/mimc"
 )
 
 type Circuit struct {
 	X [100]frontend.Variable
-	// W frontend.Variable
 	Y [200]frontend.Variable `gnark:",public"`
-	// Z frontend.Variable      `gnark:",public"`
 }
 
 func (circuit *Circuit) Define(api frontend.API) error {
-
-	// first check hash of original
-	// mimc, _ := mimc.NewMiMC(api)
-	// mimc.Write(circuit.W)
-	// api.AssertIsEqual(circuit.Z, mimc.Sum())
 
 	y_current_symbol := circuit.Y[0]
 	y_multiplicity := circuit.Y[1]
@@ -76,13 +66,6 @@ func ReadFromInputPath(pathInput string) (map[string]interface{}, error) {
 	return data, nil
 }
 
-func mimcHash(data []byte) string {
-	f := bn254.NewMiMC()
-	hash := f.Sum(data)
-	hashInt := big.NewInt(0).SetBytes(hash)
-	return hashInt.String()
-}
-
 func FromJson(pathInput string) witness.Witness {
 
 	data, err := ReadFromInputPath(pathInput)
@@ -116,16 +99,9 @@ func FromJson(pathInput string) witness.Witness {
 		}
 	}
 
-	preImage := []byte(data["original"].(string))
-	hash := mimcHash(preImage)
-	fmt.Println(preImage)
-	fmt.Println(hash)
-
 	assignment := Circuit{
 		X: XtoFE,
-		//W: "16130099170765464552823636852555369511329944820189892919423002775646948828469",
 		Y: YtoFE,
-		//Z: "12886436712380113721405259596386800092738845035233065858332878701083870690753",
 	}
 
 	w, err := frontend.NewWitness(&assignment, ecc.BN254.ScalarField())
