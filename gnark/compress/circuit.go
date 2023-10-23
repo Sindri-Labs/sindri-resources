@@ -20,6 +20,7 @@ func (circuit *Circuit) Define(api frontend.API) error {
 
 	symbol := circuit.Compressed[0]
 	multiplicity := circuit.Compressed[1]
+	multiplicity = api.Sub(multiplicity, frontend.Variable(48))
 	y_left := circuit.Compressed
 
 	for i := 0; i < 100; i++ {
@@ -35,7 +36,9 @@ func (circuit *Circuit) Define(api frontend.API) error {
 		}
 		y_left[198] = api.Select(api.IsZero(multiplicity), frontend.Variable(0), y_left[198])
 		y_left[199] = api.Select(api.IsZero(multiplicity), frontend.Variable(0), y_left[199])
-		multiplicity = api.Select(api.IsZero(multiplicity), y_left[1], multiplicity)
+
+		asciishift := api.Select(api.IsZero(y_left[1]), y_left[1], api.Sub(y_left[1], frontend.Variable(48)))
+		multiplicity = api.Select(api.IsZero(multiplicity), asciishift, multiplicity)
 
 		symbol = y_left[0]
 	}
@@ -90,7 +93,7 @@ func FromJson(pathInput string) witness.Witness {
 			if int(chars[i]) != prev_x {
 				compressed[y_idx] = frontend.Variable(prev_x)
 				y_idx = y_idx + 1
-				compressed[y_idx] = frontend.Variable(multiplicity)
+				compressed[y_idx] = frontend.Variable(multiplicity + 48)
 				y_idx = y_idx + 1
 
 				multiplicity = 1
@@ -101,7 +104,7 @@ func FromJson(pathInput string) witness.Witness {
 		} else if i == len(chars) {
 			compressed[y_idx] = frontend.Variable(prev_x)
 			y_idx = y_idx + 1
-			compressed[y_idx] = frontend.Variable(multiplicity)
+			compressed[y_idx] = frontend.Variable(multiplicity + 48) //add 48 for ascii encoding
 			y_idx = y_idx + 1
 
 			original[i] = frontend.Variable(0)

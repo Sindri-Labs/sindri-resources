@@ -18,7 +18,7 @@ which iterates through each symbol in the original string and ensures that the c
 Note that the inputs to the circuit are not the strings represented in this JSON input, but preprocessed versions of these strings which are turned into integer lists.  From the input example above, we would actually input:
 ```
 "X": [97,97,97,98,98,99,99,99,99,99,99,0,0,0,...],
-"Y": [97,3,98,2,99,6,0,0,...]
+"Y": [97,51,98,50,99,54,0,0,...]
 ```
 to the circuit and that is what `FromJson` does.  See docs for more information.
 
