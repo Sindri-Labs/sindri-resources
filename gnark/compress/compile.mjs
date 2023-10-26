@@ -44,7 +44,7 @@ let startTime = Date.now();
 let circuitDetailResponse;
 while (true) {
   circuitDetailResponse = await axios.get(`/circuit/${circuitId}/detail`, {
-    include_verification_key: false,
+    params: { include_verification_key: false },
   });
   const { status } = circuitDetailResponse.data;
   const elapsedSeconds = ((Date.now() - startTime) / 1000).toFixed(1);
@@ -60,10 +60,7 @@ while (true) {
   }
   await new Promise((resolve) => setTimeout(resolve, 1000));
 }
-console.log(
-  "Circuit Detail:",
-  JSON.stringify(circuitDetailResponse.data, null, 2),
-);
+console.log("Circuit Detail:\n", circuitDetailResponse.data);
 
 // Generate a new proof and poll for completion.
 const proofInput = JSON.stringify({
@@ -92,14 +89,8 @@ while (true) {
   }
   await new Promise((resolve) => setTimeout(resolve, 1000));
 }
-console.log(
-  "Proof Output:",
-  JSON.stringify(proofDetailResponse.data.proof, null, 2),
-);
-console.log(
-  "Public Output:",
-  JSON.stringify(proofDetailResponse.data.public, null, 2),
-);
+console.log("Proof Output:\n", proofDetailResponse.data.proof);
+console.log("Public Output:\n", proofDetailResponse.data.public);
 
 // Save the proof detail response for external verification.
 fs.writeFileSync(
