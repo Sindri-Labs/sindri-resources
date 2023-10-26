@@ -3,6 +3,7 @@ const axios = (await import("axios")).default;
 const FormData = (await import("form-data")).default;
 const fs = (await import("fs")).default;
 const process = (await import("process")).default;
+const tar = (await import("tar")).default;
 
 // Make sure to provide your actual API key here.
 const SINDRI_API_KEY = process.env.SINDRI_API_KEY || "<your-key-here>";
@@ -28,9 +29,13 @@ console.log("Circuit ID:", circuitId);
 
 // Upload the packaged circuit.
 const formData = new FormData();
-formData.append("files", fs.readFileSync("compress.tar.gz"), {
-  filename: "compress.tar.gz",
-});
+formData.append(
+  "files",
+  tar.c({ gzip: true, sync: true }, ["circuit/"]).read(),
+  {
+    filename: "compress.tar.gz",
+  },
+);
 await axios.post(`/circuit/${circuitId}/uploadfiles`, formData);
 
 // Initiate compilation and poll for completion.
