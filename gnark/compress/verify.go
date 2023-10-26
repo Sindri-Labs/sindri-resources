@@ -11,7 +11,7 @@ import (
 	"github.com/consensys/gnark/backend/groth16"
 	"github.com/consensys/gnark/backend/witness"
 	"github.com/consensys/gnark/frontend"
-	"github.com/sindri-labs/forge-sample-data/gnark/compress"
+	"github.com/sindri-labs/forge-sample-data/gnark/compress/circuit"
 )
 
 type ProofDetailResponse struct {
