@@ -4,7 +4,7 @@ This circuit is built with Gnark frontend v0.9.0 and accepts a string as input
 
 ```json
 {
-  "original": "aaabbcccccc"
+  "original": "rrrrrkkkkkkMMMsssssssssssssssJJJJJJJJJJJJJJJJ"
 }
 ```
 
