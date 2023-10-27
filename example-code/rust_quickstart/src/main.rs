@@ -91,7 +91,7 @@ async fn main() {
         .headers(headers_json())
         .form(&[
             ("circuit_name", "multiplier_example"),
-            ("circuit_type", "Circom C Groth16 bn254"),
+            ("circuit_type", "Circom"),
         ])
         .send()
         .await

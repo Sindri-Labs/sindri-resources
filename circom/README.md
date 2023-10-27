@@ -28,8 +28,29 @@ See Sindri's GitBook for more complete instructions.
 my_repo/
     circuit.circom
     supplementary.circom
+    Sindri.json
 ```
 Note that you may have nested directories within the parent, as long as `circuit.circom` sits at the first level.  A common convention when developing locally is to store all `circomlib/` templates in one place and import them for any specific circuit via a relative path resembling `../../circomlib/etc.circom`.  When preparing your circuit for upload, you may find it useful to include a `circomlib` folder with the necessary files (the sudoku circuit code gives an example of this.)
+
+### Supporting Files
+In the `Sindri.json` file, you will indicate what language the witness compiler should be built in, as well as the proving scheme and curve.  See the [Circom docs](https://docs.circom.io/getting-started/computing-the-witness/#the-witness-file) for more information.
+```
+{
+    "WITNESS_COMPILER": "c++",
+    "CURVE_NAME": "bn254",
+    "PROVING_SCHEME": "Groth16"
+}
+```
+
+### Current Support
+
+| Type        | Field       | Status       |
+| ----------- | ----------- | --- |
+| `WITNESS_COMPILER`      | c++       |  ✅   | 
+| `WITNESS_COMPILER`      | wasm       |  ✅   | 
+| `PROVING_SCHEME`      | Groth16       |  ✅   | 
+| `PROVING_SCHEME`      | Plonk       |  Coming Soon   | 
+| `CURVE_NAME`      | bn254       |  ✅   | 
 
 ## How to compress properly
 To prepare your repo, `my_repo`, for Forge upload, run the following command ***from the parent directory*** of `my_repo`:

@@ -30,14 +30,7 @@ _________________________________________________________________
 
 ## Instructions
 
-Clone this repo and create a file called `forge_credentials.json` in the top level that contains your username and password:
-```
-{
-    "user": "your_username",
-    "pass": "your_password"
-}
-```
-Both the python scripts for uploading the circuit and querying the model will read from this file to communicate with Forge via the API.
+Clone this repo and set a `FORGE_API_KEY` environment variable with your API key, e.g. via `export FORGE_API_KEY=your_key_here`
 
 ### 1. Upload
 
