@@ -60,7 +60,8 @@ while (true) {
   }
   await new Promise((resolve) => setTimeout(resolve, 1000));
 }
-console.log("Circuit Detail:\n", circuitDetailResponse.data);
+console.log("Circuit Detail:");
+console.log(circuitDetailResponse.data);
 
 // Generate a new proof and poll for completion.
 const proofInput = JSON.stringify({
@@ -89,8 +90,10 @@ while (true) {
   }
   await new Promise((resolve) => setTimeout(resolve, 1000));
 }
-console.log("Proof Output:\n", proofDetailResponse.data.proof);
-console.log("Public Output:\n", proofDetailResponse.data.public);
+console.log("Proof Output:");
+console.log(proofDetailResponse.data.proof);
+console.log("Public Output:");
+console.log(proofDetailResponse.data.public);
 
 // Save the proof detail response for external verification.
 fs.writeFileSync(
