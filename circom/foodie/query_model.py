@@ -8,29 +8,17 @@ parser.add_argument('--circuit', type=str, required=True)
 parser.add_argument('--ingredients', type=str, required=True)
 args = parser.parse_args()
 
-#reads credentials from local json
-with open("forge_credentials.json","r") as f:
-    user_creds = json.load(f)
-    USERNAME = user_creds["user"]
-    PASSWORD = user_creds["pass"]
+#reads credentials from environment variable
+API_KEY = os.getenv("FORGE_API_KEY", "")
+
+API_VERSION = "v1"
+API_URL = f"https://forge.sindri.app/api/{API_VERSION}/"
 
 #initialize your header arguments
-HEADERS = {'Accept': 'application/json'} 
-PROTO = "https"
-HOST = "forge.sindri.app/"
-URL = f"{PROTO}://{HOST}"
-
-#retrieve access key
-print('Signing in.')
-auth_response = requests.post(
-    URL + "api/token/pair", 
-    headers=HEADERS, 
-    json={"username": USERNAME, "password": PASSWORD}
-).json()
-ACCESS_KEY = auth_response["access"]
-
-#add your token to the header of any future calls
-HEADERS["Authorization"]= f"Bearer {ACCESS_KEY}"
+HEADERS = {
+    'Accept': 'application/json',
+    "Authorization": f"Bearer {API_KEY}",
+} 
 
 
 print("Transforming ingredient list to model input.")
@@ -59,14 +47,12 @@ print("Initiating proof.")
 #1. Initiate Proof
 prove_header = HEADERS.copy()
 prove_header["Content-Type"] = "application/x-www-form-urlencoded"
-proof_type = json.dumps({"name":"CPU Default"})
  
 proof_response = requests.post(
-    URL + f"api/v0/circuit/{args.circuit}/prove",
+    API_URL + f"circuit/{args.circuit}/prove",
     headers=prove_header,
     data={
         "proof_input": json.dumps(query),
-        "prover_implementation": proof_type,
     },
 ).json()
 PROOF_ID = proof_response["proof_id"]
@@ -76,7 +62,7 @@ PROOF_ID = proof_response["proof_id"]
 TIMEOUT = 1200 #timeout after 20 minutes
 for i in range(TIMEOUT):
     poll_response = requests.get(
-        URL + f"api/v0/proof/{PROOF_ID}/detail",
+        API_URL + f"proof/{PROOF_ID}/detail",
         headers=HEADERS,
         params={
             "include_circuit_input": False,
@@ -95,7 +81,7 @@ if i==TIMEOUT-1:
 
 #3. Retrieve an output from the proof
 detail_response = requests.get(
-    URL + f"api/v0/proof/{PROOF_ID}/detail",
+    API_URL + f"proof/{PROOF_ID}/detail",
     headers=HEADERS,
     params={
         "include_circuit_input": False,
@@ -113,14 +99,3 @@ print("   Proof Arguments:")
 print("   Proof ID: "+PROOF_ID)
 print(json.dumps(detail_response["proof"],indent=4))
 print()
-
-print("Verifying proof.")
-verify_request = requests.get(
-    URL+f"api/v0/proof/{PROOF_ID}/verify",
-    headers=HEADERS
-    ).json()
-validity = verify_request["success"]
-if validity:
-    print("   Proof was valid")
-else:
-    print("   Proof was not valid")

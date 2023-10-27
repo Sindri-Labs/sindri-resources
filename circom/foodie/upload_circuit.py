@@ -7,36 +7,24 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--name', type=str, required=True)
 args = parser.parse_args()
 
-#reads credentials from local json
-with open("forge_credentials.json","r") as f:
-    user_creds = json.load(f)
-    USERNAME = user_creds["user"]
-    PASSWORD = user_creds["pass"]
+#reads credentials from environment variable
+API_KEY = os.getenv("FORGE_API_KEY", "")
+
+API_VERSION = "v1"
+API_URL = f"https://forge.sindri.app/api/{API_VERSION}/"
 
 #initialize your header arguments
-HEADERS = {'Accept': 'application/json'} 
-PROTO = "https"
-HOST = "forge.sindri.app/"
-URL = f"{PROTO}://{HOST}"
-
-#retrieve access key
-print('Signing in.')
-auth_response = requests.post(
-    URL + "api/token/pair", 
-    headers=HEADERS, 
-    json={"username": USERNAME, "password": PASSWORD}
-).json()
-ACCESS_KEY = auth_response["access"]
-
-#add your token to the header of any future calls
-HEADERS["Authorization"]= f"Bearer {ACCESS_KEY}"
+HEADERS = {
+    'Accept': 'application/json',
+    "Authorization": f"Bearer {API_KEY}",
+} 
 
 print('Creating circuit.')
 circuit_name = sys.argv[1]
 """  UPLOAD  """
 # 1. Create a circuit entity within Forge
 creation_response = requests.post(
-    URL+"api/v0/circuit/create",
+    API_URL+"circuit/create",
     headers=HEADERS,
     data={
         "circuit_name": args.name, 
@@ -53,21 +41,21 @@ files = {"files": open("../foodie.tar.gz", "rb")}
 upload_header = HEADERS.copy()
 upload_header["Accept"] = "multipart/form-data" #replace json header 
 upload_response = requests.post(
-    URL+f"api/v0/circuit/{CIRCUIT_ID}/uploadfiles", 
+    API_URL+f"circuit/{CIRCUIT_ID}/uploadfiles", 
     headers=upload_header, 
     files=files)
 
 print('Compiling.')
 #3. Compile
 compile_response = requests.post(
-    URL+f"api/v0/circuit/{CIRCUIT_ID}/compile",
+    API_URL+f"circuit/{CIRCUIT_ID}/compile",
     headers=HEADERS)
 
 #4. Poll
 TIMEOUT = 600 #timeout after 10 minutes
 for i in range(TIMEOUT):
     poll_response = requests.get(
-        URL + f"api/v0/circuit/{CIRCUIT_ID}/detail",
+        API_URL + f"circuit/{CIRCUIT_ID}/detail",
         headers=HEADERS,
         params={"include_verification_key": False}
     ).json()
