@@ -40,6 +40,7 @@ creation_response = requests.post(
 )
 assert creation_response.status_code == 201
 circuit_id = creation_response.json().get("circuit_id")
+print(f"Circuit ID: {circuit_id}")
 
 # Create a tar archive and upload via byte stream
 fh = io.BytesIO()
@@ -70,7 +71,7 @@ for i in range(TIMEOUT):
     response = requests.get(
         API_URL + f"circuit/{circuit_id}/detail" ,
         headers=headers_json,
-        params={"include_verification_key": True},
+        params={"include_verification_key": False},
     )
     assert (
         response.status_code == 200
@@ -87,7 +88,7 @@ else:
 if status == "Failed":
     sys.exit("Circuit compilation failed")
 
-pprint.pprint(response.json())
+pprint.pprint(response.json(), depth=2, indent=2, width=40)
 
 
 # Initiate proof generation
@@ -102,6 +103,8 @@ proof_response = requests.post(
 )
 assert proof_response.status_code == 201
 proof_id = proof_response.json()["proof_id"]
+print(f"Proof ID: {proof_id}")
+
 # Poll proof status
 TIMEOUT = 1200 #timeout after 20 minutes
 action_complete = False
@@ -131,19 +134,14 @@ elif status == "Failed":
 else:
     proof_detail = poll_response.json()
 
-
 # Save Artifacts for Verification
 with open("verification_key.json","w") as outfile:
-    json.dump(proof_detail["verification_key"],outfile)
+    json.dump(proof_detail["verification_key"], outfile, indent=4)
 with open("public.json","w") as outfile:
-    json.dump(proof_detail["public"],outfile)
+    json.dump(proof_detail["public"], outfile, indent=4)
 with open("proof.json","w") as outfile:
-    json.dump(proof_detail["proof"],outfile)
+    json.dump(proof_detail["proof"], outfile, indent=4)
 
 # Retrieve output from the proof
-# public_output = proof_detail["public"]
-# proof_output = proof_detail["proof"]
-
-# print(proof_output.keys())
-# print(proof_output['pi_a'])
-# pprint.pprint(public_output)
+pprint.pprint(proof_detail, depth=1, indent=2, width=40)
+print(proof_detail["public"])
