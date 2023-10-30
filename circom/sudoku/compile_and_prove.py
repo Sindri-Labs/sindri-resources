@@ -9,7 +9,7 @@ import pprint
 import requests  # pip install requests
 
 # You should pass your key in as an environment variable
-API_KEY = os.getenv("FORGE_API_KEY", "")
+API_KEY = os.getenv("SINDRI_API_KEY", "")
 
 # Use V1 of Sindri API
 API_VERSION = "v1"
