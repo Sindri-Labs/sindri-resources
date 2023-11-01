@@ -1,6 +1,7 @@
 import subprocess
 
 snarkjs_verifier_args = [
+    "npx",
     "snarkjs",
     "groth16",
     "verify",
