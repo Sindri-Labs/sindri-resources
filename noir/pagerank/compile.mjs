@@ -19,7 +19,7 @@ axios.defaults.validateStatus = (status) => status >= 200 && status < 300;
 const createResponse = await axios.post(
   "/circuit/create",
   {
-    circuit_name: "compress",
+    circuit_name: "pagerank",
     circuit_type: "Noir",
   },
   { validateStatus: (status) => status === 201 },
