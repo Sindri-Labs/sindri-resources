@@ -1,2 +1,6 @@
-circuit/target
-circuit/proofs
+circuits/target
+circuits/proofs
+node_modules
+test/
+contracts/
+hardhat.config.js
