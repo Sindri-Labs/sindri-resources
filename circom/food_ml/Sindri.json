@@ -1,6 +1,6 @@
 {
     "circuit_type": "circom",
     "curve": "bn254",
-    "proving_scheme": "Groth16",
+    "proving_scheme": "groth16",
     "witness_compiler": "c++"
 }
