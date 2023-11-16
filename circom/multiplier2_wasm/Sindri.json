@@ -1,0 +1,6 @@
+{
+    "circuit_type": "circom",
+    "curve": "bn254",
+    "proving_scheme": "Groth16",
+    "witness_compiler": "wasm"
+}

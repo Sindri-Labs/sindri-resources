@@ -1,0 +1,7 @@
+{
+    "ETH_CONFIG_PARAMS": "{\"degree\":19,\"num_rlc_columns\":1,\"num_range_advice\":[22,8,0],\"num_lookup_advice\":[1,1,0],\"num_fixed\":1,\"unusable_rows\":63,\"keccak_rows_per_round\":23,\"lookup_bits\":8}",
+    "NETWORK": "MAINNET",
+    "MAX_DEPTH": "7",
+    "LOOKUP_BITS": "8",
+    "KECCAK_ROWS": "23"
+}

@@ -1,0 +1,8 @@
+{
+    "circuit_type": "halo2",
+    "class_name": "quadratic_circuit::circuit_def::CircuitInput",
+    "degree": 10,
+    "halo2_version": "axiom-v0.3.0",
+    "package_name": "quadratic-circuit",
+    "thread_builder": "GateThreadBuilder"
+}

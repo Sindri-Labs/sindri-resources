@@ -1,0 +1,1 @@
+# Quadratic with precomputed keys

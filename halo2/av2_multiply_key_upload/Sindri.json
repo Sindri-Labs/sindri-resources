@@ -1,0 +1,7 @@
+{
+    "circuit_type": "halo2",
+    "class_name": "mult_example::mult_circ::MyCircuit",
+    "degree": 15,
+    "halo2_version": "axiom-v0.2.2",
+    "package_name": "mult-example"
+}

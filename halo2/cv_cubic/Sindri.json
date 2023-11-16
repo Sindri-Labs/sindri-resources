@@ -1,0 +1,7 @@
+{
+    "circuit_type": "halo2",
+    "class_name": "cubic::circuit::cubic_circuit",
+    "degree": 8,
+    "halo2_version": "chiquito",
+    "package_name": "cubic"
+}
