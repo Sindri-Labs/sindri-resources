@@ -48,7 +48,7 @@ fn normalize_transition_matrix(transition_matrix: [u32; NUM_ENTRIES]) -> [u32; N
     normalized
 }
 
-
+// Matrix-vector multiplication
 fn iterate(mat: [u32; NUM_ENTRIES], vec: [u32; NUM_NODES]) -> [u32; NUM_NODES] {
 
     let mut next_probabilities: [u32; NUM_NODES] = [0; NUM_NODES];
@@ -100,6 +100,7 @@ fn main(edgelist: [Field; MAX_NUM_EDGES]) -> pub [u32; NUM_NODES] {
         probabilities = iterate(normalized_matrix,probabilities);
     }
 
+    // returns indices in ascending sort-order
     arg_sort(probabilities)
 
 }
@@ -120,7 +121,6 @@ fn test_end_probs() {
     for i in 1..NUM_NODES {
         assert(probabilities[i] == end_scores[i]);
     }
-
 }
 
 
@@ -146,6 +146,5 @@ fn test_bubble_sort() {
     for i in 1..NUM_NODES {
         assert(result[i] == argsort[i]);
     }
-
 }
 
