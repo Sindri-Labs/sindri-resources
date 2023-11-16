@@ -13,3 +13,7 @@
 /poetry.lock
 /pyproject.toml
 /requirements.txt
+__pycache__
+
+# Ignore Other
+.vscode
