@@ -62,6 +62,7 @@ while (true) {
 }
 console.log("Circuit Detail:");
 console.log(circuitDetailResponse.data);
+const package_name = circuitDetailResponse.data.nargo_package_name;
 
 
 // Generate a new proof and poll for completion.
@@ -93,3 +94,21 @@ console.log("Proof Output:");
 console.log(proofDetailResponse.data.proof);
 console.log("Public Output:");
 console.log(proofDetailResponse.data.public);
+
+// Create circuits/proofs if it does not exist
+const proof_dir = "./circuits/proofs";
+if (!fs.existsSync(proof_dir)){
+  fs.mkdirSync(proof_dir);
+}
+
+// Save the proof in appropriate Nargo-recognizable file
+fs.writeFileSync(
+  "circuits/proofs/"+package_name+".proof",
+  String(proofDetailResponse.data.proof["proof"]),
+);
+
+// Save the public data in appropriate Nargo-recognizable file
+fs.writeFileSync(
+  "circuits/Verifier.toml",
+  String(proofDetailResponse.data.public["Verifier.toml"]),
+);
