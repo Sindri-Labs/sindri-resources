@@ -14,7 +14,6 @@ global NUM_ENTRIES: u32 = 400; // NUM_NODES**2
 global MAX_NUM_EDGES: u32 = 30;
 
 
-
 // Initial transformation from a short list of edges to a sparsely
 // populated transition matrix.  This is unconstrained since
 // we access variable elements of the transition matrix.
@@ -34,16 +33,16 @@ fn normalize_transition_matrix(transition_matrix: [u32; NUM_ENTRIES]) -> [u32; N
     for row in 0..NUM_NODES {
         let mut out_degree = 0;
         for column in 0..NUM_NODES { // iterate once to get total out degree of a node
-            out_degree = out_degree + transition_matrix[row*NUM_NODES+column];
+            out_degree = out_degree + transition_matrix[column*NUM_NODES+row];
         }
         for column in 0..NUM_NODES { // normalize that row of the transition matrix
             if (out_degree != 0) {
-                normalized[row*NUM_NODES+column] = transition_matrix[row*NUM_NODES+column]* SCALE / out_degree;
+                normalized[column*NUM_NODES+row] = transition_matrix[column*NUM_NODES+row]* SCALE / out_degree;
             } else {
-                normalized[row*NUM_NODES+column] = SCALE/NUM_NODES;
+                normalized[column*NUM_NODES+row] = SCALE/NUM_NODES;
             }
-            normalized[row*NUM_NODES+column] = normalized[row*NUM_NODES+column] * DAMPING / DAMPING_SCALE;
-            normalized[row*NUM_NODES+column] = normalized[row*NUM_NODES+column] + SCALE * (DAMPING_SCALE - DAMPING) / DAMPING_SCALE / NUM_NODES;
+            normalized[column*NUM_NODES+row] = normalized[column*NUM_NODES+row] * DAMPING / DAMPING_SCALE;
+            normalized[column*NUM_NODES+row] = normalized[column*NUM_NODES+row] + SCALE * (DAMPING_SCALE - DAMPING) / DAMPING_SCALE / NUM_NODES;
         }
     }
     normalized
@@ -58,7 +57,7 @@ fn iterate(mat: [u32; NUM_ENTRIES], vec: [u32; NUM_NODES]) -> [u32; NUM_NODES] {
         for column in 0..NUM_NODES {
             dot_product = dot_product+mat[row*NUM_NODES+column]*vec[column];
         }
-        next_probabilities[row] = dot_product;
+        next_probabilities[row] = dot_product/SCALE;
     }
     
     next_probabilities
@@ -95,23 +94,33 @@ fn main(edgelist: [Field; MAX_NUM_EDGES]) -> pub [u32; NUM_NODES] {
 
     let mut transition_matrix: [u32; NUM_ENTRIES] = edgelist_to_matrix(edgelist);
     let mut normalized_matrix: [u32; NUM_ENTRIES] = normalize_transition_matrix(transition_matrix);
-
-
     let unit = SCALE/NUM_NODES;
     let mut probabilities: [u32; NUM_NODES] = [unit; NUM_NODES];
     for _ in 0..ITERATIONS {
         probabilities = iterate(normalized_matrix,probabilities);
     }
+
     arg_sort(probabilities)
 
 }
 
 #[test]
-fn test_end_to_end() {
-    let edgelist = [1, 17, 6, 5, 40, 23, 30, 12, 24, 28];
+fn test_end_probs() {
+    let edgelist = [222, 331, 152, 294, 43, 270, 313, 278, 210, 383, 74, 22, 250, 317, 66, 169, 214, 385, 49, 337, 134, 5, 91, 1, 41, 299, 394, 160, 182, 299];
+    let end_scores = [ 933,  855, 1622, 1290,  764,  422,  716,  969, 1511,  855,  977,  855,  683, 1021, 1839, 1409,  933,  422,  422, 1401];
 
-    let result = main(edgelist);
-    println(result);
+    let mut transition_matrix: [u32; NUM_ENTRIES] = edgelist_to_matrix(edgelist);
+    let mut normalized_matrix: [u32; NUM_ENTRIES] = normalize_transition_matrix(transition_matrix);
+    let unit = SCALE/NUM_NODES;
+    let mut probabilities: [u32; NUM_NODES] = [unit; NUM_NODES];
+    for _ in 0..ITERATIONS {
+        probabilities = iterate(normalized_matrix,probabilities);
+    }
+
+    for i in 1..NUM_NODES {
+        assert(probabilities[i] == end_scores[i]);
+    }
+
 }
 
 
