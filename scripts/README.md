@@ -1,16 +1,16 @@
 # Setup
 You will need a Forge API key in order to run the scripts.
-The Sindri Docs explain [how to obtain your API key](https://sindri-labs.gitbook.io/forge/ZpTt7gQVuHU2jgnnKBQl/forge/using-forge/access-management#api-authentication).
+The Sindri Docs explain [how to obtain your API key](https://sindri-labs.github.io/docs/forge/using-forge/access-management/#api-authentication).
 
-You can then either set a `FORGE_API_KEY` environment variable with your API key, or modify the value of the `API_KEY` global variable in the scripts before running them.
+You can then either set a `SINDRI_API_KEY` environment variable with your API key, or modify the value of the `API_KEY` global variable in the scripts before running them.
 
 Before running the scripts, make sure you prepare the sample data: `python3 compress_sample_circuits.py`
 
 # EZ Scripts
 The `ez_*.py` scripts use the **Python Sindri SDK** (located at [`sindri_sdk.py`](./sindri_sdk.py)).
-1. Set the `FORGE_API_KEY` environment variable or paste your Sindri API Key into the `../API_KEY` file.
+1. Set the `SINDRI_API_KEY` environment variable or paste your Sindri API Key into the `../API_KEY` file.
 2. Prepare the sample circuits if you have not already: `python3 compress_sample_circuits.py`
-3. Run an EZ script to create a circuit and prove it! `FORGE_API_KEY=<your-api-key> python3 ez_circom.py`
+3. Run an EZ script to create a circuit and prove it! `SINDRI_API_KEY=<your-api-key> python3 ez_circom.py`
 
 
 # Quick-Start Scripts
@@ -23,18 +23,18 @@ Once a proof has finished executing, the code will then print the public outputs
 
 * Make sure you have Node.js installed.
 * Install the necessary dependencies by running `npm install axios form-data`.
-* Inside this directory (`scripts`), run the script using `FORGE_API_KEY=<your-api-key> node quickstart.js`.
+* Inside this directory (`scripts`), run the script using `SINDRI_API_KEY=<your-api-key> node quickstart.js`.
 
 ### Python ([`quickstart.py`](./quickstart.py))
 
 * Install Python 3.
 * Install the python [requests library](https://pypi.org/project/requests/).
-* Inside of this directory (`scripts`), invoke the python script in the command line via `FORGE_API_KEY=<your-api-key> python3 quickstart.py`.
+* Inside of this directory (`scripts`), invoke the python script in the command line via `SINDRI_API_KEY=<your-api-key> python3 quickstart.py`.
 
 ### Rust ([`rust_quickstart/src/main.rs`](./rust_quickstart/src/main.rs))
 
 * Install [Rust](https://doc.rust-lang.org/cargo/getting-started/installation.html)
-* Inside the `rust_quickstart` directory, build and run the main source file in the command line via `FORGE_API_KEY=<your-api-key> cargo run`.
+* Inside the `rust_quickstart` directory, build and run the main source file in the command line via `SINDRI_API_KEY=<your-api-key> cargo run`.
 
 ### Expected Outcome
 

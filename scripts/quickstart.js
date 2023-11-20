@@ -7,7 +7,7 @@ const axios = require("axios");
 const FormData = require("form-data");
 
 // NOTE: Provide your API key here.
-const API_KEY = process.env.FORGE_API_KEY || "";
+const API_KEY = process.env.SINDRI_API_KEY || "";
 
 const API_VERSION = "v1";
 const API_URL = `https://forge.sindri.app/api/${API_VERSION}`;

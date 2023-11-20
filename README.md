@@ -5,7 +5,7 @@ This repo contains sample circuit data and utility scripts for interacting with 
 # Sample Circuits
 Each sample circuit will include:
 - A `README.md` 
-- A `Sindri.json` file (required)
+- A `sindri.json` file (required)
 - An example input file (`input.json`) for a proving the circuit
 - Files specific to the circuit
 
@@ -36,13 +36,11 @@ The `compress_sampledata.py` script is a utility for locally validating sample c
 `./compress_sampledata.py --dry-run` option
 
 The **Dry Run** will perform a validity check on all of the supplied circuits directories. 
-- If a valid circuit directory does not have a `README.md` or a valid `Sindri.json` file, it will exit with an error.
+- If a valid circuit directory does not have a `README.md` or a valid `sindri.json` file, it will exit with an error.
 
 #### Usage
 ```
-ubuntu:~/forge-sample-data$ pwd
-/home/ubuntu/forge-sample-data
-ubuntu:~/forge-sample-data$ python3 compress_sampledata.py --help
+$ python3 compress_sampledata.py --help
 usage: compress_sampledata.py [-h] [-c] [-r] [-d] [-q]
 
 options:

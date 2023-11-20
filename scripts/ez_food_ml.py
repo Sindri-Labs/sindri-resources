@@ -74,4 +74,4 @@ if __name__ == "__main__":
     print(f"\nExpected region: {expected_result}")
     print(f"\nPredicted region: {region}")
 
-    print("Done!\nUsing Sindri Labs' Forge API is EZ!\n")
+    print("Done!\nUsing Sindri Labs' API is EZ!\n")

@@ -58,7 +58,7 @@ class SindriSdk:
 
     NOTE: By default, the SindriSdk tries to obtain the API Key in the following order.
     If an option results in an empty string, try the next best option.
-    1. From the `FORGE_API_KEY` environment variable
+    1. From the `SINDRI_API_KEY` environment variable
     1. From the `../API_KEY` file
     """
 
@@ -67,7 +67,7 @@ class SindriSdk:
 
         pass
 
-    DEFAULT_FORGE_API_URL = "https://forge.sindri.app/api/"
+    DEFAULT_SINDRI_API_URL = "https://forge.sindri.app/api/"
     API_VERSION = "v1"
 
     def __init__(
@@ -381,7 +381,7 @@ class SindriSdk:
         NOTE: `v1/` is appended to the Sindri API Url (hard-coded).
         - Example: https://forge.sindri.app/api/ becomes https://forge.sindri.app/api/v1/
         """
-        api_url = os.environ.get("FORGE_API_URL", cls.DEFAULT_FORGE_API_URL)
+        api_url = os.environ.get("FORGE_API_URL", cls.DEFAULT_SINDRI_API_URL)
         api_url = os.path.join(api_url, cls.API_VERSION, "")
         return api_url
 
@@ -447,14 +447,14 @@ class SindriSdk:
 
         Try to obtain the API Key in the following order. If an option results in an
         empty string, try the next best option.
-        1. From the `FORGE_API_KEY` environment variable
+        1. From the `SINDRI_API_KEY` environment variable
         1. From the `../API_KEY` file
 
         Raise SindriApiError if the result is an empty string.
         """
         api_key = ""
         if api_key == "":
-            api_key = os.environ.get("FORGE_API_KEY", "")
+            api_key = os.environ.get("SINDRI_API_KEY", "")
         if api_key == "":
             this_directory_path = Path(__file__).parent.resolve()  # absolute path to this directory
             API_KEY_FILE_PATH = os.path.join(this_directory_path, "..", "API_KEY")
