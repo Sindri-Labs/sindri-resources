@@ -13,38 +13,21 @@ API_URL = f"https://forge.sindri.app/api/{API_VERSION}/"
 
 api_key_querystring = f"?api_key={API_KEY}"
 headers_json = {"Accept": "application/json"}
-headers_multipart = {"Accept": "multipart/form-data"}
-headers_urlencode = {
-    "Accept": "application/json",
-    "Content-Type": "application/x-www-form-urlencoded",
-}
+
+# Load the circuit .tar.gz file
+files = {"files": open(os.path.join("..", "circom", "multiplier2", "multiplier2.tar.gz"), "rb")}
 
 # Create new circuit
 print("1. Creating circuit...")
 response = requests.post(
-    API_URL + "circuit/create" + api_key_querystring,
+    API_URL + "circuit" + api_key_querystring,
     headers=headers_json,
-    data={"circuit_name": "multiplier_example", "circuit_type": "Circom"},
+    data={"circuit_name": "multiplier2"},
+    files=files,
 )
 assert response.status_code == 201, f"Expected status code 201, received {response.status_code}."
 circuit_id = response.json().get("circuit_id")  # Obtain circuit_id
 
-# Load the circuit .tar.gz file
-files = {"files": open(os.path.join("..", "circom", "multiplier2.tar.gz"), "rb")}
-
-# Upload the circuit file
-response = requests.post(
-    API_URL + f"circuit/{circuit_id}/uploadfiles" + api_key_querystring,
-    headers=headers_multipart,
-    files=files,
-)
-assert response.status_code == 201, f"Expected status code 201, received {response.status_code}."
-
-# Initiate circuit compilation
-response = requests.post(
-    API_URL + f"circuit/{circuit_id}/compile" + api_key_querystring, headers=headers_json
-)
-assert response.status_code == 201, f"Expected status code 201, received {response.status_code}."
 
 # Poll circuit detail unitl it has a status of Ready or Failed
 TIMEOUT = 600  # timeout after 10 minutes
@@ -76,10 +59,8 @@ print("2. Proving circuit...")
 proof_input = json.dumps({"a": "7", "b": "42"})
 response = requests.post(
     API_URL + f"circuit/{circuit_id}/prove" + api_key_querystring,
-    headers=headers_urlencode,
-    data={
-        "proof_input": proof_input,
-    },
+    headers=headers_json,
+    data={"proof_input": proof_input},
 )
 assert response.status_code == 201, f"Expected status code 201, received {response.status_code}."
 proof_id = response.json()["proof_id"]  # Obtain proof_id

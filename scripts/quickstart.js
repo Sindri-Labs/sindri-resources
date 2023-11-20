@@ -13,9 +13,9 @@ const API_VERSION = "v1";
 const API_URL = `https://forge.sindri.app/api/${API_VERSION}`;
 
 const apiKeyQueryString = `?api_key=${API_KEY}`;
-const headersUrlEncode = {
+const headersJson = {
   Accept: "application/json",
-  "Content-Type": "application/x-www-form-urlencoded",
+  'Content-Type': 'application/json',
 };
 
 // Utility to poll a detail API endpoint until the status is `Ready` or `Failed`.
@@ -23,7 +23,7 @@ const headersUrlEncode = {
 async function pollForStatus(endpoint, timeout = 20 * 60) {
   for (let i = 0; i < timeout; i++) {
     const response = await axios.get(API_URL + endpoint + apiKeyQueryString, {
-      headers: headersUrlEncode,
+      headers: headersJson,
       validateStatus: (status) => status === 200,
     });
 
@@ -41,43 +41,45 @@ async function pollForStatus(endpoint, timeout = 20 * 60) {
 
 async function main() {
   try {
-    // Create a new circuit.
-    console.log("1. Creating circuit...");
-    const createResponse = await axios.post(
-      API_URL + "/circuit/create" + apiKeyQueryString,
-      {
-        circuit_name: "multiplier_example",
-        circuit_type: "Circom",
-      },
-      { headers: headersUrlEncode, validateStatus: (status) => status === 201 },
-    );
-    const circuitId = createResponse.data.circuit_id;
-
     // Load the circuit's `tar.gz` file.
     const circuitFilePath = path.join(
       __dirname,
       "..",
       "circom",
+      "multiplier2",
       "multiplier2.tar.gz",
     );
     const circuitFileBuffer = fs.readFileSync(circuitFilePath);
-
-    // Upload the circuit file.
     const uploadFormData = new FormData();
     uploadFormData.append("files", circuitFileBuffer, {
-      filename: "multiplier2.tar.gz",
+      filename: "upload.tar.gz",
     });
-    await axios.post(
-      API_URL + `/circuit/${circuitId}/uploadfiles` + apiKeyQueryString,
-      uploadFormData,
-      { validateStatus: (status) => status === 201 },
-    );
 
-    // Initiate circuit compilation.
-    await axios.post(
-      API_URL + `/circuit/${circuitId}/compile` + apiKeyQueryString,
-      { validateStatus: (status) => status === 201 },
+
+    // Create a new circuit.
+    console.log("1. Creating circuit...");
+    const createResponse = await axios.post(
+      API_URL + "/circuit" + apiKeyQueryString,
+      {
+        circuit_name: "multiplier2",
+      },
+      uploadFormData,
+      {
+        validateStatus: (status) => status === 201 },
     );
+    const circuitId = createResponse.data.circuit_id;
+
+    // await axios.post(
+    //   API_URL + `/circuit/${circuitId}/uploadfiles` + apiKeyQueryString,
+    //   uploadFormData,
+    //   { validateStatus: (status) => status === 201 },
+    // );
+
+    // // Initiate circuit compilation.
+    // await axios.post(
+    //   API_URL + `/circuit/${circuitId}/compile` + apiKeyQueryString,
+    //   { validateStatus: (status) => status === 201 },
+    // );
 
     // Poll the circuit detail endpoint until the compilation status is `Ready` or `Failed`.
     const {
@@ -96,7 +98,7 @@ async function main() {
     const proveResponse = await axios.post(
       API_URL + `/circuit/${circuitId}/prove` + apiKeyQueryString,
       { proof_input: proofInput },
-      { headers: headersUrlEncode, validateStatus: (status) => status === 201 },
+      { headers: headersJson, validateStatus: (status) => status === 201 },
     );
     const proofId = proveResponse.data.proof_id;
 
