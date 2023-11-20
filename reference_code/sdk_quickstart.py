@@ -1,11 +1,10 @@
 #!/usr/bin/python3
+from sdk import SindriSdk
 
-from sindri_sdk import SindriSdk  # type: ignore
-
-circuit_name = "Noir NEQ Circuit"
-circuit_upload_path = "../noir/neq_v0_10_5"
+circuit_name = "Circom multiplier2"
+circuit_upload_path = "../circuit_database/circom/multiplier2"
 proof_input = ""
-proof_input_file_path = "../noir/neq_v0_10_5/Prover.toml"
+proof_input_file_path = "../circuit_database/circom/multiplier2/input.json"
 with open(proof_input_file_path, "r") as f:
     proof_input = f.read()
 

@@ -1,7 +1,0 @@
-[package]
-authors = [""]
-name = "decision_tree"
-type = "bin"
-compiler_version = "0.7.1"
-
-[dependencies]
