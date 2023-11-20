@@ -2,7 +2,7 @@
 from sindri_sdk import SindriSdk  # type: ignore
 
 circuit_name = "Axiom halo2 v0.3.0 Quadratic"
-circuit_upload_path = "../halo2/av3_quadratic/av3_quadratic.tar.gz"
+circuit_upload_path = "../halo2/av3_quadratic"
 proof_input = ""
 proof_input_file_path = "../halo2/av3_quadratic/input.json"
 with open(proof_input_file_path, "r") as f:

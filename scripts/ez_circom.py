@@ -2,7 +2,7 @@
 from sindri_sdk import SindriSdk  # type: ignore
 
 circuit_name = "Circom multiplier2"
-circuit_upload_path = "../circom/multiplier2/multiplier2.tar.gz"
+circuit_upload_path = "../circom/multiplier2"
 proof_input = ""
 proof_input_file_path = "../circom/multiplier2/input.json"
 with open(proof_input_file_path, "r") as f:

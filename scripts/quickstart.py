@@ -1,6 +1,8 @@
+import io
 import json
 import os
 import sys
+import tarfile
 import time
 
 import requests  # pip install requests
@@ -14,8 +16,13 @@ API_URL = f"https://forge.sindri.app/api/{API_VERSION}/"
 api_key_querystring = f"?api_key={API_KEY}"
 headers_json = {"Accept": "application/json"}
 
-# Load the circuit .tar.gz file
-files = {"files": open(os.path.join("..", "circom", "multiplier2", "multiplier2.tar.gz"), "rb")}
+circuit_upload_path = os.path.abspath(os.path.join("..", "circom", "multiplier2"))
+
+# Create a tar archive of the circuit and upload via byte stream
+fh = io.BytesIO()
+with tarfile.open(fileobj=fh, mode='w:gz') as tar:
+    tar.add(circuit_upload_path, arcname="upload.tar.gz")
+files = {"files": fh.getvalue()}
 
 # Create new circuit
 print("1. Creating circuit...")

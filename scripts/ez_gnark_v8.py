@@ -2,7 +2,7 @@
 from sindri_sdk import SindriSdk  # type: ignore
 
 circuit_name = "Gnark v0.8.1 poseidon"
-circuit_upload_path = "../gnark/v8_poseidon/v8_poseidon.tar.gz"
+circuit_upload_path = "../gnark/v8_poseidon"
 proof_input = ""
 proof_input_file_path = "../gnark/v8_poseidon/input.json"
 with open(proof_input_file_path, "r") as f:

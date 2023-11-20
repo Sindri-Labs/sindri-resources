@@ -15,7 +15,7 @@ The `ez_*.py` scripts use the **Python Sindri SDK** (located at [`sindri_sdk.py`
 
 # Quick-Start Scripts
 
-We provide quick-start scripts in JavaScript ([`quickstart.js`](./quickstart.js)) and Python ([`quickstart.py`](./quickstart.py)) as well as compilable quick-start rust code ([`rust_quickstart/src/main.rs`](./rust_quickstart/src/main.rs)).
+We provide quick-start scripts in JavaScript ([`quickstart.js`](./quickstart.js)) and Python ([`quickstart.py`](./quickstart.py)) as well as compilable quick-start rust code ([`quickstart_rust/src/main.rs`](./quickstart_rust/src/main.rs)).
 These scripts will create a Circom circuit object in Forge, upload a gzipped sample circuit file (located at [`../circom/multiplier2/multiplier2.tar.gz`](../circom/multiplier2/multiplier2.tar.gz)), and compile it.
 Once a proof has finished executing, the code will then print the public outputs from the circuit.
 
@@ -31,10 +31,10 @@ Once a proof has finished executing, the code will then print the public outputs
 * Install the python [requests library](https://pypi.org/project/requests/).
 * Inside of this directory (`scripts`), invoke the python script in the command line via `SINDRI_API_KEY=<your-api-key> python3 quickstart.py`.
 
-### Rust ([`rust_quickstart/src/main.rs`](./rust_quickstart/src/main.rs))
+### Rust ([`quickstart_rust/src/main.rs`](./quickstart_rust/src/main.rs))
 
 * Install [Rust](https://doc.rust-lang.org/cargo/getting-started/installation.html)
-* Inside the `rust_quickstart` directory, build and run the main source file in the command line via `SINDRI_API_KEY=<your-api-key> cargo run`.
+* Inside the `quickstart_rust` directory, build and run the main source file in the command line via `SINDRI_API_KEY=<your-api-key> cargo run`.
 
 ### Expected Outcome
 

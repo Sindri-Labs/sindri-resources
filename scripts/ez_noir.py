@@ -3,7 +3,7 @@
 from sindri_sdk import SindriSdk  # type: ignore
 
 circuit_name = "Noir NEQ Circuit"
-circuit_upload_path = "../noir/neq_v0_10_5/neq_v0_10_5.tar.gz"
+circuit_upload_path = "../noir/neq_v0_10_5"
 proof_input = ""
 proof_input_file_path = "../noir/neq_v0_10_5/Prover.toml"
 with open(proof_input_file_path, "r") as f:

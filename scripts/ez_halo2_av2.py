@@ -2,7 +2,7 @@
 from sindri_sdk import SindriSdk  # type: ignore
 
 circuit_name = "Axiom halo2 v0.2.2 Multiply"
-circuit_upload_path = "../halo2/av2_multiply/av2_multiply.tar.gz"
+circuit_upload_path = "../halo2/av2_multiply"
 proof_input = ""
 proof_input_file_path = "../halo2/av2_multiply/input.json"
 with open(proof_input_file_path, "r") as f:

@@ -1,6 +1,8 @@
+import io
 import json
 import os
 import sys
+import tarfile
 import time
 from pathlib import Path
 from pprint import pformat
@@ -196,8 +198,10 @@ class SindriSdk:
         circuit_upload_path: str,
     ) -> str:
         """
-        Create a circuit, upload the circuit code,
-        submit the compile request, poll until the circuit is Ready.
+        Create a circuit and poll until the circuit is Ready.
+
+        `circuit_upload_path` can be a path to a tar.gz circuit file or the circuit directory. 
+        If it is a directory, it will automatically be tarred before sending.
 
         Return:
         - str: circuit_id
@@ -214,7 +218,16 @@ class SindriSdk:
         if not os.path.exists(circuit_upload_path):
             raise ValueError(f"circuit_upload_path does not exist: {circuit_upload_path}")
 
-        files = {"files": open(circuit_upload_path, "rb")}
+        if os.path.isfile(circuit_upload_path):
+            # Assume the path is already a tarfile
+            files = {"files": open(circuit_upload_path, "rb")}
+        elif os.path.isdir(circuit_upload_path):
+            # Create a tar archive and upload via byte stream
+            circuit_upload_path = os.path.abspath(circuit_upload_path)
+            fh = io.BytesIO()
+            with tarfile.open(fileobj=fh, mode='w:gz') as tar:
+                tar.add(circuit_upload_path, arcname="upload.tar.gz")
+            files = {"files": fh.getvalue()}
 
         # 1. Create a circuit, obtain a circuit_id.
         if self.verbose_level > 0:

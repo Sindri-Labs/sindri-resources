@@ -2,7 +2,7 @@
 from sindri_sdk import SindriSdk  # type: ignore
 
 circuit_name = "Chiquito halo2 Cubic"
-circuit_upload_path = "../halo2/cv_cubic/cv_cubic.tar.gz"
+circuit_upload_path = "../halo2/cv_cubic"
 proof_input = ""
 proof_input_file_path = "../halo2/cv_cubic/input.json"
 with open(proof_input_file_path, "r") as f:
