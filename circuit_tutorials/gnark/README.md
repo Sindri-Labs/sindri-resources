@@ -35,13 +35,14 @@ func FromJson(pathInput string) witness.Witness {}
 
 ### Supporting Files
 The file `Sindri.json` specifies what you have named your package and how to reference the circuit.  In this file, you will also indicate the Gnark version your circuit was written with, as well as the proving scheme and curve.
-```
+```json
 {
-    "PACKAGE_NAME": "PackageName",
-    "CIRCUIT_NAME": "MainCircuitDef",
-    "VERSION": "0.8.1",
-    "CURVE_NAME": "bn254",
-    "PROVING_SCHEME": "Groth16"
+    "circuit_struct_name": "MainCircuitDef",
+    "circuit_type": "gnark",
+    "curve": "bn254",
+    "gnark_version": "v0.9.0",
+    "package_name": "PackageName",
+    "proving_scheme": "groth16"
 }
 ```
 

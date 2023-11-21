@@ -41,6 +41,7 @@ CIRCUIT_PARENT_DIRS_TO_BE_COMPRESSED = [
     "circom/",
     "gnark/",
     "halo2/",
+    "noir/"
 ]
 
 

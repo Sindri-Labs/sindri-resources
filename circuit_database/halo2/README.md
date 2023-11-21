@@ -1,12 +1,9 @@
-# Valid Halo2 sample data
+# Halo2 Circuits
 
-Every directory is a valid circuit that contains
+Every directory is a circuit that contains
 - `README.md`
-- `Sindri.json` with `"circuit_type": "halo2"`
-
-There are multiple versions of Halo2. They have shorthand versions in the items names.
-- `av2`: `"halo2_version": "axiom-v0.2.2"`
-- `av3`: `"halo2_version": "axiom-v0.3.0"`
+- `Sindri.json`
+- Circuit code
 
 
 ## Available Circuits

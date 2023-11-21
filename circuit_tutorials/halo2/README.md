@@ -10,13 +10,13 @@ See Sindri's Documentation for more complete instructions.
 
 ## Available Circuits
 
-### v0.2.2
+### axiom-v0.2.2
 
 | Name | Size (DEGREE) | Original Source | Functionality | 
 | ---- | ---- | --------------- | ------------- | 
 |storage_proof| 17 |[axiom-eth repo](https://github.com/axiom-crypto/axiom-eth/tree/v0.2.0) | Produces a ZKP verifying the validity of an Ethereum storage query |
 
-### v0.3.0
+### axiom-v0.3.0
 
 | Name | Size (DEGREE) | Original Source | Functionality | 
 | ---- | ---- | --------------- | ------------- |

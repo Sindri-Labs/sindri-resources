@@ -11,3 +11,12 @@ Coming Soon
 ## Circuit Requirements
 
 Coming Soon
+
+### Supporting Files
+The file `Sindri.json` should be defined as follows:
+```json
+{
+    "circuit_type": "Noir",
+    "proving_scheme": "Barretenberg"
+}
+```
