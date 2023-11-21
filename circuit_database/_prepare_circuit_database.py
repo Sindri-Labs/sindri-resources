@@ -38,9 +38,9 @@ If `--compress` or `--dry-run` are not supplied, the script will prompt for `y/n
 RELPATH_OF_THIS_DIRECTORY = os.path.relpath(pathlib.Path(__file__).parent.resolve())
 
 CIRCUIT_PARENT_DIRS_TO_BE_COMPRESSED = [
-    "../circom/",
-    "../gnark/",
-    "../halo2/",
+    "circom/",
+    "gnark/",
+    "halo2/",
 ]
 
 

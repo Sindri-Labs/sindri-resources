@@ -1,3 +1,5 @@
+# Storage proof
+
 You can run a single storage proof with the command 
 ```
 cargo run --bin single_storage_proof

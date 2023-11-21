@@ -28,11 +28,12 @@ my_repo/
 ```
 
 The file `Sindri.json` specifies what you have named your package and how to reference the circuit
-```
+```json
 {
-    "PACKAGE_NAME": "my-circuit",
-    "CLASS_NAME": "circuit::myCircuit",
-    "DEGREE": "12",
-    "HALO2_BASE_VERSION": "0.2.2"
+    "circuit_type": "halo2",
+    "class_name": "axiom_eth::storage::EthBlockStorageCircuit",
+    "degree": 17,
+    "halo2_version": "axiom-v0.2.2",
+    "package_name": "axiom-eth"
 }
 ```
