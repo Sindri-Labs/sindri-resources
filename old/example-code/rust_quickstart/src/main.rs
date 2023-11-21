@@ -77,7 +77,7 @@ async fn poll_status(
 #[tokio::main]
 async fn main() {
 
-    let api_key: String = env::var("FORGE_API_KEY").unwrap();
+    let api_key: String = env::var("SINDRI_API_KEY").unwrap();
     let api_key_querystring: String = format!("?api_key={api_key}");
     
     let api_version: &str = "v1";

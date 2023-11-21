@@ -30,7 +30,7 @@ _________________________________________________________________
 
 ## Instructions
 
-Clone this repo and set a `FORGE_API_KEY` environment variable with your API key, e.g. via `export FORGE_API_KEY=your_key_here`
+Clone this repo and set a `SINDRI_API_KEY` environment variable with your API key, e.g. via `export SINDRI_API_KEY=your_key_here`
 
 ### 1. Upload
 
