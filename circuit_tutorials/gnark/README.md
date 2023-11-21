@@ -13,15 +13,13 @@ See Sindri's Documentation for more complete instructions.
 ### Gnark v0.8.1 (Gnark-Crypto v0.9.1)
 
 | Name | Size (DEGREE) | Original Source | Functionality | 
-| ---- | ---- | --------------- | ------------- | 
-| cubic | 3 | [Gnark Github Examples](https://github.com/Consensys/gnark/blob/master/examples/cubic/cubic.go) | Checks $x^3 + x + 5 == y$ for public $y$ and private $x$|
-| poseidon | 214 | [Vocdoni's Gnark Primitives](https://github.com/vocdoni/gnark-crypto-primitives/tree/main) | Computes the Poseidon hash of a preimage  |
+| - | - | - | - | 
+| N/A | N/A | N/A | N/A |
 
 ### Gnark v0.9.0 (Gnark-Crypto v0.11.2)
 | Name | Size (DEGREE) | Original Source | Functionality | 
-| ---- | ---- | --------------- | ------------- | 
-| cubic_v9 | 3 | [Gnark Github Examples](https://github.com/Consensys/gnark/blob/master/examples/cubic/cubic.go) | Checks $x^3 + x + 5 == y$ for public $y$ and private $x$|
-| poseidon_v9 | 214 | [Vocdoni's Gnark Primitives](https://github.com/vocdoni/gnark-crypto-primitives/tree/main) | Computes the Poseidon hash of a preimage  |
+| - | - | - | - | 
+| compress | ? | Sindri | ? |
 
 
 ## Circuits Requirements

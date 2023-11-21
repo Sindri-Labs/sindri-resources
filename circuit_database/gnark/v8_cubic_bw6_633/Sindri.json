@@ -1,8 +1,0 @@
-{
-    "circuit_struct_name": "Circuit",
-    "circuit_type": "gnark",
-    "curve": "bw6-633",
-    "gnark_version": "v0.8.1",
-    "package_name": "cubic",
-    "proving_scheme": "groth16"
-}
