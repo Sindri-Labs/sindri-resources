@@ -1,5 +1,0 @@
-{
-    "WITNESS_COMPILER": "c++",
-    "CURVE_NAME": "bn254",
-    "PROVING_SCHEME": "Groth16"
-}

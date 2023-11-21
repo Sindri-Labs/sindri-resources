@@ -1,0 +1,11 @@
+NorthernEuropean
+MiddleEastern
+SouthernEuropean
+WesternEuropean
+EasternEuropean
+LatinAmerican
+SoutheastAsian
+EastAsian
+African
+NorthAmerican
+SouthAsian
