@@ -4,3 +4,5 @@ gnark/*/*.tar.gz
 gnark/*/*.zip
 halo2/*/*.tar.gz
 halo2/*/*.zip
+noir/*/*.tar.gz
+noir/*/*.zip

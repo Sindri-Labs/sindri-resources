@@ -48,18 +48,18 @@ The file `Sindri.json` specifies what you have named your package and how to ref
 
 ### Current Support
 
-| Type        | Field       | Status       |
-| ----------- | ----------- | --- |
-| `PROVING_SCHEME`      | Groth16       |  ✅   | 
-| `PROVING_SCHEME`      | Plonk       |  Coming Soon   | 
-| `CURVE_NAME`      | bn254       |  ✅   | 
-| `CURVE_NAME`      | BLS12-381       |  Coming Soon   | 
-| `CURVE_NAME`      | BLS12-377       |  Coming Soon   | 
-| `CURVE_NAME`      | BLS24-315       |  Coming Soon   | 
-| `CURVE_NAME`      | BW6-633      |  Coming Soon   | 
-| `CURVE_NAME`      | BW6-761       |  Coming Soon   | 
-| `VERSION`      | (Gnark) 0.8.1       |  ✅   | 
-| `VERSION`      | (Gnark) 0.9.0       |  ✅   | 
+| Type | Field | Status |
+| - | - | - |
+| `PROVING_SCHEME` | Groth16 | ✅ | 
+| `PROVING_SCHEME` | Plonk | Coming Soon | 
+| `CURVE_NAME` | bn254 | ✅ | 
+| `CURVE_NAME` | BLS12-381 | ✅ | 
+| `CURVE_NAME` | BLS12-377 | ✅ | 
+| `CURVE_NAME` | BLS24-315 | ✅ | 
+| `CURVE_NAME` | BW6-633 | ✅ | 
+| `CURVE_NAME` | BW6-761 | ✅ | 
+| `VERSION` | (Gnark) 0.8.1 | ✅ | 
+| `VERSION` | (Gnark) 0.9.0 | ✅ | 
 
 ### How to compress properly
 To prepare your repo, `my_repo`, for Sindri upload, run the following command ***from the parent directory*** of `my_repo`:
