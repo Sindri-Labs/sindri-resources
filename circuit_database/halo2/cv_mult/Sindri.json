@@ -1,7 +1,0 @@
-{
-    "circuit_type": "Halo2",
-    "class_name": "mult::circuit::mult",
-    "degree": 8,
-    "halo2_version": "chiquito",
-    "package_name": "mult"
-}
