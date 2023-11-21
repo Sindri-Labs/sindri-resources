@@ -23,7 +23,12 @@ class SindriSdk:
     - `requests`: (`pip install requests`)
 
     ### Parameters:
-    - `verbose_level: int`: Stdout print level (defeault=`1`, options=`[0,1,2]`)
+    - `verbose_level: int`: Stdout print level (default=`1`, options=`[0,1,2]`)
+    - `api_key: str`: Sindri API Key (default="")
+      - If not specified (default), the SindriSdk tries to obtain the API Key in the following order:
+        1. From the `SINDRI_API_KEY` environment variable
+        1. From the `../API_KEY` file
+        1. Raise SindriApiError
 
     ### Usage
     ```python
@@ -57,11 +62,6 @@ class SindriSdk:
     - `set_api_key()` - Configure SindriSdk instance with provided API Key
     - `set_api_url()` - Configure SindriSdk instance with provided API Url
     - `set_verbose_level()` - Configure SindriSdk instance with stdout verbosity level
-
-    NOTE: By default, the SindriSdk tries to obtain the API Key in the following order.
-    If an option results in an empty string, try the next best option.
-    1. From the `SINDRI_API_KEY` environment variable
-    1. From the `../API_KEY` file
     """
 
     class SindriApiError(Exception):
@@ -75,13 +75,17 @@ class SindriSdk:
     def __init__(
         self,
         verbose_level: int = 2,
+        api_key: str = "",
     ):
         self.polling_interval_sec: int = 1  # polling interval for circuit compilation & proving
         self.max_polling_iterations: int = 172800  # 2 days with polling interval 1 second
         self.perform_verify: bool = True
         self.set_verbose_level(verbose_level)
 
-        self.api_key = self.load_api_key()
+        if api_key == "":
+            self.api_key = self.load_api_key()
+        else:
+            self.set_api_key(api_key)
         self.api_url = self.get_api_url()
         self.headers_json = {
             "Accept": "application/json",

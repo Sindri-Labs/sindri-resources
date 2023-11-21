@@ -8,13 +8,39 @@ import tarfile
 import zipfile
 from glob import glob
 
+"""
+This script is a utility for locally validating sample circuits and compressing them. 
+- It assumes every sample circuit directory in one of the framework subdirectories is a valid circuit. 
+- The script can be run from any directory. It uses relative paths from the file location (you do not have to worry about the paths being messed up because of your shell's current working directory).
+- All compressed circuit objects that are created by the `_prepare_circuit_database.py` script for a circuit are stored inside the circuit's directory.
+- The script has no requirements other than `python3`.
+- The resulting compressed circuits are gitignored (see `.gitignore`).
+
+**What happens if I run the script multiple times?**
+- The script will remove existing compressed objects before recompressing the directory, ***provided that the circuit directory was not renamed***!
+
+#### Dry Run
+`./_prepare_circuit_database.py --dry-run` option
+
+The **Dry Run** will perform a validity check on all of the supplied circuits directories. 
+- If a valid circuit directory does not have a `README.md` or a valid `sindri.json` file, it will exit with an error.
+
+#### Usage
+```
+$ python3 _prepare_circuit_database.py --help
+```
+
+If `--compress` or `--dry-run` are not supplied, the script will prompt for `y/n` to continue with running compression.
+- If `n` is supplied or `--dry-run` is specified, the script will only perform a **dry run**.
+"""
+
+
 RELPATH_OF_THIS_DIRECTORY = os.path.relpath(pathlib.Path(__file__).parent.resolve())
 
 CIRCUIT_PARENT_DIRS_TO_BE_COMPRESSED = [
     "../circom/",
     "../gnark/",
     "../halo2/",
-    "../noir/",
 ]
 
 
