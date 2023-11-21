@@ -32,11 +32,12 @@ Note that you may have nested directories within the parent, as long as `circuit
 
 ### Supporting Files
 In the `Sindri.json` file, you will indicate what language the witness compiler should be built in, as well as the proving scheme and curve.  See the [Circom docs](https://docs.circom.io/getting-started/computing-the-witness/#the-witness-file) for more information.
-```
+```json
 {
-    "WITNESS_COMPILER": "c++",
-    "CURVE_NAME": "bn254",
-    "PROVING_SCHEME": "Groth16"
+    "circuit_type": "circom",
+    "curve": "bn254",
+    "proving_scheme": "groth16",
+    "witness_compiler": "c++"
 }
 ```
 
