@@ -20,7 +20,6 @@ const createResponse = await axios.post(
   "/circuit/create",
   {
     circuit_name: "compress",
-    circuit_type: "Gnark",
   },
   { validateStatus: (status) => status === 201 },
 );

@@ -31,17 +31,18 @@ my_repo/
 ```
 
 The file `Sindri.json` specifies what you have named your package and how to reference the circuit
-```
+```json
 {
-    "PACKAGE_NAME": "my-circuit",
-    "CLASS_NAME": "circuit::myCircuit",
-    "DEGREE": "12",
-    "THREAD_BUILDER": "GateThreadBuilder",
-    "HALO2_BASE_VERSION": "0.3.0"
+    "circuit_type": "halo2",
+    "class_name": "circuit::myCircuit",
+    "degree": 14,
+    "halo2_version": "axiom-v0.3.0",
+    "package_name": "my-circuit",
+    "thread_builder": "RlcThreadBuilder"
 }
 ```
 The file `config.json` specifies any environment variables that are necessary to define your circuit configuration.  For example, in the `float_radius` circuit we have
-```
+```json
 {
     "LOOKUP_BITS": "12"
 }

@@ -59,7 +59,7 @@ async function main() {
     // Create a new circuit.
     console.log("1. Creating circuit...");
     const createResponse = await axios.post(
-      API_URL + "/circuit" + apiKeyQueryString,
+      API_URL + "/circuit/create" + apiKeyQueryString,
       {
         circuit_name: "multiplier2",
       },

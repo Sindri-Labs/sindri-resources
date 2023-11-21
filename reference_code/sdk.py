@@ -241,7 +241,7 @@ class SindriSdk:
             print(f"    upload_path:   {circuit_upload_path}")
         response_status_code, response_json = self._hit_api(
             "POST",
-            "circuit",
+            "circuit/create",
             data={"circuit_name": circuit_name},
             files=files,
         )

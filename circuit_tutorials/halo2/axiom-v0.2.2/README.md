@@ -31,9 +31,9 @@ The file `Sindri.json` specifies what you have named your package and how to ref
 ```json
 {
     "circuit_type": "halo2",
-    "class_name": "axiom_eth::storage::EthBlockStorageCircuit",
+    "class_name": "circuit::myCircuit",
     "degree": 17,
     "halo2_version": "axiom-v0.2.2",
-    "package_name": "axiom-eth"
+    "package_name": "my-circuit"
 }
 ```

@@ -30,7 +30,7 @@ files = {"files": fh.getvalue()}
 # Create new circuit
 print("1. Creating circuit...")
 response = requests.post(
-    API_URL + "circuit",
+    API_URL + "circuit/create",
     headers=headers_json,
     data={"circuit_name": "multiplier2"},
     files=files,
