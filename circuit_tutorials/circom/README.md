@@ -11,12 +11,10 @@ See Sindri's Documentation for more complete instructions.
 ## Available Circuits
 
 | Name | Size (# Constraints) | Original Source | Functionality | 
-| ---- | ---- | --------------- | ------------- | 
+| - | - | - | - | 
+| food_ml     | 60530 | Original DNN + [Keras2Circom](https://github.com/socathie/keras2circom) transpiler | Verified inference with a dense neural network |
 | multiplier2 | 1 | [Circom2 Docs](https://docs.circom.io/getting-started/writing-circuits/)| Computes the product of two private inputs| 
-| sha256      | 152313 | [Celer Network's Benchmarking](https://github.com/celer-network/zk-benchmark/tree/main) | Verifies that the SHA256 hash of a private preimage equals the claimed public output|
 | sudoku      | 11906 | [Web3-Master's ZK-Sudoku](https://github.com/web3-master/zksnark-sudoku)| Trustless verification of a Sudoku solution |
-| food_ml      | 60530 | Original DNN + [Keras2Circom](https://github.com/socathie/keras2circom) transpiler | Verified inference with a dense neural network |
-
 
 
 ## Circuit Requirements

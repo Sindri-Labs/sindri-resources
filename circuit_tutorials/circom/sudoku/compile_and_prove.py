@@ -20,50 +20,25 @@ headers_json = {
     "Accept": "application/json",
     "Authorization": f"Bearer {API_KEY}"
 }
-headers_multipart = {
-    "Accept": "multipart/form-data",
-    "Authorization": f"Bearer {API_KEY}"
-}
-headers_urlencode = {
-    "Accept": "application/json",
-    "Content-Type": "application/x-www-form-urlencoded",
-    "Authorization": f"Bearer {API_KEY}"
-}
 
-# Create new circuit
-creation_response = requests.post(
-    API_URL + "circuit/create",
-    headers=headers_json,
-    data={
-        "circuit_name": "sudoku",
-        "circuit_type": "Circom"
-        },
-)
-assert creation_response.status_code == 201
-circuit_id = creation_response.json().get("circuit_id")
-print(f"Circuit ID: {circuit_id}")
 
-# Create a tar archive and upload via byte stream
+# Create a tar archive of the circuit and upload via byte stream
+circuit_upload_path = "circuit"
 fh = io.BytesIO()
 with tarfile.open(fileobj=fh, mode='w:gz') as tar:
-    tar.add("circuit/")
+    tar.add(circuit_upload_path, arcname="upload.tar.gz")
 files = {"files": fh.getvalue()}
 
-# Upload the circuit file
-upload_response = requests.post(
-    API_URL + f"circuit/{circuit_id}/uploadfiles",
-    headers=headers_multipart,
-    files=files
+# Create new circuit
+print("1. Creating circuit...")
+response = requests.post(
+    API_URL + "circuit",
+    headers=headers_json,
+    data={"circuit_name": "sudoku"},
+    files=files,
 )
-assert upload_response.status_code == 201
-
-
-# Initiate compilation
-compile_response = requests.post(
-    API_URL + f"circuit/{circuit_id}/compile",
-    headers=headers_json
-)
-assert compile_response.status_code == 201
+assert response.status_code == 201, f"Expected status code 201, received {response.status_code}."
+circuit_id = response.json().get("circuit_id")  # Obtain circuit_id
 
 
 # Poll circuit detail unitl it has a status of Ready or Failed
@@ -93,14 +68,12 @@ pprint.pprint(response.json(), depth=2, indent=2, width=40)
 
 
 # Initiate proof generation
-with open("example_solution.json","r") as proof_file:
+with open("input.json","r") as proof_file:
     proof_input = json.dumps(json.load(proof_file))
 proof_response = requests.post(
     API_URL + f"circuit/{circuit_id}/prove",
-    headers=headers_urlencode,
-    data={
-        "proof_input": proof_input,
-    },
+    headers=headers_json,
+    data={"proof_input": proof_input},
 )
 assert proof_response.status_code == 201
 proof_id = proof_response.json()["proof_id"]

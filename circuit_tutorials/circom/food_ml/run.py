@@ -1,10 +1,9 @@
 #!/usr/bin/python3
-
 import json
 import os
 import sys
 sys.path.append("../../../reference_code")
-from sdk import SindriSdk  # type: ignore
+from sdk import SindriSdk
 
 # NOTE: Provide your API Key here
 API_KEY = os.getenv("SINDRI_API_KEY", "")

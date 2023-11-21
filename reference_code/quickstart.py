@@ -14,7 +14,10 @@ API_VERSION = "v1"
 API_URL = f"https://forge.sindri.app/api/{API_VERSION}/"
 
 api_key_querystring = f"?api_key={API_KEY}"
-headers_json = {"Accept": "application/json"}
+headers_json = {
+    "Accept": "application/json",
+    "Authorization": f"Bearer {API_KEY}"
+}
 
 circuit_upload_path = os.path.abspath(os.path.join("..", "circom", "multiplier2"))
 
@@ -27,7 +30,7 @@ files = {"files": fh.getvalue()}
 # Create new circuit
 print("1. Creating circuit...")
 response = requests.post(
-    API_URL + "circuit" + api_key_querystring,
+    API_URL + "circuit",
     headers=headers_json,
     data={"circuit_name": "multiplier2"},
     files=files,
@@ -40,7 +43,7 @@ circuit_id = response.json().get("circuit_id")  # Obtain circuit_id
 TIMEOUT = 600  # timeout after 10 minutes
 for i in range(TIMEOUT):
     response = requests.get(
-        API_URL + f"circuit/{circuit_id}/detail" + api_key_querystring,
+        API_URL + f"circuit/{circuit_id}/detail",
         headers=headers_json,
         params={"include_verification_key": False},
     )
@@ -65,7 +68,7 @@ else:
 print("2. Proving circuit...")
 proof_input = json.dumps({"a": "7", "b": "42"})
 response = requests.post(
-    API_URL + f"circuit/{circuit_id}/prove" + api_key_querystring,
+    API_URL + f"circuit/{circuit_id}/prove",
     headers=headers_json,
     data={"proof_input": proof_input},
 )
@@ -76,7 +79,7 @@ proof_id = response.json()["proof_id"]  # Obtain proof_id
 TIMEOUT = 1200  # timeout after 20 minutes
 for i in range(TIMEOUT):
     response = requests.get(
-        API_URL + f"proof/{proof_id}/detail" + api_key_querystring,
+        API_URL + f"proof/{proof_id}/detail",
         headers=headers_json,
         params={
             "include_proof_input": False,

@@ -1,5 +1,7 @@
 import subprocess
 
+# Install snarkjs: https://iden3-docs.readthedocs.io/en/latest/iden3_repos/snarkjs/README.html
+
 snarkjs_verifier_args = [
     "npx",
     "snarkjs",

@@ -1,5 +1,6 @@
 {
-    "WITNESS_COMPILER": "c++",
-    "CURVE_NAME": "bn254",
-    "PROVING_SCHEME": "Groth16"
+    "circuit_type": "circom",
+    "curve": "bn254",
+    "proving_scheme": "groth16",
+    "witness_compiler": "c++"
 }
