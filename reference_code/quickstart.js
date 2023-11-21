@@ -45,9 +45,9 @@ async function main() {
     const circuitFilePath = path.join(
       __dirname,
       "..",
+      "circuit_database",
       "circom",
-      "multiplier2",
-      "multiplier2.tar.gz",
+      "multiplier2"
     );
     const circuitFileBuffer = fs.readFileSync(circuitFilePath);
     const uploadFormData = new FormData();

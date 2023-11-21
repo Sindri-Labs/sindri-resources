@@ -19,7 +19,7 @@ headers_json = {
     "Authorization": f"Bearer {API_KEY}"
 }
 
-circuit_upload_path = os.path.abspath(os.path.join("..", "circom", "multiplier2"))
+circuit_upload_path = os.path.abspath(os.path.join("..", "circuit_database", "circom", "multiplier2"))
 
 # Create a tar archive of the circuit and upload via byte stream
 fh = io.BytesIO()

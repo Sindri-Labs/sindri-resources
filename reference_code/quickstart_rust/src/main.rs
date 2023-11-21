@@ -100,7 +100,7 @@ async fn main() {
     let circuit_id = response.json::<CircuitResponse>().await.unwrap().circuit_id; 
 
     // Load the circuit .tar.gz file and create multipart form
-    let mut file = File::open("../../circom/multiplier2.tar.gz").unwrap();
+    let mut file = File::open("../circuit_database/circom/multiplier2").unwrap();
     let mut contents = Vec::new();
     file.read_to_end(&mut contents).expect("Unable to read tar file");
     let part = Part::bytes(contents).file_name("filename.filetype");
