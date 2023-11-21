@@ -1,0 +1,7 @@
+circuits/target
+circuits/proofs
+circuits/Verifier.toml
+node_modules
+test/
+contracts/
+hardhat.config.js
