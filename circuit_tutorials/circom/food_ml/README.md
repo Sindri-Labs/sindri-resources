@@ -3,7 +3,7 @@
 Inspired by [this article](https://www.nature.com/articles/srep00196), we trained a deep neural net (DNN) to recognize combinations of ingredients as identifiers for a particular type of cuisine.  
 ![pair_figure](ingredient_combos.png)
 
-After converting the DNN to a Circom ciruit, we can provide verified inference via Forge.  Specifically when you make a query, such as "what type of cuisine would use macaroni and parmesan?" and the model returns "Southern European", the response will also include a proof that the answer was achieved by putting your input directly into the model (as opposed to taking any shortcuts).   
+After converting the DNN to a Circom ciruit, we can provide verified inference via Sindri.  Specifically when you make a query, such as "what type of cuisine would use macaroni and parmesan?" and the model returns "Southern European", the response will also include a proof that the answer was achieved by putting your input directly into the model (as opposed to taking any shortcuts).   
 
 This particular model is not large; as the summary below indicates there were only two dense layers and fewer than 25K trainable parameters.  After transpiling, the ZKML circuit has more than 60K constraints.  (You can think of proof time as roughly dependent on the number of constraints.)  The inherent complexity of ML training and inference poses implementation challenges; and now by encapsulating the models within a ZK-container, we are magnifiying that complexity.  It is an [active area](https://github.com/worldcoin/awesome-zkml) of research to accomodate larger models.  Sindri's proof acceleration technique (Sagittal) provides an essential contribution towards the goal of making nontrivial ZKML feasible.
 ```
@@ -54,7 +54,7 @@ Now we will enter a list of ingredients to ask the model what type of cuisine th
 ```
 python3 query_model.py --circuit "9ef4b718-9f74-4304-9d4a-0a6b864993be" --ingredients "mango soy_sauce peanut_butter spaghetti watermelon beef"
 ```
-Notice from the output of this example that the vocabulary of our model is somewhat limited.  See `vocab.txt` for a full list of all 374 recognizable ingredients.  If you enter a list of ingredients and none are recognized, the script will not bother submitting a Forge proof request.  
+Notice from the output of this example that the vocabulary of our model is somewhat limited.  See `vocab.txt` for a full list of all 374 recognizable ingredients.  If you enter a list of ingredients and none are recognized, the script will not bother submitting a Sindri proof request.  
 ```
 Signing in.
 Transforming ingredient list to model input.

@@ -1,12 +1,12 @@
 # Sample Gnark Circuits
 
-In this directory, we provide a handful of Gnark circuits which have already been prepared to use with Forge. You may find them useful as a reference when writing your own circuits; or you may use these as circuit uploads if you are just beginning to try out Forge.
+In this directory, we provide a handful of Gnark circuits which have already been prepared to use with Sindri. You may find them useful as a reference when writing your own circuits; or you may use these as circuit uploads if you are just beginning to try out Sindri.
 
-All of the tar files are compressed versions of the corresponding folder. Rather than uploading the entire directory to Forge, you will upload it's compressed .tar.gz file. In order to request a proof for one of these circuits, consult the input.json file in the corresponding folder.
+All of the tar files are compressed versions of the corresponding folder. Rather than uploading the entire directory to Sindri, you will upload it's compressed .tar.gz file. In order to request a proof for one of these circuits, consult the input.json file in the corresponding folder.
 
 It is allowed (but unneccesary) to include extraneous files in your compressed directory such as readme's, example inputs, and unused code. However, you should not include any executables.
 
-See Sindri's GitBook for more complete instructions.
+See Sindri's Documentation for more complete instructions.
 
 ## Available Circuits
 
@@ -63,7 +63,7 @@ The file `Sindri.json` specifies what you have named your package and how to ref
 | `VERSION`      | (Gnark) 0.9.0       |  ✅   | 
 
 ### How to compress properly
-To prepare your repo, `my_repo`, for Forge upload, run the following command ***from the parent directory*** of `my_repo`:
+To prepare your repo, `my_repo`, for Sindri upload, run the following command ***from the parent directory*** of `my_repo`:
 ```
 tar -zcvf my_repo.tar.gz my_repo/
 ```

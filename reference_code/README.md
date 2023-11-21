@@ -1,5 +1,5 @@
 # Setup
-You will need a Forge API key in order to run the scripts.
+You will need a Sindri API key in order to run the scripts.
 The Sindri Docs explain [how to obtain your API key](https://sindri-labs.github.io/docs/forge/using-forge/access-management/#api-authentication).
 
 You can then either set the `SINDRI_API_KEY` environment variable with your API key. Alternatively, you may modify the value of the `API_KEY` global variable in the below scripts before running them.
@@ -8,7 +8,7 @@ You can then either set the `SINDRI_API_KEY` environment variable with your API 
 # Quick-Start Scripts
 
 We provide quick-start scripts in JavaScript ([`quickstart.js`](./quickstart.js)) and Python ([`quickstart.py`](./quickstart.py)) as well as compilable quick-start rust code ([`quickstart_rust/src/main.rs`](./quickstart_rust/src/main.rs)).
-These scripts will create a Circom circuit object in Forge, upload a gzipped sample circuit file (located at [`../circom/multiplier2/multiplier2.tar.gz`](../circom/multiplier2/multiplier2.tar.gz)), and compile it.
+These scripts will create a Circom circuit object in Sindri, upload a gzipped sample circuit file (located at [`../circom/multiplier2/multiplier2.tar.gz`](../circom/multiplier2/multiplier2.tar.gz)), and compile it.
 Once a proof has finished executing, the code will then print the public outputs from the circuit.
 
 ### JavaScript ([`quickstart.js`](./quickstart.js))

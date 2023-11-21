@@ -1,12 +1,12 @@
 # Sample Halo2 Circuits
 
-In this directory, we provide a handful of Halo2 circuits which have already been prepared to use with Forge.  You may find them useful as a reference when writing your own circuits; or you may use these as circuit uploads if you are just beginning to try out Forge.
+In this directory, we provide a handful of Halo2 circuits which have already been prepared to use with Sindri.  You may find them useful as a reference when writing your own circuits; or you may use these as circuit uploads if you are just beginning to try out Sindri.
 
-All of the tar files are compressed versions of the corresponding folder.  Rather than uploading the entire directory to Forge, you will upload it's compressed `.tar.gz` file.  In order to request a proof for one of these circuits, consult the `input.json` file in the corresponding folder.  
+All of the tar files are compressed versions of the corresponding folder.  Rather than uploading the entire directory to Sindri, you will upload it's compressed `.tar.gz` file.  In order to request a proof for one of these circuits, consult the `input.json` file in the corresponding folder.  
 
-It is allowed (but unneccesary) to include extraneous files in your compressed directory such as readme's, example inputs, and unused code.  However, you should not include any executables from your Cargo build process with your upload (e.g. the `debug/` or `target/` directories), as they are unnecessary for Forge purposes and will slow the upload.
+It is allowed (but unneccesary) to include extraneous files in your compressed directory such as readme's, example inputs, and unused code.  However, you should not include any executables from your Cargo build process with your upload (e.g. the `debug/` or `target/` directories), as they are unnecessary for Sindri purposes and will slow the upload.
 
-See Sindri's GitBook for more complete instructions. 
+See Sindri's Documentation for more complete instructions. 
 
 ## Available Circuits
 
