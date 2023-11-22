@@ -14,7 +14,7 @@ Once a proof has finished executing, the code will then print the public outputs
 ### JavaScript ([`quickstart.js`](./quickstart.js))
 
 - Make sure you have Node.js installed.
-- Install the necessary dependencies by running `npm install axios form-data`.
+- Install the necessary dependencies by running `npm install axios form-data tar`.
 - Inside this directory (`scripts`), run the script using `SINDRI_API_KEY=<your-api-key> node quickstart.js`.
 
 ### Python ([`quickstart.py`](./quickstart.py))
