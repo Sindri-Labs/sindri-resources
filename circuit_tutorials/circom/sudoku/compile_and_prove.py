@@ -34,7 +34,6 @@ print("1. Creating circuit...")
 response = requests.post(
     API_URL + "circuit/create",
     headers=headers_json,
-    data={"circuit_name": "sudoku"},
     files=files,
 )
 assert response.status_code == 201, f"Expected status code 201, received {response.status_code}."

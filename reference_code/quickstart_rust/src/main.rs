@@ -86,7 +86,7 @@ async fn main() {
         tar.append_dir_all("multiplier2/","../../circuit_database/circom/multiplier2/").unwrap();
     }
     let part = Part::bytes(contents).file_name("filename.filetype");
-    let upload = reqwest::multipart::Form::new().text("circuit_name","multiplier2").part("files", part);
+    let upload = reqwest::multipart::Form::new().part("files", part);
 
     // Create new circuit
     println!("1. Creating circuit...");

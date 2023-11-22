@@ -47,7 +47,6 @@ async function main() {
     const circuitFilePath = "multiplier2/"
 
     const uploadFormData = new FormData();
-    uploadFormData.append("circuit_name", "multiplier2");
     uploadFormData.append(
       "files",
       tar.c({ gzip: true, sync: true, cwd: circuitCWD}, [circuitFilePath]).read(),

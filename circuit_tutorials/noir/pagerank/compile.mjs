@@ -24,7 +24,6 @@ formData.append(
     filename: "compress.tar.gz",
   },
 );
-formData.append("circuit_name", "pagerank");
 
 const createResponse = await axios.post(
   "/circuit/create",

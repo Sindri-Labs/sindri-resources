@@ -46,10 +46,9 @@ def interpret_result(proof_public) -> str:
 
 # Create the circuit
 circuit_upload_path = "circuit"
-circuit_name = "circom food_ml"
 
 sindri_sdk = SindriSdk(verbose_level=1, api_key=API_KEY, api_url=API_URL)
-circuit_id = sindri_sdk.create_circuit(circuit_name, circuit_upload_path)
+circuit_id = sindri_sdk.create_circuit(circuit_upload_path)
 
 
 expected_result = "NorthAmerican"

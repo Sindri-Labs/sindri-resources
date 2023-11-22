@@ -34,7 +34,6 @@ class SindriSdk:
     ### Usage
     ```python
     # Collect inputs for circuit compilation and proving
-    circuit_name = "Circom multiplier2"
     circuit_upload_path = "circom/multiplier2.tar.gz"
     # Set proof input as a dict. Here we read from a JSON file.
     proof_input = {}
@@ -44,7 +43,7 @@ class SindriSdk:
 
     # Run Sindri API
     sindri_sdk = SindriSdk()
-    circuit_id = sindri_sdk.create_circuit(circuit_name, circuit_upload_path)
+    circuit_id = sindri_sdk.create_circuit(circuit_upload_path)
     proof_id = sindri_sdk.prove_circuit(circuit_id, proof_input)
     ```
 
@@ -199,7 +198,6 @@ class SindriSdk:
 
     def create_circuit(
         self,
-        circuit_name: str,
         circuit_upload_path: str,
     ) -> str:
         """
@@ -238,12 +236,10 @@ class SindriSdk:
         if self.verbose_level > 0:
             print("Circuit: Create")
         if self.verbose_level > 1:
-            print(f"    circuit_name: {circuit_name}")
             print(f"    upload_path:   {circuit_upload_path}")
         response_status_code, response_json = self._hit_api(
             "POST",
             "circuit/create",
-            data={"circuit_name": circuit_name},
             files=files,
         )
         if response_status_code != 201:
