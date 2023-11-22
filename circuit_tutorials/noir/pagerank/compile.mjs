@@ -9,25 +9,13 @@ const tar = (await import("tar")).default;
 const SINDRI_API_KEY = process.env.SINDRI_API_KEY || "<your-key-here>";
 
 // Use v1 of the Sindri API.
-axios.defaults.baseURL = "https://forge.sindri.app/api/v1";
+axios.defaults.baseURL = "http://forge.sindri.app/api/v1";
 // Authorize all future requests with an `Authorization` header.
 axios.defaults.headers.common["Authorization"] = `Bearer ${SINDRI_API_KEY}`;
 // Expect 2xx responses for all requests.
 axios.defaults.validateStatus = (status) => status >= 200 && status < 300;
 
 // Create a new circuit.
-const createResponse = await axios.post(
-  "/circuit/create",
-  {
-    circuit_name: "pagerank",
-    circuit_type: "Noir",
-  },
-  { validateStatus: (status) => status === 201 },
-);
-const circuitId = createResponse.data.circuit_id;
-console.log("Circuit ID:", circuitId);
-
-// Upload the packaged circuit.
 const formData = new FormData();
 formData.append(
   "files",
@@ -36,10 +24,16 @@ formData.append(
     filename: "compress.tar.gz",
   },
 );
-await axios.post(`/circuit/${circuitId}/uploadfiles`, formData);
+formData.append("circuit_name", "pagerank");
 
-// Initiate compilation and poll for completion.
-await axios.post(`/circuit/${circuitId}/compile`);
+const createResponse = await axios.post(
+  "/circuit/create",
+  formData,
+);
+const circuitId = createResponse.data.circuit_id;
+console.log("Circuit ID:", circuitId);
+
+// Poll for completed status.
 let startTime = Date.now();
 let circuitDetailResponse;
 while (true) {
