@@ -1,5 +1,7 @@
 ## Compression Circuit
 
+# TODO: should package.json and package-lock.json be gitignored here?
+
 This circuit is built with Gnark frontend v0.9.0 and accepts a string as input
 
 ```json
