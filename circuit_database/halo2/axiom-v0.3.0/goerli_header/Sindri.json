@@ -3,6 +3,7 @@
     "class_name": "axiom_eth::block_header::EthBlockHeaderChainCircuit",
     "degree": 14,
     "halo2_version": "axiom-v0.3.0",
+    "name": "axiom-goerli-header",
     "package_name": "axiom-eth",
     "thread_builder": "RlcThreadBuilder"
 }

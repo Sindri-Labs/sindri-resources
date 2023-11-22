@@ -3,6 +3,7 @@
     "circuit_type": "gnark",
     "curve": "bn254",
     "gnark_version": "v0.8.1",
+    "name": "exponentiate",
     "package_name": "exponentiate",
     "proving_scheme": "groth16"
 }

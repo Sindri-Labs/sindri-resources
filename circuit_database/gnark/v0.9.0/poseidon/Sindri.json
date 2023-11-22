@@ -3,6 +3,7 @@
     "circuit_type": "gnark",
     "curve": "bn254",
     "gnark_version": "v0.9.0",
+    "name": "poseidon",
     "package_name": "poseidon",
     "proving_scheme": "groth16"
 }

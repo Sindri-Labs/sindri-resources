@@ -1,4 +1,5 @@
 {
     "circuit_type": "Noir",
+    "name": "pagerank",
     "proving_scheme": "Barretenberg"
 }
