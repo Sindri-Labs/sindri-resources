@@ -25,7 +25,8 @@ class SindriSdk:
     ### Parameters:
     - `verbose_level: int`: Stdout print level (default=`1`, options=`[0,1,2]`)
     - `api_key: str`: Sindri API Key (default=`""`)
-      - If not specified (default), the SindriSdk tries to obtain the API Key in the following order:
+      - If not specified (default), the SindriSdk tries to obtain the
+        API Key in the following order:
         1. From the `SINDRI_API_KEY` environment variable
         1. From the `../API_KEY` file
         1. Raise `SindriApiError`
@@ -75,13 +76,16 @@ class SindriSdk:
         self,
         verbose_level: int = 2,
         api_key: str = "",
-        api_url: str = DEFAULT_SINDRI_API_URL,
+        api_url: str = "",
     ):
         self.polling_interval_sec: int = 1  # polling interval for circuit compilation & proving
         self.max_polling_iterations: int = 172800  # 2 days with polling interval 1 second
         self.perform_verify: bool = True
         self.set_verbose_level(0)  # Do not print anything during initial setup
-        self.set_api_url(api_url)
+        if api_url == "":
+            self.api_url = self.get_api_url()
+        else:
+            self.set_api_url(api_url)
         if api_key == "":
             self.api_key = self.load_api_key()
         else:
@@ -203,7 +207,7 @@ class SindriSdk:
         """
         Create a circuit and poll until the circuit is Ready.
 
-        `circuit_upload_path` can be a path to a tar.gz circuit file or the circuit directory. 
+        `circuit_upload_path` can be a path to a tar.gz circuit file or the circuit directory.
         If it is a directory, it will automatically be tarred before sending.
 
         Return:
@@ -228,9 +232,9 @@ class SindriSdk:
             # Create a tar archive and upload via byte stream
             circuit_upload_path = os.path.abspath(circuit_upload_path)
             fh = io.BytesIO()
-            with tarfile.open(fileobj=fh, mode='w:gz') as tar:
+            with tarfile.open(fileobj=fh, mode="w:gz") as tar:
                 tar.add(circuit_upload_path, arcname="upload.tar.gz")
-            files = {"files": fh.getvalue()}
+            files = {"files": fh.getvalue()}  # type: ignore
 
         # 1. Create a circuit, obtain a circuit_id.
         if self.verbose_level > 0:
