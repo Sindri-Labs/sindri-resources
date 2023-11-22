@@ -7,6 +7,7 @@ from sdk import SindriSdk
 
 # NOTE: Provide your API Key here
 API_KEY = os.getenv("SINDRI_API_KEY", "")
+API_URL = os.getenv("SINDRI_API_URL", "https://forge.sindri.app/api/")
 
 # Paths to auxiliary files
 model_vocab_file_path = "vocab.txt"
@@ -47,7 +48,7 @@ def interpret_result(proof_public) -> str:
 circuit_upload_path = "circuit"
 circuit_name = "circom food_ml"
 
-sindri_sdk = SindriSdk(verbose_level=1, api_key=API_KEY)
+sindri_sdk = SindriSdk(verbose_level=1, api_key=API_KEY, api_url=API_URL)
 circuit_id = sindri_sdk.create_circuit(circuit_name, circuit_upload_path)
 
 

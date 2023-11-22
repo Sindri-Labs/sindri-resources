@@ -1,5 +1,8 @@
 # ZKML for Culinary Categories
 
+# TODO: UPDATE. New script
+
+
 Inspired by [this article](https://www.nature.com/articles/srep00196), we trained a deep neural net (DNN) to recognize combinations of ingredients as identifiers for a particular type of cuisine.  
 ![pair_figure](ingredient_combos.png)
 
@@ -34,11 +37,11 @@ Clone this repo and set a `SINDRI_API_KEY` environment variable with your API ke
 
 ### 1. Upload
 
-Running the following command will create a circuit with whatever name you supply and upload the contents of `foodie.tar.gz` (i.e. the model defined in the `circuit_def/`.)  
+Running the following command will create a circuit and prove it (i.e. the model defined in the `circuit_def/`.)  
+```bash
+python3 compile_and_prove.py
 ```
-python3 upload_circuit.py --name "food_region_ml"
-```
-Here is an example printout.  It is important that you copy the circuit ID; this will be used as an input each time you query the model.
+Here is an example printout. It is important that you copy the circuit ID; this will be used as an input each time you query the model.
 ```
 Signing in.
 Creating circuit.
