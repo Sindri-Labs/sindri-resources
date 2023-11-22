@@ -14,7 +14,6 @@ API_URL = os.getenv("SINDRI_API_URL", "https://forge.sindri.app/api/")
 API_VERSION = "v1"
 API_URL = os.path.join(API_URL, API_VERSION, "")
 
-api_key_querystring = f"?api_key={API_KEY}"
 headers_json = {
     "Accept": "application/json",
     "Authorization": f"Bearer {API_KEY}"
