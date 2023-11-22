@@ -1,16 +1,16 @@
 use std::{
+    io::Cursor,
     option_env,
-    fs::File,
-    io::Read,
     time::Duration
 };
+use flate2::Compression;
+use flate2::write::GzEncoder;
 use serde::Deserialize;
 use reqwest::{
     Client, 
     header::{HeaderMap, HeaderValue},
     multipart::Part
 };
-
 
 // Structs to decode JSON endpoint responses
 #[derive(Debug,Clone,Deserialize)]
@@ -78,17 +78,20 @@ async fn main() {
     let api_version: &str = "v1/";
     let api_url: String = api_url_prefix.to_owned()  + api_version;
 
-    // Load the circuit .tar.gz file and create multipart form
-    let mut file = File::open("../../circuit_database/circom/multiplier2.tar.gz").unwrap();
     let mut contents = Vec::new();
-    file.read_to_end(&mut contents).expect("Unable to read tar file");
+    { // has to be scoped so that contents can be accessed after written to
+        let buffer = Cursor::new(&mut contents);
+        let enc = GzEncoder::new(buffer, Compression::default());
+        let mut tar = tar::Builder::new(enc);
+        tar.append_dir_all("multiplier2/","../../circuit_database/circom/multiplier2/").unwrap();
+    }
     let part = Part::bytes(contents).file_name("filename.filetype");
     let upload = reqwest::multipart::Form::new().text("circuit_name","multiplier2").part("files", part);
 
     // Create new circuit
     println!("1. Creating circuit...");
     let client = Client::new();
-    let mut response = client
+    let response = client
         .post(format!("{api_url}circuit/create"))
         .headers(headers_json(api_key))
         .multipart(upload)
@@ -97,27 +100,6 @@ async fn main() {
         .unwrap();
     assert_eq!(&response.status().as_u16(), &201u16, "Expected status code 201");
     let circuit_id = response.json::<CircuitResponse>().await.unwrap().circuit_id; 
-
-
-    // Upload the circuit file
-    // let client = Client::new();
-    // response = client
-    // .post(format!("{api_url}circuit/{circuit_id}/uploadfiles"))
-    //     .headers(headers_multipart())
-    //     .multipart(upload)
-    //     .send()
-    //     .await
-    //     .unwrap();
-    // assert_eq!(&response.status().as_u16(), &201u16, "Expected status code 201");
-
-    // Initiate circuit compilation
-    // response = client
-    // .post(format!("{api_url}circuit/{circuit_id}/compile{api_key_querystring}"))
-    // .headers(headers_json())
-    // .send()
-    // .await
-    // .unwrap();
-    // assert_eq!(&response.status().as_u16(), &201u16, "Expected status code 201");
 
     // Poll circuit detail until it has a status of Ready or Failed
     let circuit_data = poll_status(
@@ -137,12 +119,12 @@ async fn main() {
     let map = serde_json::json!({"proof_input": proof_input});
 
     let response = client
-    .post(format!("{api_url}circuit/{circuit_id}/prove"))
-    .headers(headers_json(api_key))
-    .json(&map)
-    .send()
-    .await
-    .unwrap();
+        .post(format!("{api_url}circuit/{circuit_id}/prove"))
+        .headers(headers_json(api_key))
+        .json(&map)
+        .send()
+        .await
+        .unwrap();
     assert_eq!(&response.status().as_u16(), &201u16, "Expected status code 201");
     
     let proof_id = response.json::<ProofResponse>().await.unwrap().proof_id;
