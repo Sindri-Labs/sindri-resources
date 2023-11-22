@@ -8,12 +8,12 @@ import pprint
 
 import requests  # pip install requests
 
-# You should pass your key in as an environment variable
+# NOTE: Provide your API Key here
 API_KEY = os.getenv("SINDRI_API_KEY", "")
+API_URL = os.getenv("SINDRI_API_URL", "https://forge.sindri.app/api/")
 
-# Use V1 of Sindri API
 API_VERSION = "v1"
-API_URL = f"https://forge.sindri.app/api/{API_VERSION}/"
+API_URL = os.path.join(API_URL, API_VERSION, "")
 
 #Define various headers
 headers_json = {
@@ -68,7 +68,7 @@ pprint.pprint(response.json(), depth=2, indent=2, width=40)
 
 
 # Initiate proof generation
-with open("input.json","r") as proof_file:
+with open("example_solution.json", "r") as proof_file:
     proof_input = json.dumps(json.load(proof_file))
 proof_response = requests.post(
     API_URL + f"circuit/{circuit_id}/prove",
