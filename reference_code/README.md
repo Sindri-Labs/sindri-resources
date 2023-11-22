@@ -8,7 +8,7 @@ You can then either set the `SINDRI_API_KEY` environment variable with your API 
 # Quick-Start Scripts
 
 We provide quick-start scripts in JavaScript ([`quickstart.js`](./quickstart.js)) and Python ([`quickstart.py`](./quickstart.py)) as well as compilable quick-start rust code ([`quickstart_rust/src/main.rs`](./quickstart_rust/src/main.rs)).
-These scripts will create a Circom circuit object in Sindri, upload a gzipped sample circuit file (located at [`../circom/multiplier2/multiplier2.tar.gz`](../circom/multiplier2/multiplier2.tar.gz)), and compile it.
+These scripts will create a Circom circuit in Sindri, create a gzipped upload from the sample circuit folder located at [`../circuit_database/circom/multiplier2/`](../circuit_database/circom/multiplier2/), and compile it.
 Once a proof has finished executing, the code will then print the public outputs from the circuit.
 
 ### JavaScript ([`quickstart.js`](./quickstart.js))
