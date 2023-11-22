@@ -24,11 +24,12 @@ class SindriSdk:
 
     ### Parameters:
     - `verbose_level: int`: Stdout print level (default=`1`, options=`[0,1,2]`)
-    - `api_key: str`: Sindri API Key (default="")
+    - `api_key: str`: Sindri API Key (default=`""`)
       - If not specified (default), the SindriSdk tries to obtain the API Key in the following order:
         1. From the `SINDRI_API_KEY` environment variable
         1. From the `../API_KEY` file
-        1. Raise SindriApiError
+        1. Raise `SindriApiError`
+    - `api_url: str`: Sindri API Url (default=`"https://forge.sindri.app/api/"`)
 
     ### Usage
     ```python
@@ -42,7 +43,6 @@ class SindriSdk:
         proof_input = json.load(f)
 
     # Run Sindri API
-    # NOTE: API Key and API Url are obtained upon initialization of the SindriSdk class.
     sindri_sdk = SindriSdk()
     circuit_id = sindri_sdk.create_circuit(circuit_name, circuit_upload_path)
     proof_id = sindri_sdk.prove_circuit(circuit_id, proof_input)
@@ -76,21 +76,22 @@ class SindriSdk:
         self,
         verbose_level: int = 2,
         api_key: str = "",
+        api_url: str = DEFAULT_SINDRI_API_URL,
     ):
         self.polling_interval_sec: int = 1  # polling interval for circuit compilation & proving
         self.max_polling_iterations: int = 172800  # 2 days with polling interval 1 second
         self.perform_verify: bool = True
-        self.set_verbose_level(verbose_level)
-
+        self.set_verbose_level(0)  # Do not print anything during initial setup
+        self.set_api_url(api_url)
         if api_key == "":
             self.api_key = self.load_api_key()
         else:
             self.set_api_key(api_key)
-        self.api_url = self.get_api_url()
         self.headers_json = {
             "Accept": "application/json",
             "Authorization": f"Bearer {self.api_key}",
         }
+        self.set_verbose_level(verbose_level)  # Set desired verbose level now
         if self.verbose_level > 0:
             self._print_sindri_logo()
             print(f"Sindri Api Url: {self.api_url}")
@@ -392,13 +393,13 @@ class SindriSdk:
     def get_api_url(cls) -> str:
         """
         Get the Sindri API Url
-        - Read from the `FORGE_API_URL` environment variable. Default to
+        - Read from the `SINDRI_API_URL` environment variable. Default to
         https://forge.sindri.app/api/
 
         NOTE: `v1/` is appended to the Sindri API Url (hard-coded).
         - Example: https://forge.sindri.app/api/ becomes https://forge.sindri.app/api/v1/
         """
-        api_url = os.environ.get("FORGE_API_URL", cls.DEFAULT_SINDRI_API_URL)
+        api_url = os.environ.get("SINDRI_API_URL", cls.DEFAULT_SINDRI_API_URL)
         api_url = os.path.join(api_url, cls.API_VERSION, "")
         return api_url
 

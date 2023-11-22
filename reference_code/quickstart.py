@@ -9,9 +9,10 @@ import requests  # pip install requests
 
 # NOTE: Provide your API Key here
 API_KEY = os.getenv("SINDRI_API_KEY", "")
+API_URL = os.getenv("SINDRI_API_URL", "https://forge.sindri.app/api/")
 
 API_VERSION = "v1"
-API_URL = f"https://forge.sindri.app/api/{API_VERSION}/"
+API_URL = os.path.join(API_URL, API_VERSION, "")
 
 api_key_querystring = f"?api_key={API_KEY}"
 headers_json = {
