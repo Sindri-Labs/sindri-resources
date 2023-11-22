@@ -2,8 +2,6 @@ const fs = require("fs");
 const path = require("path");
 const process = require("process");
 
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'; // REMOVE AFTER LOCAL DEV TESTS
-
 // NOTE: Install dependencies with `npm i axios form-data tar`.
 const axios = require("axios");
 const FormData = require("form-data");
@@ -11,21 +9,21 @@ const tar = require("tar");
 
 // NOTE: Provide your API key here.
 const API_KEY = process.env.SINDRI_API_KEY || "";
+let API_URL_PREFIX = process.env.SINDRI_API_URL || "https://forge.sindri.app/api/";
 
 const API_VERSION = "v1";
-const API_URL = `https://localhost/api/${API_VERSION}`;
+const API_URL = API_URL_PREFIX.concat(API_VERSION);
 
-const apiKeyQueryString = `?api_key=${API_KEY}`;
 const headersJson  = {
   Accept: "application/json",
-  'Content-Type': "application/x-www-form-urlencoded",
+  Authorization: `Bearer ${API_KEY}`
 };
 
 // Utility to poll a detail API endpoint until the status is `Ready` or `Failed`.
 // Returns the response object of the final request or throws an error if the timeout is reached.
 async function pollForStatus(endpoint, timeout = 20 * 60) {
   for (let i = 0; i < timeout; i++) {
-    const response = await axios.get(API_URL + endpoint + apiKeyQueryString, {
+    const response = await axios.get(API_URL + endpoint, {
       headers: headersJson,
       validateStatus: (status) => status === 200,
     });
@@ -44,31 +42,26 @@ async function pollForStatus(endpoint, timeout = 20 * 60) {
 
 async function main() {
   try {
-    //Load the circuit's `tar.gz` file.
-    const circuitFilePath = path.join(
-      __dirname,
-      "..",
-      "circuit_database",
-      "circom",
-    );
-
+    // Create a tar archive of the circuit and upload via byte stream
+    const circuitCWD = path.join( __dirname, "..", "circuit_database","circom");
+    const circuitFilePath = "multiplier2/"
 
     const uploadFormData = new FormData();
+    uploadFormData.append("circuit_name", "multiplier2");
     uploadFormData.append(
       "files",
-      tar.c({ gzip: true, sync: true, cwd: circuitFilePath}, ["multiplier2/"]).read(),
+      tar.c({ gzip: true, sync: true, cwd: circuitCWD}, [circuitFilePath]).read(),
       {
         filename: "upload.tar.gz",
       },
     );
-    uploadFormData.append("circuit_name", "multiplier2");
 
     // Create a new circuit.
     console.log("1. Creating circuit...");
     const createResponse = await axios.post(
-      API_URL + "/circuit/create" + apiKeyQueryString,
+      API_URL + "/circuit/create",
       uploadFormData,
-      {validateStatus: (status) => status === 201},
+      {headers: headersJson, validateStatus: (status) => status === 201},
     );
 
     const circuitId = createResponse.data.circuit_id;
@@ -88,7 +81,7 @@ async function main() {
     console.log("2. Proving circuit...");
     const proofInput = JSON.stringify({ a: "7", b: "42" });
     const proveResponse = await axios.post(
-      API_URL + `/circuit/${circuitId}/prove` + apiKeyQueryString,
+      API_URL + `/circuit/${circuitId}/prove`,
       { proof_input: proofInput },
       { headers: headersJson, validateStatus: (status) => status === 201 },
     );
