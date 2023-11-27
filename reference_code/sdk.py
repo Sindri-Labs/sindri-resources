@@ -15,34 +15,28 @@ except ModuleNotFoundError:
 
 class SindriSdk:
     """
-    # Sindri SDK
+    # SindriSdk
     Utility class for interacting with the Sindri API.
 
     ### Dependencies:
     - `requests`: (`pip install requests`)
 
     ### Parameters:
-    - `verbose_level: int`: Stdout print level (default=`1`, options=`[0,1,2]`)
-    - `api_key: str`: Sindri API Key (default=`""`)
-      - If not specified (default), the SindriSdk tries to obtain the
-        API Key in the following order:
-        1. From the `SINDRI_API_KEY` environment variable
-        1. From the `../API_KEY` file
-        1. Raise `SindriApiError`
+    - `api_key: str`: Sindri API Key (required)
     - `api_url: str`: Sindri API Url (default=`"https://forge.sindri.app/api/"`)
+    - `verbose_level: int`: Stdout print level (default=`1`, options=`[0,1,2]`)
 
     ### Usage
     ```python
-    # Collect inputs for circuit compilation and proving
-    circuit_upload_path = "circom/multiplier2.tar.gz"
-    # Set proof input as a dict. Here we read from a JSON file.
-    proof_input = {}
-    proof_input_file_path = "circom/input.json"
+    circuit_upload_path = "circom/multiplier2"
+    proof_input = ""
+    proof_input_file_path = "circom/multiplier2/input.json"
     with open(proof_input_file_path, "r") as f:
-        proof_input = json.load(f)
+        proof_input = f.read()
 
     # Run Sindri API
-    sindri_sdk = SindriSdk()
+    API_KEY = <YOUR_API_KEY>
+    sindri_sdk = SindriSdk(API_KEY)
     circuit_id = sindri_sdk.create_circuit(circuit_upload_path)
     proof_id = sindri_sdk.prove_circuit(circuit_id, proof_input)
     ```
@@ -72,20 +66,21 @@ class SindriSdk:
 
     def __init__(
         self,
+        api_key: str,
+        api_url: str = DEFAULT_SINDRI_API_URL,
         verbose_level: int = 2,
-        api_key: str = "",
-        api_url: str = "",
     ):
+        # Do not print anything during initial setup
+        self.set_verbose_level(0)
+
         self.polling_interval_sec: int = 1  # polling interval for circuit compilation & proving
         self.max_polling_iterations: int = 172800  # 2 days with polling interval 1 second
         self.perform_verify: bool = True
-        self.set_verbose_level(0)  # Do not print anything during initial setup
-        if api_url == "":
-            self.api_url = self.get_api_url()
-        else:
-            self.set_api_url(api_url)
+        self.set_api_url(api_url)
         self.set_api_key(api_key)
-        self.set_verbose_level(verbose_level)  # Set desired verbose level now
+
+        # Set desired verbose level
+        self.set_verbose_level(verbose_level)
         if self.verbose_level > 0:
             self._print_sindri_logo()
             print(f"Sindri Api Url: {self.api_url}")
@@ -380,20 +375,6 @@ class SindriSdk:
 
         return response_json
 
-    @classmethod
-    def get_api_url(cls) -> str:
-        """
-        Get the Sindri API Url
-        - Read from the `SINDRI_API_URL` environment variable. Default to
-        https://forge.sindri.app/api/
-
-        NOTE: `v1/` is appended to the Sindri API Url (hard-coded).
-        - Example: https://forge.sindri.app/api/ becomes https://forge.sindri.app/api/v1/
-        """
-        api_url = os.environ.get("SINDRI_API_URL", cls.DEFAULT_SINDRI_API_URL)
-        api_url = os.path.join(api_url, cls.API_VERSION, "")
-        return api_url
-
     def get_circuit(self, circuit_id: str) -> dict:
         """Get circuit by circuit_id."""
         if self.verbose_level > 0:
@@ -540,7 +521,9 @@ class SindriSdk:
         return proof_id
 
     def set_api_key(self, api_key: str) -> None:
-        """Set the API Key and headers for the Sindri SDK instance."""
+        """Set the API Key and headers for the SindriSdk instance."""
+        if not isinstance(api_key, str):
+            raise SindriSdk.SindriApiError("Invalid API Key")
         if api_key == "":
             raise SindriSdk.SindriApiError("Invalid API Key")
         self.api_key = api_key
@@ -553,12 +536,18 @@ class SindriSdk:
 
     def set_api_url(self, api_url: str) -> None:
         """
-        Set the API Url for the Sindri SDK instance.
+        Set the API Url for the SindriSdk instance.
 
-        NOTE: `v1/` is appended to the Sindri API Url (hard-coded).
+        NOTE: `v1/` is appended to the Sindri API Url if it is not present.
         - Example: https://forge.sindri.app/api/ becomes https://forge.sindri.app/api/v1/
         """
-        self.api_url = os.path.join(api_url, self.API_VERSION, "")
+        if not isinstance(api_url, str):
+            raise SindriSdk.SindriApiError("Invalid API Url")
+        if api_url == "":
+            raise SindriSdk.SindriApiError("Invalid API Url")
+        if not api_url.endswith(self.API_VERSION) or not api_url.endswith(f"{self.API_VERSION}/"):
+            # Append f"{self.API_VERSION}/" to api_url
+            self.api_url = os.path.join(api_url, f"{self.API_VERSION}/")
         if self.verbose_level > 0:
             print(f"Sindri Api Url: {self.api_url}")
 
