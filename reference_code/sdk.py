@@ -4,7 +4,6 @@ import os
 import sys
 import tarfile
 import time
-from pathlib import Path
 from pprint import pformat
 
 try:
@@ -58,7 +57,6 @@ class SindriSdk:
     - `prove_circuit()` - prove a circuit
 
     Additional methods for configuring the SindriSdk:
-    - `load_api_key()` - Load and return API Key:
     - `set_api_key()` - Configure SindriSdk instance with provided API Key
     - `set_api_url()` - Configure SindriSdk instance with provided API Url
     - `set_verbose_level()` - Configure SindriSdk instance with stdout verbosity level
@@ -86,14 +84,7 @@ class SindriSdk:
             self.api_url = self.get_api_url()
         else:
             self.set_api_url(api_url)
-        if api_key == "":
-            self.api_key = self.load_api_key()
-        else:
-            self.set_api_key(api_key)
-        self.headers_json = {
-            "Accept": "application/json",
-            "Authorization": f"Bearer {self.api_key}",
-        }
+        self.set_api_key(api_key)
         self.set_verbose_level(verbose_level)  # Set desired verbose level now
         if self.verbose_level > 0:
             self._print_sindri_logo()
@@ -458,31 +449,6 @@ class SindriSdk:
 
         return response_json
 
-    @classmethod
-    def load_api_key(cls) -> str:
-        """
-        Return the API Key as a string.
-
-        Try to obtain the API Key in the following order. If an option results in an
-        empty string, try the next best option.
-        1. From the `SINDRI_API_KEY` environment variable
-        1. From the `../API_KEY` file
-
-        Raise SindriApiError if the result is an empty string.
-        """
-        api_key = ""
-        if api_key == "":
-            api_key = os.environ.get("SINDRI_API_KEY", "")
-        if api_key == "":
-            this_directory_path = Path(__file__).parent.resolve()  # absolute path to this directory
-            API_KEY_FILE_PATH = os.path.join(this_directory_path, "..", "API_KEY")
-            api_key = ""
-            with open(API_KEY_FILE_PATH, "r") as f:
-                api_key = f.read()
-        if api_key == "":
-            raise SindriSdk.SindriApiError("Invalid API Key")
-        return api_key
-
     def prove_circuit(self, circuit_id: str, proof_input: str) -> str:
         """
         Prove a circuit given a circuit_id and a proof_input.
@@ -574,7 +540,9 @@ class SindriSdk:
         return proof_id
 
     def set_api_key(self, api_key: str) -> None:
-        """Set the API Key for the Sindri SDK instance."""
+        """Set the API Key and headers for the Sindri SDK instance."""
+        if api_key == "":
+            raise SindriSdk.SindriApiError("Invalid API Key")
         self.api_key = api_key
         self.headers_json = {
             "Accept": "application/json",
