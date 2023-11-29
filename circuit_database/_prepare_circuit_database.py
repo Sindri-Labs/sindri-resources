@@ -192,10 +192,10 @@ if __name__ == "__main__":
     parser.add_argument("-q", "--quiet", action="store_true", help="Suppress verbose stdout")
     try:
         args = parser.parse_args()
-    except:  # NOTE: This does not work as intended without bare except.
+    except SystemExit:
         parser.print_help()
         _print_help_message()
-        sys.exit(0)
+        sys.exit()
 
     if args.quiet:
         QUIET = True
@@ -206,6 +206,7 @@ if __name__ == "__main__":
     if dry_run:
         print("\n***DRY RUN BEGIN***\n")
     if not compress and not remove:
+        parser.print_usage()
         print("No command specified.")
         prompt = input("\nContinue and run compression? (--compress)\n[y/n]\n")
         if prompt.lower() == "y":
