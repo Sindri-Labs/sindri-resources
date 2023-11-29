@@ -193,7 +193,6 @@ if __name__ == "__main__":
     try:
         args = parser.parse_args()
     except SystemExit:
-        parser.print_help()
         _print_help_message()
         sys.exit()
 

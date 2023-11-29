@@ -32,21 +32,7 @@ Within each circuit directory, we include a `.tar.gz` and a `.zip` of the circui
 ```bash
 $ python3 _prepare_circuit_database.py --help
 usage: _prepare_circuit_database.py [-h] [-c] [-r] [-d] [-q]
-
-options:
-  -h, --help      show this help message and exit
-  -c, --compress  Run compression (default: False)
-  -r, --remove    Remove compressed objects (default: False)
-  -d, --dry-run   Dry run (default: False)
-  -q, --quiet     Suppress verbose stdout (default: False)
-usage: _prepare_circuit_database.py [-h] [-c] [-r] [-d] [-q]
-
-options:
-  -h, --help      show this help message and exit
-  -c, --compress  Run compression (default: False)
-  -r, --remove    Remove compressed objects (default: False)
-  -d, --dry-run   Dry run (default: False)
-  -q, --quiet     Suppress verbose stdout (default: False)
+_prepare_circuit_database.py: error: unrecognized arguments: -a
 
 To run compression/removal, use the --compress OR the --remove flags:
   python3 _prepare_circuit_database.py --compress
