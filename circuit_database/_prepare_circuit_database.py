@@ -125,7 +125,7 @@ def validate_circuit_dirs(circuit_dirs: list[str] | list[pathlib.Path]) -> None:
     """
     for circuit_dir in circuit_dirs:
         if not QUIET:
-            print(f"VALIDATING: {circuit_dir}")
+            print(f"Validating: {circuit_dir}")
 
         # Ensure the directory exists
         if not os.path.exists(circuit_dir):
@@ -177,6 +177,8 @@ def _print_help_message() -> None:
     print("\nAdd the --dry-run flag to perform a dry run:")
     print("  python3 _prepare_circuit_database.py --compress --dry-run")
     print("  python3 _prepare_circuit_database.py --remove --dry-run")
+    print("\nUse just the --dry-run flag to only perform validation:")
+    print("  python3 _prepare_circuit_database.py --dry-run")
     print("\nAdd the --quiet flag to suppress verbose stdout:")
     print("  python3 _prepare_circuit_database.py --compress --quiet")
     print()
@@ -205,7 +207,7 @@ if __name__ == "__main__":
     remove = args.remove
     if dry_run:
         print("\n***DRY RUN BEGIN***\n")
-    if not compress and not remove:
+    if not compress and not remove and not dry_run:
         parser.print_usage()
         print("No command specified.")
         prompt = input("\nContinue and run compression? (--compress)\n[y/n]\n")

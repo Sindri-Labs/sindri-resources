@@ -30,9 +30,14 @@ Within each circuit directory, we include a `.tar.gz` and a `.zip` of the circui
 
 ### Usage
 ```bash
-$ python3 _prepare_circuit_database.py --help
 usage: _prepare_circuit_database.py [-h] [-c] [-r] [-d] [-q]
-_prepare_circuit_database.py: error: unrecognized arguments: -a
+
+options:
+  -h, --help      show this help message and exit
+  -c, --compress  Run compression (default: False)
+  -r, --remove    Remove compressed objects (default: False)
+  -d, --dry-run   Dry run (default: False)
+  -q, --quiet     Suppress verbose stdout (default: False)
 
 To run compression/removal, use the --compress OR the --remove flags:
   python3 _prepare_circuit_database.py --compress
@@ -41,6 +46,9 @@ To run compression/removal, use the --compress OR the --remove flags:
 Add the --dry-run flag to perform a dry run:
   python3 _prepare_circuit_database.py --compress --dry-run
   python3 _prepare_circuit_database.py --remove --dry-run
+
+Use just the --dry-run flag to only perform validation:
+  python3 _prepare_circuit_database.py --dry-run
 
 Add the --quiet flag to suppress verbose stdout:
   python3 _prepare_circuit_database.py --compress --quiet
