@@ -30,6 +30,7 @@ Within each circuit directory, we include a `.tar.gz` and a `.zip` of the circui
 
 ### Usage
 ```bash
+$ python3 _prepare_circuit_database.py --help
 usage: _prepare_circuit_database.py [-h] [-c] [-r] [-d] [-q]
 
 options:
