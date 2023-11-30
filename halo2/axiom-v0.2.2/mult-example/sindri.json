@@ -1,5 +1,6 @@
 {
   "name": "mult-example",
+  "circuitType": "halo2",
   "packageName": "mult-example",
   "className": "mult_example::mult_circ::MyCircuit",
   "degree": "11",

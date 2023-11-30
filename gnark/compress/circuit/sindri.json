@@ -1,5 +1,6 @@
 {
   "name": "circuit",
+  "circuitType": "gnark",
   "packageName": "compress",
   "circuitName": "Circuit",
   "version": "0.9.0",

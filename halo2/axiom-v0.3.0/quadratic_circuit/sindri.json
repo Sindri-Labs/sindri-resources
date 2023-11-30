@@ -1,5 +1,6 @@
 {
   "name": "quadratic-circuit",
+  "circuitType": "halo2",
   "packageName": "quadratic-circuit",
   "className": "quadratic_circuit::circuit_def::CircuitInput",
   "threadBuilder": "GateThreadBuilder",

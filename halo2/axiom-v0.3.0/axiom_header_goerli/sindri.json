@@ -1,5 +1,6 @@
 {
   "name": "axiom-header-goerli",
+  "circuitType": "halo2",
   "packageName": "axiom-eth",
   "className": "axiom_eth::block_header::EthBlockHeaderChainCircuit",
   "threadBuilder": "RlcThreadBuilder",

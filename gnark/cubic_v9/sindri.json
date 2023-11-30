@@ -1,5 +1,6 @@
 {
   "name": "cubic-v9",
+  "circuitType": "gnark",
   "packageName": "cubic",
   "circuitName": "Circuit",
   "version": "0.9.0",

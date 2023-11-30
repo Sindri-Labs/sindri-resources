@@ -1,5 +1,6 @@
 {
   "name": "multiplier2",
+  "circuitType": "circom",
   "witnessCompiler": "c++",
   "curveName": "bn254",
   "provingScheme": "groth16"

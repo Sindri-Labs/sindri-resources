@@ -1,5 +1,6 @@
 {
   "name": "storage-proof",
+  "circuitType": "halo2",
   "packageName": "axiom-eth",
   "className": "axiom_eth::storage::EthBlockStorageCircuit",
   "degree": "17",
