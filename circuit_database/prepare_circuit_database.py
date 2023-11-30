@@ -142,6 +142,7 @@ if __name__ == "__main__":
     dry_run = args.dry_run
     compress = args.compress
     remove = args.remove
+    
     if dry_run:
         print("\n***DRY RUN BEGIN***\n")
 
@@ -158,10 +159,10 @@ if __name__ == "__main__":
     if remove:
         # Remove compressed artifacts for given circuit_dirs
         remove_compressed_artifacts(circuit_dirs, dry_run=dry_run)
-    elif compress:
+
+    if compress:
         # Compress all circuit_dirs
         compress_dirs(circuit_dirs, dry_run=dry_run)
+    
     if dry_run:
-        # if not QUIET:
-        #     _print_help_message()
         print("\n***DRY RUN SUCCESS***")
