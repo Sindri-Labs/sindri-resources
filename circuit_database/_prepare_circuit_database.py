@@ -31,7 +31,7 @@ def compress_dirs(source_dirs: list[str] | list[pathlib.Path], dry_run: bool = F
     zip -r    <source_dir>.zip    source_dir
     ```
     """
-    print(f"\nBEGIN: (Re)compressing {len(source_dirs)} circuit(s)\n")
+    print(f"\nBEGIN: (Re)compressing {len(source_dirs)} circuit(s)")
     for source_dir in source_dirs:
         if not QUIET:
             print(f"\nSource {str(source_dir)}")
@@ -108,77 +108,13 @@ def remove_compressed_artifacts(
     print(f"\nSUCCESS. Removed {num_removed} artifacts for {len(source_dirs)} circuit(s).")
 
 
-def validate_circuit_dirs(circuit_dirs: list[str] | list[pathlib.Path]) -> None:
-    """
-    Ensure that every circuit_dir in `circuit_dirs` is a valid circuit.
-
-    Exit if `circuit_dir`
-    - is missing a `README.md`
-    - is missing an example input file
-    - is missing a `Sindri.json` or `sindri.json` file
-    - the `Sindri.json` file is not a dictionary
-    - the `Sindri.json` file has no duplicate keys (case-insensitive)
-    - the `Sindri.json` field is missing the `circuit_type` key (case-insensitive).
-    - the `Sindri.json` field is missing the `name` key (case-insensitive).
-
-    TODO: Use sindri_manifest JSON schema from Sindri API for validation for proper validation.
-    """
-    for circuit_dir in circuit_dirs:
-        if not QUIET:
-            print(f"Validating: {circuit_dir}")
-
-        # Ensure the directory exists
-        if not os.path.exists(circuit_dir):
-            sys.exit(f"\nERROR: {circuit_dir} does not exist.")
-
-        # Ensure circuit_dir contains a README.md
-        readme_path = os.path.join(circuit_dir, "README.md")
-        if not os.path.exists(readme_path):
-            sys.exit(f"\nERROR: {circuit_dir} is missing a README.md file.")
-
-        # Ensure circuit_dir contains an input.json
-        # or Prover.toml (Noir circuits only)
-        input_path = os.path.join(circuit_dir, "input.json")
-        noir_input_path = os.path.join(circuit_dir, "Prover.toml")
-        if not os.path.exists(input_path) and not os.path.exists(noir_input_path):
-            sys.exit(f"\nERROR: {circuit_dir} is missing an input.json or Prover.toml file.")
-
-        # Ensure circuit_dir contains a Sindri.json or sindri.json
-        sindri_json_path = os.path.join(circuit_dir, "Sindri.json")
-        if not os.path.exists(sindri_json_path):
-            sindri_json_path = os.path.join(circuit_dir, "sindri.json")
-            if not os.path.exists(str(sindri_json_path).lower()):
-                sys.exit(f"\nERROR: {circuit_dir} is missing a Sindri.json file.")
-
-        # Load the contents of the Sindri.json
-        sindri_json = {}
-        with open(sindri_json_path, "r") as f:
-            sindri_json = json.load(f)
-        if not isinstance(sindri_json, dict):
-            sys.exit(f"\nERROR: {circuit_dir} Sindri.json is not a dictionary.")
-
-        sindri_json_keys_lower = [key.lower() for key in sindri_json.keys()]
-
-        # Ensure there are no duplicate Sindri.json keys (case-insensitive)
-        if len(sindri_json_keys_lower) != len(set(sindri_json_keys_lower)):
-            sys.exit(f"\nERROR: {sindri_json_path} has duplicate keys (case-insensitive).")
-
-        # Check required keys for all circuit types
-        if "circuit_type" not in sindri_json_keys_lower:
-            sys.exit(f"\nERROR: {sindri_json_path} is missing the `circuit_type` key.")
-        if "name" not in sindri_json_keys_lower:
-            sys.exit(f"\nERROR: {sindri_json_path} is missing the `name` key.")
-
-
 def _print_help_message() -> None:
-    print("\nTo run compression/removal, use the --compress OR the --remove flags:")
+    print("\nTo run compression/removal, you must use the --compress OR the --remove flags:")
     print("  python3 _prepare_circuit_database.py --compress")
     print("  python3 _prepare_circuit_database.py --remove")
     print("\nAdd the --dry-run flag to perform a dry run:")
     print("  python3 _prepare_circuit_database.py --compress --dry-run")
     print("  python3 _prepare_circuit_database.py --remove --dry-run")
-    print("\nUse just the --dry-run flag to only perform validation:")
-    print("  python3 _prepare_circuit_database.py --dry-run")
     print("\nAdd the --quiet flag to suppress verbose stdout:")
     print("  python3 _prepare_circuit_database.py --compress --quiet")
     print()
@@ -188,8 +124,9 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument("-c", "--compress", action="store_true", help="Run compression")
-    parser.add_argument("-r", "--remove", action="store_true", help="Remove compressed objects")
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument("-c", "--compress", action="store_true", help="Run compression")
+    group.add_argument("-r", "--remove", action="store_true", help="Remove compressed objects")
     parser.add_argument("-d", "--dry-run", action="store_true", help="Dry run")
     parser.add_argument("-q", "--quiet", action="store_true", help="Suppress verbose stdout")
     try:
@@ -207,27 +144,16 @@ if __name__ == "__main__":
     remove = args.remove
     if dry_run:
         print("\n***DRY RUN BEGIN***\n")
-    if not compress and not remove and not dry_run:
-        parser.print_usage()
-        print("No command specified.")
-        prompt = input("\nContinue and run compression? (--compress)\n[y/n]\n")
-        if prompt.lower() == "y":
-            compress = True
-        else:
-            sys.exit("Goodbye.")
 
     if not QUIET:
         print(
-            "\nThis script compresses all circuit folders using"
+            "This script compresses all circuit folders using"
             " multiple methods (.tar.gz, .zip) and places the compressed"
-            " artifacts in the parent folder of the circuit folder.\n"
+            " artifacts in the parent folder of the circuit folder."
         )
 
     # Obtain circuit_dirs from CIRCUIT_PARENT_DIRS
     circuit_dirs = get_child_dirs_from_parent_dirs(CIRCUIT_PARENT_DIRS)
-
-    # Validate all circuit_dirs
-    validate_circuit_dirs(circuit_dirs)
 
     if remove:
         # Remove compressed artifacts for given circuit_dirs
@@ -236,6 +162,6 @@ if __name__ == "__main__":
         # Compress all circuit_dirs
         compress_dirs(circuit_dirs, dry_run=dry_run)
     if dry_run:
+        # if not QUIET:
+        #     _print_help_message()
         print("\n***DRY RUN SUCCESS***")
-        if not QUIET:
-            _print_help_message()
