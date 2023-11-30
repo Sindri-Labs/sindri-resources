@@ -1,6 +1,6 @@
 {
   "$schema": "https://forge.sindri.app/api/v1/sindri-manifest-schema.json",
   "name": "pagerank",
-  "circuitType": "Noir",
-  "provingScheme": "Barretenberg"
+  "circuitType": "noir",
+  "provingScheme": "barretenberg"
 }
