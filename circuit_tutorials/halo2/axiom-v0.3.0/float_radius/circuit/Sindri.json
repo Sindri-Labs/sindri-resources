@@ -1,9 +1,0 @@
-{
-    "circuit_type": "halo2",
-    "class_name": "radius_circuit::circuit_def::CircuitInput",
-    "degree": 13,
-    "halo2_version": "axiom-v0.3.0",
-    "name": "float-radius",
-    "package_name": "radius-circuit",
-    "thread_builder": "GateThreadBuilder"
-}
