@@ -3,6 +3,6 @@
   "circuitType": "halo2",
   "packageName": "mult-example",
   "className": "mult_example::mult_circ::MyCircuit",
-  "degree": "11",
+  "degree": 11,
   "halo2Version": "axiom-v0.2.2"
 }

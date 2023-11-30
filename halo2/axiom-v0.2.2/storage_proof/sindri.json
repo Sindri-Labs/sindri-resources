@@ -3,6 +3,6 @@
   "circuitType": "halo2",
   "packageName": "axiom-eth",
   "className": "axiom_eth::storage::EthBlockStorageCircuit",
-  "degree": "17",
+  "degree": 17,
   "halo2Version": "axiom-v0.2.2"
 }

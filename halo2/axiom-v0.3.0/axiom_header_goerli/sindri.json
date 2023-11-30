@@ -4,6 +4,6 @@
   "packageName": "axiom-eth",
   "className": "axiom_eth::block_header::EthBlockHeaderChainCircuit",
   "threadBuilder": "RlcThreadBuilder",
-  "degree": "14",
+  "degree": 14,
   "halo2Version": "axiom-v0.3.0"
 }

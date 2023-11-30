@@ -4,6 +4,6 @@
   "packageName": "radius-circuit",
   "className": "radius_circuit::circuit_def::CircuitInput",
   "threadBuilder": "GateThreadBuilder",
-  "degree": "13",
+  "degree": 13,
   "halo2Version": "axiom-v0.3.0"
 }
