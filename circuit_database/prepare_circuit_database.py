@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-import json
 import os
 import pathlib
 import sys
@@ -142,7 +141,7 @@ if __name__ == "__main__":
     dry_run = args.dry_run
     compress = args.compress
     remove = args.remove
-    
+
     if dry_run:
         print("\n***DRY RUN BEGIN***\n")
 
