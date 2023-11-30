@@ -1,7 +1,7 @@
 {
-    "PACKAGE_NAME": "quadratic-circuit",
-    "CLASS_NAME": "quadratic_circuit::circuit_def::CircuitInput",
-    "THREAD_BUILDER": "GateThreadBuilder",
-    "DEGREE": "10",
-    "HALO2_BASE_VERSION": "0.3.0"
+    "packageName": "quadratic-circuit",
+    "className": "quadratic_circuit::circuit_def::CircuitInput",
+    "threadBuilder": "GateThreadBuilder",
+    "degree": "10",
+    "halo2BaseVersion": "0.3.0"
 }

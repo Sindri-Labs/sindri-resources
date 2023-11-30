@@ -1,6 +1,6 @@
 {
-    "PACKAGE_NAME": "mult-example",
-    "CLASS_NAME": "mult_example::mult_circ::MyCircuit",
-    "DEGREE": "11",
-    "HALO2_BASE_VERSION": "0.2.2"
+    "packageName": "mult-example",
+    "className": "mult_example::mult_circ::MyCircuit",
+    "degree": "11",
+    "halo2BaseVersion": "0.2.2"
 }

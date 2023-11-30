@@ -1,4 +1,4 @@
 {
-    "circuit_type": "Noir",
-    "proving_scheme": "Barretenberg"
+    "circuitType": "Noir",
+    "provingScheme": "Barretenberg"
 }

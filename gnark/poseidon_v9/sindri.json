@@ -1,7 +1,7 @@
 {
-    "PACKAGE_NAME": "poseidon",
-    "CIRCUIT_NAME": "PoseidonCircuit",
-    "VERSION": "0.9.0",
-    "CURVE_NAME": "bn254",
-    "PROVING_SCHEME": "GROTH16"
+    "packageName": "poseidon",
+    "circuitName": "PoseidonCircuit",
+    "version": "0.9.0",
+    "curveName": "bn254",
+    "provingScheme": "GROTH16"
 }
