@@ -1,6 +1,5 @@
 # Sindri Resources
 This repo contains resources and sample data for the Sindri API.
-DELETE ME
 
 To quickly get started, clone this repo!
 
