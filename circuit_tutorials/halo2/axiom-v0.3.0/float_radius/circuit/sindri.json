@@ -1,9 +1,10 @@
 {
-    "circuit_type": "halo2",
-    "class_name": "radius_circuit::circuit_def::CircuitInput",
-    "degree": 13,
-    "halo2_version": "axiom-v0.3.0",
+    "$schema": "https://forge.sindri.app/api/v1/sindri-manifest-schema.json",
     "name": "float-radius",
-    "package_name": "radius-circuit",
-    "thread_builder": "GateThreadBuilder"
+    "circuitType": "halo2",
+    "className": "radius_circuit::circuit_def::CircuitInput",
+    "degree": 13,
+    "halo2Version": "axiom-v0.3.0",
+    "packageName": "radius-circuit",
+    "threadBuilder": "GateThreadBuilder"
 }

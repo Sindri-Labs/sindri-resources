@@ -1,9 +1,10 @@
 {
-    "circuit_struct_name": "Circuit",
-    "circuit_type": "gnark",
-    "curve": "bls12-377",
-    "gnark_version": "v0.8.1",
+    "$schema": "https://forge.sindri.app/api/v1/sindri-manifest-schema.json",
     "name": "cubic",
-    "package_name": "cubic",
-    "proving_scheme": "groth16"
+    "circuitStructName": "Circuit",
+    "circuitType": "gnark",
+    "curve": "bls12-377",
+    "gnarkVersion": "v0.8.1",
+    "packageName": "cubic",
+    "provingScheme": "groth16"
 }

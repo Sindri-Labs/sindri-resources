@@ -1,8 +1,9 @@
 {
-    "circuit_type": "halo2",
-    "class_name": "axiom_eth::storage::EthBlockStorageCircuit",
-    "degree": 17,
-    "halo2_version": "axiom-v0.2.2",
+    "$schema": "https://forge.sindri.app/api/v1/sindri-manifest-schema.json",
     "name": "axiom-storage-proof",
-    "package_name": "axiom-eth"
+    "circuitType": "halo2",
+    "className": "axiom_eth::storage::EthBlockStorageCircuit",
+    "degree": 17,
+    "halo2Version": "axiom-v0.2.2",
+    "packageName": "axiom-eth"
 }

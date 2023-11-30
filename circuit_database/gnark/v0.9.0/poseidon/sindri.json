@@ -1,9 +1,10 @@
 {
-    "circuit_struct_name": "PoseidonCircuit",
-    "circuit_type": "gnark",
-    "curve": "bn254",
-    "gnark_version": "v0.9.0",
+    "$schema": "https://forge.sindri.app/api/v1/sindri-manifest-schema.json",
     "name": "poseidon",
-    "package_name": "poseidon",
-    "proving_scheme": "groth16"
+    "circuitStructName": "PoseidonCircuit",
+    "circuitType": "gnark",
+    "curve": "bn254",
+    "gnarkVersion": "v0.9.0",
+    "packageName": "poseidon",
+    "provingScheme": "groth16"
 }

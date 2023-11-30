@@ -1,9 +1,10 @@
 {
-    "circuit_type": "halo2",
-    "class_name": "quadratic_circuit::circuit_def::CircuitInput",
-    "degree": 10,
-    "halo2_version": "axiom-v0.3.0",
+    "$schema": "https://forge.sindri.app/api/v1/sindri-manifest-schema.json",
     "name": "quadratic",
-    "package_name": "quadratic-circuit",
-    "thread_builder": "GateThreadBuilder"
+    "circuitType": "halo2",
+    "className": "quadratic_circuit::circuit_def::CircuitInput",
+    "degree": 10,
+    "halo2Version": "axiom-v0.3.0",
+    "packageName": "quadratic-circuit",
+    "threadBuilder": "GateThreadBuilder"
 }

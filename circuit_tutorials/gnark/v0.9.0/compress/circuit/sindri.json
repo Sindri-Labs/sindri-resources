@@ -1,9 +1,10 @@
 {
-    "circuit_struct_name": "Circuit",
-    "circuit_type": "gnark",
-    "curve": "bn254",
-    "gnark_version": "v0.9.0",
+    "$schema": "https://forge.sindri.app/api/v1/sindri-manifest-schema.json",
     "name": "compress",
-    "package_name": "compress",
-    "proving_scheme": "groth16"
+    "circuitStructName": "Circuit",
+    "circuitType": "gnark",
+    "curve": "bn254",
+    "gnarkVersion": "v0.9.0",
+    "packageName": "compress",
+    "provingScheme": "groth16"
 }
