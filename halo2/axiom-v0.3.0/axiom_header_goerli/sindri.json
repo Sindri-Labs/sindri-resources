@@ -1,4 +1,5 @@
 {
+  "name": "axiom-header-goerli",
   "packageName": "axiom-eth",
   "className": "axiom_eth::block_header::EthBlockHeaderChainCircuit",
   "threadBuilder": "RlcThreadBuilder",

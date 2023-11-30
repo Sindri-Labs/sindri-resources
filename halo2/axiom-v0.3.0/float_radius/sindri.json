@@ -1,4 +1,5 @@
 {
+  "name": "float-radius",
   "packageName": "radius-circuit",
   "className": "radius_circuit::circuit_def::CircuitInput",
   "threadBuilder": "GateThreadBuilder",

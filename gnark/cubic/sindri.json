@@ -1,7 +1,8 @@
 {
+  "name": "cubic",
   "packageName": "cubic",
   "circuitName": "Circuit",
   "version": "0.8.1",
   "curveName": "bn254",
-  "provingScheme": "Groth16"
+  "provingScheme": "groth16"
 }

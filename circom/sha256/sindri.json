@@ -1,5 +1,6 @@
 {
+  "name": "sha256",
   "witnessCompiler": "c++",
   "curveName": "bn254",
-  "provingScheme": "Groth16"
+  "provingScheme": "groth16"
 }

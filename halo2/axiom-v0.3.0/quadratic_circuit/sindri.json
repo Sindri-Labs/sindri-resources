@@ -1,4 +1,5 @@
 {
+  "name": "quadratic-circuit",
   "packageName": "quadratic-circuit",
   "className": "quadratic_circuit::circuit_def::CircuitInput",
   "threadBuilder": "GateThreadBuilder",

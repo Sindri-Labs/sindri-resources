@@ -1,4 +1,5 @@
 {
+  "name": "mult-example",
   "packageName": "mult-example",
   "className": "mult_example::mult_circ::MyCircuit",
   "degree": "11",

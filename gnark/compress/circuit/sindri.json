@@ -1,7 +1,8 @@
 {
+  "name": "circuit",
   "packageName": "compress",
   "circuitName": "Circuit",
   "version": "0.9.0",
   "curveName": "bn254",
-  "provingScheme": "Groth16"
+  "provingScheme": "groth16"
 }
