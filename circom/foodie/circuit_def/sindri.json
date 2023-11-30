@@ -1,5 +1,5 @@
 {
-    "witnessCompiler": "c++",
-    "curveName": "bn254",
-    "provingScheme": "Groth16"
+  "witnessCompiler": "c++",
+  "curveName": "bn254",
+  "provingScheme": "Groth16"
 }

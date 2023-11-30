@@ -1,7 +1,7 @@
 {
-    "packageName": "radius-circuit",
-    "className": "radius_circuit::circuit_def::CircuitInput",
-    "threadBuilder": "GateThreadBuilder",
-    "degree": "13",
-    "halo2BaseVersion": "0.3.0"
+  "packageName": "radius-circuit",
+  "className": "radius_circuit::circuit_def::CircuitInput",
+  "threadBuilder": "GateThreadBuilder",
+  "degree": "13",
+  "halo2BaseVersion": "0.3.0"
 }

@@ -1,6 +1,6 @@
 {
-    "packageName": "axiom-eth",
-    "className": "axiom_eth::storage::EthBlockStorageCircuit",
-    "degree": "17",
-    "halo2BaseVersion": "0.2.2"
+  "packageName": "axiom-eth",
+  "className": "axiom_eth::storage::EthBlockStorageCircuit",
+  "degree": "17",
+  "halo2BaseVersion": "0.2.2"
 }
