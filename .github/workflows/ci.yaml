@@ -1,0 +1,60 @@
+name: CI Workflows
+
+on:
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        id: setup-node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Check Casing of `sindri.json` Files
+        run: |
+          # Disable exiting on error so we can check all files.
+          set +e
+
+          # Find all files named `sindri.json` regardless of casing.
+          for file in $(find . -iname sindri.json); do
+            # Check if the file name is `sindri.json` and not `Sindri.json`.
+            if [ $(basename $file) != "sindri.json" ]; then
+              echo "Sindri manifest filename is not 'sindri.json': $file"
+              problem_found=true
+            fi
+          done
+
+          # Exit with an error if any problems were found.
+          if [ "$problem_found" = true ]; then
+            exit 1
+          fi
+
+      - name: Lint Circuit Projects with Sindri CLI
+        if: success() || failure()
+        run: |
+          # Disable exiting on error so we can check all files.
+          set +e
+
+          # Find each project root by finding directories with a `sindri.json` file.
+          problem_found=false
+          for project_root in $(find . -name sindri.json -exec dirname {} \;); do
+            echo "Linting ${project_root}..."
+            cd $project_root
+            npx sindri lint
+            if [ $? -ne 0 ]; then
+              echo "Linting failed for ${project_root}/sindri.json."
+              problem_found=true
+            fi
+            cd -
+          done
+
+          # Exit with an error if any problems were found.
+          if [ "$problem_found" = true ]; then
+            exit 1
+          fi
