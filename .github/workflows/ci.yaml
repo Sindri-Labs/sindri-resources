@@ -35,6 +35,11 @@ jobs:
             exit 1
           fi
 
+      - name: Lint Formatting of Sindri Manifest Files
+        if: success() || failure()
+        run: |
+          npx prettier --check '**/sindri.json'
+
       - name: Lint Circuit Projects with Sindri CLI
         if: success() || failure()
         run: |
