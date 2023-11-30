@@ -3,6 +3,6 @@
   "circuitType": "gnark",
   "packageName": "cubic",
   "circuitStructName": "Circuit",
-  "gnarkVersion": "0.8.1",
+  "gnarkVersion": "v0.8.1",
   "provingScheme": "groth16"
 }

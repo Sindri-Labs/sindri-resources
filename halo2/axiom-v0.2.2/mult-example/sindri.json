@@ -4,5 +4,5 @@
   "packageName": "mult-example",
   "className": "mult_example::mult_circ::MyCircuit",
   "degree": "11",
-  "halo2Version": "0.2.2"
+  "halo2Version": "v0.2.2"
 }

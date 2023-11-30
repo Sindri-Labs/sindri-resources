@@ -5,5 +5,5 @@
   "className": "radius_circuit::circuit_def::CircuitInput",
   "threadBuilder": "GateThreadBuilder",
   "degree": "13",
-  "halo2Version": "0.3.0"
+  "halo2Version": "v0.3.0"
 }
