@@ -2,8 +2,8 @@
   "name": "poseidon",
   "circuitType": "gnark",
   "packageName": "poseidon",
-  "circuitName": "PoseidonCircuit",
-  "version": "0.8.1",
-  "curveName": "bn254",
+  "circuitStructName": "PoseidonCircuit",
+  "gnarkVersion": "v0.8.1",
+  "curve": "bn254",
   "provingScheme": "groth16"
 }

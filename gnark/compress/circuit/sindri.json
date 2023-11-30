@@ -2,8 +2,8 @@
   "name": "circuit",
   "circuitType": "gnark",
   "packageName": "compress",
-  "circuitName": "Circuit",
-  "version": "0.9.0",
-  "curveName": "bn254",
+  "circuitStructName": "Circuit",
+  "gnarkVersion": "v0.9.0",
+  "curve": "bn254",
   "provingScheme": "groth16"
 }

@@ -2,8 +2,7 @@
   "name": "cubic",
   "circuitType": "gnark",
   "packageName": "cubic",
-  "circuitName": "Circuit",
-  "version": "0.8.1",
-  "curveName": "bn254",
+  "circuitStructName": "Circuit",
+  "gnarkVersion": "0.8.1",
   "provingScheme": "groth16"
 }
