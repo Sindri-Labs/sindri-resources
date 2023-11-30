@@ -1,10 +1,10 @@
 {
-    "$schema": "https://forge.sindri.app/api/v1/sindri-manifest-schema.json",
-    "name": "axiom-goerli-header",
-    "circuitType": "halo2",
-    "className": "axiom_eth::block_header::EthBlockHeaderChainCircuit",
-    "degree": 14,
-    "halo2Version": "axiom-v0.3.0",
-    "packageName": "axiom-eth",
-    "threadBuilder": "RlcThreadBuilder"
+  "$schema": "https://forge.sindri.app/api/v1/sindri-manifest-schema.json",
+  "name": "axiom-goerli-header",
+  "circuitType": "halo2",
+  "className": "axiom_eth::block_header::EthBlockHeaderChainCircuit",
+  "degree": 14,
+  "halo2Version": "axiom-v0.3.0",
+  "packageName": "axiom-eth",
+  "threadBuilder": "RlcThreadBuilder"
 }

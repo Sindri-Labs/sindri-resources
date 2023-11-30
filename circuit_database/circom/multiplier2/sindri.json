@@ -1,8 +1,8 @@
 {
-    "$schema": "https://forge.sindri.app/api/v1/sindri-manifest-schema.json",
-    "name": "multiplier2",
-    "circuitType": "circom",
-    "curve": "bn254",
-    "provingScheme": "groth16",
-    "witnessCompiler": "c++"
+  "$schema": "https://forge.sindri.app/api/v1/sindri-manifest-schema.json",
+  "name": "multiplier2",
+  "circuitType": "circom",
+  "curve": "bn254",
+  "provingScheme": "groth16",
+  "witnessCompiler": "c++"
 }
