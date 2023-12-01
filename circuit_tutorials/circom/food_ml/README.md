@@ -1,7 +1,5 @@
 # ZKML for Culinary Categories
 
-# TODO: UPDATE. New script
-
 
 Inspired by [this article](https://www.nature.com/articles/srep00196), we trained a deep neural net (DNN) to recognize combinations of ingredients as identifiers for a particular type of cuisine.  
 ![pair_figure](ingredient_combos.png)
