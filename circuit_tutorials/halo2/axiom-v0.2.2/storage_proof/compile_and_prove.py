@@ -1,22 +1,22 @@
 #!/usr/bin/python3
-import sys
-sys.path.append("../../../../reference_code")
-from sdk import SindriSdk
 import os
 
-# NOTE: Provide your API Key here
+from sindri_labs.sindri import Sindri  # pip install sindri-labs
+
+# NOTE: Provide your API Key and API Url
 API_KEY = os.getenv("SINDRI_API_KEY", "")
 API_URL = os.getenv("SINDRI_API_URL", "https://forge.sindri.app/api/")
 
-circuit_upload_path = "circuit"
-proof_input = ""
+# Initialize Sindri API SDK
+sindri = Sindri(API_KEY, api_url=API_URL, verbose_level=1)
+
+# Create the circuit
+circuit_upload_path = "circuit/"
+circuit_id = sindri.create_circuit(circuit_upload_path)
+
+# Prove the circuit
 proof_input_file_path = "input.json"
 with open(proof_input_file_path, "r") as f:
-    proof_input = f.read()
+    proof_id = sindri.prove_circuit(circuit_id, f.read())
 
-sindri_sdk = SindriSdk(verbose_level=1, api_key=API_KEY, api_url=API_URL)
-circuit_id = sindri_sdk.create_circuit(circuit_upload_path)
-proof_id = sindri_sdk.prove_circuit(circuit_id, proof_input)
-
-print("Done!")
-print("Using Sindri Labs' API is EZ!\n")
+print("Done!\nUsing Sindri Labs' API is EZ!\n")

@@ -2,10 +2,10 @@
 import json
 import os
 import sys
-sys.path.append("../../../reference_code")
-from sdk import SindriSdk
 
-# NOTE: Provide your API Key here
+from sindri_labs.sindri import Sindri  # pip install sindri-labs
+
+# NOTE: Provide your API Key and API Url
 API_KEY = os.getenv("SINDRI_API_KEY", "")
 API_URL = os.getenv("SINDRI_API_URL", "https://forge.sindri.app/api/")
 
@@ -28,8 +28,7 @@ def prepare_query(query_raw) -> dict:
         else:
             invec[inglist.index(elem)] += 1
     if sum(invec) < 1:
-        print("No ingredients identified.")
-        sys.exit(1)
+        sys.exit("No ingredients identified.")
 
     with open(model_weights_file_path, "r") as modelfile:
         query = json.loads(modelfile.read())
@@ -39,18 +38,21 @@ def prepare_query(query_raw) -> dict:
 
 
 def interpret_result(proof_public) -> str:
+    # Transform the resulting public output to the region
     with open(model_regions_file_path, "r") as f:
         regions = [elem[:-1] for elem in f.readlines()]
     return regions[proof_public]
 
 
+# Initialize Sindri API SDK
+sindri = Sindri(API_KEY, api_url=API_URL, verbose_level=1)
+
 # Create the circuit
-circuit_upload_path = "circuit"
-
-sindri_sdk = SindriSdk(verbose_level=1, api_key=API_KEY, api_url=API_URL)
-circuit_id = sindri_sdk.create_circuit(circuit_upload_path)
+circuit_upload_path = "circuit/"
+circuit_id = sindri.create_circuit(circuit_upload_path)
 
 
+# Transform text input to proof input
 expected_result = "NorthAmerican"
 query_raw = "mango soy_sauce peanut_butter spaghetti watermelon beef"
 
@@ -65,14 +67,14 @@ query_raw = "mango soy_sauce peanut_butter spaghetti watermelon beef"
 proof_input = json.dumps(prepare_query(query_raw))
 
 # Prove the circuit
-proof_id = sindri_sdk.prove_circuit(circuit_id, proof_input)
+proof_id = sindri.prove_circuit(circuit_id, proof_input)
 
 # Obtain the result
-sindri_sdk.set_verbose_level(0)
-proof = sindri_sdk.get_proof(proof_id)
-proof_public = proof["public"]
+sindri.set_verbose_level(0)
+proof = sindri.get_proof(proof_id)
 
 # Obtain the plaintext result
+proof_public = proof["public"]
 region = interpret_result(int(proof_public[0]))
 
 print(f"\nInputted query: {query_raw}")
