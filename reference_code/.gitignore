@@ -1,0 +1,19 @@
+# Ignore JavaScript dependency/module files.
+/node_modules/
+/package-lock.json
+/package.json
+
+# Ignore rust executables and build artifacts
+/quickstart_rust/Cargo.lock
+/quickstart_rust/debug
+/quickstart_rust/target
+
+# Ignore Python dependency/package files.
+/.venv/
+/poetry.lock
+/pyproject.toml
+/requirements.txt
+__pycache__
+
+# Ignore Other
+.vscode

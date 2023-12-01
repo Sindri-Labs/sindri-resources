@@ -1,0 +1,10 @@
+{
+  "$schema": "https://forge.sindri.app/api/v1/sindri-manifest-schema.json",
+  "name": "exponentiate",
+  "circuitStructName": "Circuit",
+  "circuitType": "gnark",
+  "curve": "bn254",
+  "gnarkVersion": "v0.8.1",
+  "packageName": "exponentiate",
+  "provingScheme": "groth16"
+}

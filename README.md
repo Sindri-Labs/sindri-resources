@@ -1,15 +1,24 @@
-# Forge Sample Data
-This repo contains sample data for Sindri Labs' Forge API.  The readme within each framework directory will contain information specific to that circuit type.
+# Sindri Resources
+This repo contains resources and sample data for the Sindri API.
 
+To quickly get started, clone this repo!
 
-## Common Conventions
+The `README.md` within each directory will contain more detailed information.
+```
+📦sindri-resources
+ ┣ 📂circuit_database
+ ┣ 📂circuit_tutorials
+ ┣ 📂reference_code
+ ┗ 📜README.md
+```
 
-The following information applies to all circuit types.
+**Check out the [Sindri Documentation](https://sindri-labs.github.io/docs/forge/introduction/) for more information, guides, interactive tutorials, Q&A, and more!**
 
-- Each example will include a `.tar.gz` file outside the code directory which may be directly uploaded as a circuit.
-- Example input for a proof has been included within the source code folder for any example circuit.
+### Circuit Database
+Sample circuits in multiple frameworks for getting started with the Sindri API. Every circuit should work as-is.
 
-#### Compressing Circuit Code
-- Forge code uploads must be archived in a **gzip** tarfile (`.tar.gz`), zip compression is not currently supported.
-- Forge expects a tarfile of a directory.
-- Even if you have 1 file, place the file a directory and archive that entire directory, not just the single file.
+### Circuit Tutorials
+Detailed circuit examples with walkthroughs and explanations. These examples are referenced in our docs and posts.
+
+### Reference Code
+Quick-start code in multiple languages for interfacing with the Sindri API. Copy and paste!
