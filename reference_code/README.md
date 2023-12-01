@@ -4,10 +4,19 @@ The Sindri Docs explain [how to obtain your API key](https://sindri-labs.github.
 
 You can then either set the `SINDRI_API_KEY` environment variable with your API key. Alternatively, you may modify the value of the `API_KEY` global variable in the below scripts before running them.
 
+# Sindri SDK
+
+For users just getting started using Sindri's API, we have published [Sindri's python SDK](https://pypi.org/project/sindri-labs/) which abstracts API calls into a simple interface.  To see an example of this SDK in action:
+
+- Install Python 3.
+- Install the python sdk by running `pip install sindri-labs`.
+- Inside of this directory (`reference_code/`), invoke the python script in the command line via `SINDRI_API_KEY=<your-api-key> python3 sdk_quickstart.py`.
+
+This will authenticate via your API key, upload a circuit from `circuit_database/` and create a proof from that circuit within 23 lines of code! See the [docs](https://sindri-labs.github.io/docs/forge/using-forge/api-basics/) for more details.
 
 # Quick-Start Scripts
 
-We provide quick-start scripts in JavaScript ([`quickstart.js`](./quickstart.js)) and Python ([`quickstart.py`](./quickstart.py)) as well as compilable quick-start rust code ([`quickstart_rust/src/main.rs`](./quickstart_rust/src/main.rs)).
+For users that want less abstracted API calls that they can adapt within their own pipeline, we provide quick-start scripts in JavaScript ([`quickstart.js`](./quickstart.js)) and Python ([`quickstart.py`](./quickstart.py)) as well as compilable quick-start rust code ([`quickstart_rust/src/main.rs`](./quickstart_rust/src/main.rs)).
 These scripts will create a Circom circuit in Sindri, create a gzipped upload from the sample circuit folder located at [`../circuit_database/circom/multiplier2/`](../circuit_database/circom/multiplier2/), and compile it.
 Once a proof has finished executing, the code will then print the public outputs from the circuit.
 
@@ -42,11 +51,3 @@ Circuit proof output signal: 294
 ```
 
 Note that the circuit computes the product of two inputs `a=7` and `b=42`, so the output signal should change accordingly when you alter `proof_input`/`proofInput` in the input scripts.
-
-# Sindri SDK
-
-### Python ([`sdk.py`](./sdk.py))
-The `SindriSdk` class in `skd.py` abstracts the api calls into a simple interface.
-- Install Python 3.
-- Install the python [requests library](https://pypi.org/project/requests/).
-- Inside of this directory (`scripts`), invoke the python script in the command line via `SINDRI_API_KEY=<your-api-key> python3 sdk_quickstart.py`.
