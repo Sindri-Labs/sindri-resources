@@ -1,6 +1,6 @@
 # Food ML - ZKML for Culinary Categories
 
-We trained a deep neural net (DNN) to recognize combinations of ingredients as identifiers for a particular type of cuisine. It was inspired by [this article](https://www.nature.com/articles/srep00196).
+We trained a deep neural net (DNN) to recognize combinations of ingredients as identifiers for a particular type of cuisine. The model was inspired by [this article](https://www.nature.com/articles/srep00196).
 
 **Sindri's novel proof acceleration techniques provide an essential contribution towards the goal of making nontrivial ZKML feasible.**
 
