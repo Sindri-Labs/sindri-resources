@@ -1,16 +1,15 @@
 #! /usr/bin/env python
 import os
-
 from sindri_labs.sindri import Sindri  # pip install sindri-labs
 
-# NOTE: Provide your API Key and API Url
+# Obtain your API Key from an environment variable
 API_KEY = os.getenv("SINDRI_API_KEY", "")
-API_URL = os.getenv("SINDRI_API_URL", "https://forge.sindri.app/api/")
 
-# Initialize Sindri API SDK
-sindri = Sindri(API_KEY, api_url=API_URL, verbose_level=2)
+# Initialize an instance of the Sindri API SDK
+sindri = Sindri(API_KEY)
+sindri.set_verbose_level(1)  # Enable verbose stdout
 
-# Create the circuit
+# Create a circuit
 circuit_upload_path = "../circuit_database/circom/multiplier2/"
 circuit_id = sindri.create_circuit(circuit_upload_path)
 
@@ -19,4 +18,3 @@ proof_input_file_path = "../circuit_database/circom/multiplier2/input.json"
 with open(proof_input_file_path, "r") as f:
     proof_id = sindri.prove_circuit(circuit_id, f.read())
 
-print("Done!\nUsing Sindri Labs' API is EZ!\n")
