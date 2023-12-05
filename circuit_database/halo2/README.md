@@ -1,20 +1,12 @@
 # Halo2 Circuits
 
-Every directory is a circuit that contains
-- `README.md`
-- `Sindri.json`
-- Circuit code
-
-
-## Available Circuits
-
-### v0.2.2
+### Axiom v0.2.2
 
 | Name | Size (DEGREE) | Original Source | Functionality | 
 | ---- | ---- | --------------- | ------------- | 
 |mult-example| 11 | [halo2-lib's benchmarking](https://github.com/axiom-crypto/halo2-lib/blob/v0.2.2/halo2-base/benches/mul.rs) | Performs $b*c$ 120 times with no public output (120 is a tunable parameter to time proofs for circuits of various sizes)|
 
-### v0.3.0
+### Axiom v0.3.0
 
 | Name | Size (DEGREE) | Original Source | Functionality | 
 | ---- | ---- | --------------- | ------------- |
