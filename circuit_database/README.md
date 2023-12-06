@@ -1,6 +1,6 @@
 # Sindri Circuit Database
 This directory contains sample circuits for interacting with the Sindri Labs' API.
-The `README.md` within each framework directory will contain information specific to that circuit type.
+The `README.md` within each framework directory contains information specific to that circuit type.
 
 Each sample circuit will include:
 - A `README.md` 
