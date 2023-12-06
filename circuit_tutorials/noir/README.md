@@ -1,22 +1,5 @@
-# Sample Noir Circuits
+# Noir Circuit Tutorials
 
-In this directory, we provide a handful of Noir circuits which have already been prepared to use with Sindri. You may find them useful as a reference when writing your own circuits; or you may use these as circuit uploads if you are just beginning to try out Sindri.
+In this directory, we provide a handful of Noir circuit tutorials which have been prepared for use with Sindri.
 
-See Sindri's documentation for more complete instructions. 
-
-## Available Circuits
-
-Coming Soon
-
-## Circuit Requirements
-
-Coming Soon
-
-### Supporting Files
-The file `Sindri.json` should be defined as follows:
-```json
-{
-    "circuit_type": "Noir",
-    "proving_scheme": "Barretenberg"
-}
-```
+See the [Sindri Noir Documentation](https://sindri-labs.github.io/docs/how-to-guides/frameworks/noir/) for detailed information.

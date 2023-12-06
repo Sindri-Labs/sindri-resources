@@ -1,13 +1,5 @@
 # Gnark Circuits
 
-Every directory is a circuit that contains
-- `README.md`
-- `Sindri.json`
-- Circuit code
-
-
-## Available Circuits
-
 ### Gnark v0.8.1 (Gnark-Crypto v0.9.1)
 
 | Name | Size (DEGREE) | Original Source | Functionality | 
