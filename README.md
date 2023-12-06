@@ -1,7 +1,7 @@
 # Sindri Resources
-This repo contains resources and sample data for the Sindri API.
+This repository contains resources and sample data for the Sindri API.
 
-To quickly get started, clone this repo!
+To quickly get started, clone this repository!
 
 The `README.md` within each directory will contain more detailed information.
 ```
