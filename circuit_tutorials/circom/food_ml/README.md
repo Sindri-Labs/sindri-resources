@@ -95,4 +95,4 @@ See `vocab.txt` for a full list of all 374 recognizable ingredients. If you ente
 
 The training data came from the supplementary data for this [article](https://www.nature.com/articles/srep00196)
 
-The conversion from trained a Keras model to a Circom circuit was straightforward due to this [amazing repo](https://github.com/socathie/keras2circom)
+The conversion from a trained Keras model to a Circom circuit was straightforward due to this [amazing repo](https://github.com/socathie/keras2circom)
