@@ -10,7 +10,7 @@ You can then set the `SINDRI_API_KEY` environment variable with your API key.
 # SDK Quickstart
 
 [`sdk_quickstart.py`](./sdk_quickstart.py) is for users that are just getting started using Sindri's API.
-It utilizes [Sindri's Python SDK](https://pypi.org/project/sindri-labs/), which abstracts Sindri API calls into a simple interface.
+It utilizes the [Sindri Python SDK](https://pypi.org/project/sindri-labs/), which abstracts Sindri API calls into a simple interface.
 
 Refer to the Sindri docs for quickly [getting started with the Python SDK](https://sindri-labs.github.io/docs/getting-started/api-sdk/).
 
