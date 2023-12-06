@@ -1,7 +1,7 @@
 # Sudoku Circuit
 
 This circuit accepts a (public) sudoku puzzle and a (private) solution to that puzzle; it has 11906 constraints.
-Both are formatted as 81-long integer lists with entries 1-9.  
+Both are formatted as 81 digit-long strings made up of the digits "0" - "9".
 
 Source: https://github.com/web3-master/zksnark-sudoku
 
