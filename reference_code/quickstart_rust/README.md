@@ -1,6 +1,6 @@
 # Rust Quickstart
 
-The code in `src/main.rs` will create a circuit, upload, and initiate compile. Then from that compiled circuit, it will initiate a proof. From this directory, you can call
+The code in `src/main.rs` will create a circuit, upload, and initiate compilation. Then from that compiled circuit, it will initiate a proof. From this directory, you can call
 ```bash
 cargo run
 ```
