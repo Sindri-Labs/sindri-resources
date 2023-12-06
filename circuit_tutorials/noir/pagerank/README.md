@@ -1,7 +1,7 @@
 # Pagerank Circuit
 
 This circuit accepts a list of edges in a sparse graph with 20 nodes.
-It will compute the pagerank of those 20 nodes and return the sorted list of nodes
+It will compute the pagerank of those 20 nodes and return the sorted list of nodes.
 The most "influential" node in the network is last in the sorted list of `Verifier.toml`.
 
 ### Circuit Info
