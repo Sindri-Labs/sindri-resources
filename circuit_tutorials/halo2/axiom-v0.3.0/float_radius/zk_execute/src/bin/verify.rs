@@ -30,9 +30,8 @@ use radius_circuit::{
 
 #[tokio::main]
 async fn main() {
-    std::env::set_var("LOOKUP_BITS","12");   
-    std::env::set_var("FLEX_GATE_CONFIG_PARAMS", r#"{"strategy":"Vertical","k":13,"num_advice_per_phase":[3,0,0],"num_lookup_advice_per_phase":[1,0,0],"num_fixed":1}"#);
 
+    println!("Reading proof details locally");
     let mut file = fs::File::open("./data/prove_out.json").unwrap();
     let mut data = String::new();
     file.read_to_string(&mut data).unwrap();
@@ -49,7 +48,8 @@ async fn main() {
     let fixed_point_chip = FixedPointChip::<Fr, PRECISION_BITS>::default(lookup_bits);
 
     let radius = fixed_point_chip.dequantization(field_instance);
-    println!("radius: {:?}", radius);
+    println!("The claimed radius for this proof: {:?}", radius);
+    println!("");
 
     // download SRS if it doesn't exist in ./data already
     if !std::path::Path::new("./data/kzg_bn254_15.srs").is_file() {
@@ -63,6 +63,8 @@ async fn main() {
     let mut setup_bufreader = BufReader::new(setup_fp);
     let setup = ParamsKZG::<Bn256>::read(&mut setup_bufreader).expect("can't read setup");
 
+    std::env::set_var("LOOKUP_BITS","12");   
+    std::env::set_var("FLEX_GATE_CONFIG_PARAMS", r#"{"strategy":"Vertical","k":13,"num_advice_per_phase":[3,0,0],"num_lookup_advice_per_phase":[1,0,0],"num_fixed":1}"#);
     let verification_key = &proof_data["verification_key"]["data"].as_str().unwrap();
     let b64_data = general_purpose::STANDARD.decode(verification_key).unwrap();
     let vk: VerifyingKey<G1Affine> = VerifyingKey::from_bytes::<RadiusCircuitBuilder<Fr>>(&b64_data[..], SerdeFormat::RawBytesUnchecked).unwrap();
@@ -73,14 +75,20 @@ async fn main() {
 
     let strategy = SingleStrategy::new(&setup);
 
-    assert!(verify_proof::<
+    println!("Verifying Proof + Public");
+    let verify_status = verify_proof::<
         KZGCommitmentScheme<Bn256>,
         VerifierSHPLONK<'_, Bn256>,
         Challenge255<G1Affine>,
         Blake2bRead<_, G1Affine, Challenge255<G1Affine>>,
         SingleStrategy<'_, Bn256>,
-    >(&setup, &vk, strategy, &[&[&[field_instance]]], &mut transcript)
-    .is_ok());
+    >(&setup, &vk, strategy, &[&[&[field_instance]]], &mut transcript);
+    if !verify_status.is_ok() { // function technically executes, but proof is incorrect
+        eprintln!("Verify failed!");
+        std::process::exit(1);
+    }
+
+    println!("Verification Successful!")
 
 
 }

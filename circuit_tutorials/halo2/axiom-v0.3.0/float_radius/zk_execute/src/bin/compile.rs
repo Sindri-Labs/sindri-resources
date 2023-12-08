@@ -36,6 +36,7 @@ async fn main() {
     let upload = reqwest::multipart::Form::new().part("files", part);
 
     // Create new circuit
+    println!("Compiling circuit");
     let client = Client::new();
     let response = client
         .post(format!("{api_url}circuit/create"))
@@ -47,6 +48,7 @@ async fn main() {
     assert_eq!(&response.status().as_u16(), &201u16, "Expected status code 201");
     let response_body = response.json::<Value>().await.unwrap();
     let circuit_id = response_body["circuit_id"].as_str().unwrap(); 
+    println!("Circuit ID: {:?}", &circuit_id);
 
     // Poll circuit detail until it has a status of Ready or Failed
     let circuit_data = poll_status(
@@ -59,6 +61,7 @@ async fn main() {
         std::process::exit(1);
     }
 
+    println!("Saving circuit details locally");
     std::fs::create_dir_all("./data").unwrap();
     let file = File::create("./data/compile_out.json").unwrap();
     let mut writer = BufWriter::new(file);
