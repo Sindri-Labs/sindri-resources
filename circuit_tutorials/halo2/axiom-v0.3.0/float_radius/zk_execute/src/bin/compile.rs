@@ -1,5 +1,4 @@
 use zk_execute::{
-    CircuitResponse,
     headers_json,
     poll_status
 };
@@ -14,6 +13,7 @@ use std::{
     fs::File,
     io::{BufWriter,Cursor,Write}
 };
+use serde_json::Value;
 
 #[tokio::main]
 async fn main() {
@@ -45,7 +45,8 @@ async fn main() {
         .await
         .unwrap();
     assert_eq!(&response.status().as_u16(), &201u16, "Expected status code 201");
-    let circuit_id = response.json::<CircuitResponse>().await.unwrap().circuit_id; 
+    let response_body = response.json::<Value>().await.unwrap();
+    let circuit_id = response_body["circuit_id"].as_str().unwrap(); 
 
     // Poll circuit detail until it has a status of Ready or Failed
     let circuit_data = poll_status(
@@ -58,6 +59,7 @@ async fn main() {
         std::process::exit(1);
     }
 
+    std::fs::create_dir_all("./data").unwrap();
     let file = File::create("./data/compile_out.json").unwrap();
     let mut writer = BufWriter::new(file);
     serde_json::to_writer_pretty(&mut writer, &circuit_data).unwrap();

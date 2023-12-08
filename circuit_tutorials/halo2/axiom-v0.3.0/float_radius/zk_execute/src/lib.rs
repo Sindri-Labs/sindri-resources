@@ -1,21 +1,11 @@
+use std::io;
+use std::io::Write;
 use std::time::Duration;
-use serde::Deserialize;
 use serde_json::Value;
 use reqwest::{
     Client, 
     header::{HeaderMap, HeaderValue}
 };
-
-// Structs to decode JSON endpoint responses
-#[derive(Debug,Clone,Deserialize)]
-pub struct CircuitResponse {
-    pub circuit_id: String,
-}
-
-#[derive(Debug,Clone,Deserialize)]
-pub struct ProofResponse {
-    pub proof_id: String,
-}
 
 // Functions which return Reqwest Header
 pub fn headers_json(api_key: &str) -> HeaderMap {
@@ -32,6 +22,7 @@ pub async fn poll_status(
     api_key: &str,
     timeout: i64
 ) -> Value {
+    println!("Polling");
     let client = Client::new();
     for i in 1..timeout {
 
@@ -46,13 +37,16 @@ pub async fn poll_status(
         let data = response.json::<Value>().await.unwrap();
         let status = &data["status"].to_string();
         if ["Ready", "Failed"].iter().any(|&s| status.as_str().contains(s)) {
+            println!("")
             println!("Polling exited after {} seconds with status: {}", i, &status);
             return data
         }
         
         tokio::time::sleep(Duration::from_secs(1)).await;
+        print!(".");
+        io::stdout().flush().unwrap();
     }
-
+    println!("")
     println!("Polling timed out after {} seconds", timeout);
     std::process::exit(1);
 }

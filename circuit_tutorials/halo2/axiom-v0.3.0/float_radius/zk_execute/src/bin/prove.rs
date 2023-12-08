@@ -1,5 +1,4 @@
 use zk_execute::{
-    ProofResponse,
     headers_json,
     poll_status
 };
@@ -29,7 +28,9 @@ async fn main() {
     println!("{:?}",&circuit_id);
 
     // Initiate proof generation.
-    let proof_input =  r#"{"x": 5.28978, "y": 3.14217}"#;
+    let mut proof_input_file = fs::File::open("example-input.json").unwrap();
+    let mut proof_input = String::new();
+    proof_input_file.read_to_string(&mut proof_input).unwrap();
     let map = serde_json::json!({"proof_input": proof_input});
 
     let client = Client::new();
@@ -41,8 +42,8 @@ async fn main() {
         .await
         .unwrap();
     assert_eq!(&response.status().as_u16(), &201u16, "Expected status code 201");
-    
-    let proof_id = response.json::<ProofResponse>().await.unwrap().proof_id;
+    let response_body = response.json::<Value>().await.unwrap();
+    let proof_id = response_body["proof_id"].as_str().unwrap();
 
     // Poll proof detail until it has a status of Ready or Failed
     let proof_data = poll_status(
@@ -57,7 +58,7 @@ async fn main() {
 
     let file = fs::File::create("./data/prove_out.json").unwrap();
     let mut writer = BufWriter::new(file);
-    serde_json::to_writer_pretty(&mut writer, &circuit_data).unwrap();
+    serde_json::to_writer_pretty(&mut writer, &proof_data).unwrap();
     writer.flush().unwrap(); 
 
     // // Retrieve output from the proof.
