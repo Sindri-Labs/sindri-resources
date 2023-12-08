@@ -8,32 +8,30 @@ use base64::{engine::general_purpose, Engine as _};
 use halo2_base::{
     halo2_proofs::{
         SerdeFormat,
-        plonk::{verify_proof, VerifyingKey,Circuit},
+        plonk::{verify_proof, VerifyingKey},
         halo2curves::bn256::{Bn256,Fr, G1Affine},
-        halo2curves::serde::SerdeObject,
-        poly::commitment::{ParamsProver, Params},
+        poly::commitment::Params,
         poly::kzg::{
             commitment::{KZGCommitmentScheme, ParamsKZG},
-            multiopen::{ProverSHPLONK, VerifierSHPLONK},
+            multiopen::VerifierSHPLONK,
             strategy::SingleStrategy,
         },
 
         transcript::{
-            Blake2bRead, Blake2bWrite, Challenge255, TranscriptReadBuffer, TranscriptWriterBuffer,
-            Keccak256Read,Keccak256Write
+            Blake2bRead, Challenge255, TranscriptReadBuffer
         },
-    },
-    utils::{fs::gen_srs},
+    }
 };
 use radius_circuit::{
-    circuit_def::CircuitInput,
-    gadgets::{FixedPointChip,FixedPointInstructions}
+    circuit_def::RadiusCircuitBuilder,
+    gadgets::FixedPointChip,
 };
-use halo2_base::gates::builder::GateCircuitBuilder;
-use halo2_base::gates::builder::GateThreadBuilder;
+
 
 #[tokio::main]
 async fn main() {
+    std::env::set_var("LOOKUP_BITS","12");   
+    std::env::set_var("FLEX_GATE_CONFIG_PARAMS", r#"{"strategy":"Vertical","k":13,"num_advice_per_phase":[3,0,0],"num_lookup_advice_per_phase":[1,0,0],"num_fixed":1}"#);
 
     let mut file = fs::File::open("./data/prove_out.json").unwrap();
     let mut data = String::new();
@@ -53,12 +51,6 @@ async fn main() {
     let radius = fixed_point_chip.dequantization(field_instance);
     println!("radius: {:?}", radius);
 
-
-    std::env::set_var("RUST_BACKTRACE","1");
-    std::env::set_var("LOOKUP_BITS","12");   
-    let input = CircuitInput::<Fr>::default(); 
-    let circuit = input.create_circuit(GateThreadBuilder::keygen(), None);
-
     // download SRS if it doesn't exist in ./data already
     if !std::path::Path::new("./data/kzg_bn254_15.srs").is_file() {
         let srs_link = "https://axiom-crypto.s3.amazonaws.com/params/kzg_bn254_15.srs";
@@ -67,28 +59,28 @@ async fn main() {
         let mut content =  Cursor::new(response.bytes().await.unwrap());
         std::io::copy(&mut content, &mut file).unwrap();
     }
-    let mut setup_fp = fs::File::open("./data/kzg_bn254_15.srs").expect("can't open setup_fn");
+    let setup_fp = fs::File::open("./data/kzg_bn254_15.srs").expect("can't open setup_fn");
     let mut setup_bufreader = BufReader::new(setup_fp);
     let setup = ParamsKZG::<Bn256>::read(&mut setup_bufreader).expect("can't read setup");
 
     let verification_key = &proof_data["verification_key"]["data"].as_str().unwrap();
-    let mut b64_data = general_purpose::STANDARD.decode(verification_key).unwrap();
-    let vk: VerifyingKey<G1Affine> = VerifyingKey::from_bytes::<GateCircuitBuilder<Fr>>(&b64_data[..], SerdeFormat::RawBytesUnchecked).unwrap();
+    let b64_data = general_purpose::STANDARD.decode(verification_key).unwrap();
+    let vk: VerifyingKey<G1Affine> = VerifyingKey::from_bytes::<RadiusCircuitBuilder<Fr>>(&b64_data[..], SerdeFormat::RawBytesUnchecked).unwrap();
 
     let proof = &proof_data["proof"]["data"].as_str().unwrap();
-    b64_data = general_purpose::STANDARD.decode(proof).unwrap();
+    let b64_data = general_purpose::STANDARD.decode(proof).unwrap();
     let mut transcript =  Blake2bRead::<_, G1Affine, Challenge255<_>>::init(&b64_data[..]);
-    
+
     let strategy = SingleStrategy::new(&setup);
 
-    // assert!(verify_proof::<
-    //     KZGCommitmentScheme<Bn256>,
-    //     VerifierSHPLONK<'_, Bn256>,
-    //     Challenge255<G1Affine>,
-    //     Blake2bRead<_, G1Affine, Challenge255<G1Affine>>,
-    //     SingleStrategy<'_, Bn256>,
-    // >(&setup, pk.get_vk(), strategy, &[&[&instances]], &mut transcript)
-    // .is_ok());
+    assert!(verify_proof::<
+        KZGCommitmentScheme<Bn256>,
+        VerifierSHPLONK<'_, Bn256>,
+        Challenge255<G1Affine>,
+        Blake2bRead<_, G1Affine, Challenge255<G1Affine>>,
+        SingleStrategy<'_, Bn256>,
+    >(&setup, &vk, strategy, &[&[&[field_instance]]], &mut transcript)
+    .is_ok());
 
 
 }
