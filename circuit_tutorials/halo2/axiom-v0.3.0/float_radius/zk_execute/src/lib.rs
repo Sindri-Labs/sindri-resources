@@ -37,7 +37,7 @@ pub async fn poll_status(
         let data = response.json::<Value>().await.unwrap();
         let status = &data["status"].to_string();
         if ["Ready", "Failed"].iter().any(|&s| status.as_str().contains(s)) {
-            println!("")
+            println!("");
             println!("Polling exited after {} seconds with status: {}", i, &status);
             return data
         }
@@ -46,7 +46,7 @@ pub async fn poll_status(
         print!(".");
         io::stdout().flush().unwrap();
     }
-    println!("")
+    println!("");
     println!("Polling timed out after {} seconds", timeout);
     std::process::exit(1);
 }
