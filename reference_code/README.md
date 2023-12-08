@@ -1,18 +1,18 @@
+# Reference Code
+This directory contains quick-start code in multiple languages for interfacing with the Sindri API.
+
 # Setup
 You will need a Sindri API key in order to run the scripts.
-The Sindri Docs explain [how to obtain your API key](https://sindri-labs.github.io/docs/forge/using-forge/access-management/#api-authentication).
+The Sindri Docs explain [how to obtain your API key](https://sindri-labs.github.io/docs/topic-guides/access-management/#api-authentication).
 
-You can then either set the `SINDRI_API_KEY` environment variable with your API key. Alternatively, you may modify the value of the `API_KEY` global variable in the below scripts before running them.
+You can then set the `SINDRI_API_KEY` environment variable with your API key.
 
-# Sindri SDK
+# SDK Quickstart
 
-For users just getting started using Sindri's API, we have published [Sindri's python SDK](https://pypi.org/project/sindri-labs/) which abstracts API calls into a simple interface.  To see an example of this SDK in action:
+[`sdk_quickstart.py`](./sdk_quickstart.py) is for users that are just getting started using Sindri's API.
+It utilizes the [Sindri Python SDK](https://pypi.org/project/sindri-labs/), which abstracts Sindri API calls into a simple interface.
 
-- Install Python 3.
-- Install the python sdk by running `pip install sindri-labs`.
-- Inside of this directory (`reference_code/`), invoke the python script in the command line via `SINDRI_API_KEY=<your-api-key> python3 sdk_quickstart.py`.
-
-This will authenticate via your API key, upload a circuit from `circuit_database/` and create a proof from that circuit within 23 lines of code! See the [docs](https://sindri-labs.github.io/docs/forge/using-forge/api-basics/) for more details.
+Refer to the Sindri documentation for quickly [getting started with the Python SDK](https://sindri-labs.github.io/docs/getting-started/api-sdk/).
 
 # Quick-Start Scripts
 

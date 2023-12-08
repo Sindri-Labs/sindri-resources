@@ -1,7 +1,7 @@
 # Sindri Resources
-This repo contains resources and sample data for the Sindri API.
+This repository contains resources and sample data for the Sindri API.
 
-To quickly get started, clone this repo!
+To quickly get started, clone this repository!
 
 The `README.md` within each directory will contain more detailed information.
 ```
@@ -12,7 +12,7 @@ The `README.md` within each directory will contain more detailed information.
  ┗ 📜README.md
 ```
 
-**Check out the [Sindri Documentation](https://sindri-labs.github.io/docs/forge/introduction/) for more information, guides, interactive tutorials, Q&A, and more!**
+**Check out the [Sindri Documentation](https://sindri-labs.github.io/docs/introduction/) for more information, guides, interactive tutorials, FAQs, and more!**
 
 ### Circuit Database
 Sample circuits in multiple frameworks for getting started with the Sindri API. Every circuit should work as-is.
