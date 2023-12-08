@@ -29,4 +29,4 @@ From the input example above, we would actually input:
 
 to the circuit and that is what `FromJson` does.
 
-Refer to the [Sindri's gnark tutorial](https://sindri-labs.github.io/docs/forge/api-tutorials/gnark/) for more information on this circuit and instructions for running the `compile.mjs` script.
+Refer to the [Sindri's gnark tutorial](https://sindri-labs.github.io/docs/how-to-guides/frameworks/gnark/) for more information on this circuit and instructions for running the `compile.mjs` script.
