@@ -1,0 +1,6 @@
+[workspace]
+
+members = [
+    "circuit",
+    "zk_execute"
+]

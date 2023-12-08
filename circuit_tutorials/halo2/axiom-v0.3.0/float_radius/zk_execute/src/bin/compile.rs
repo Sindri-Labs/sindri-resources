@@ -23,8 +23,7 @@ async fn main() {
     let api_version: &str = "v1/";
     let api_url: String = api_url_prefix.to_owned()  + api_version;
 
-
-    let circuit_dir = std::env::current_dir().unwrap().join("..").join("circuit");
+    let circuit_dir = std::env::current_dir().unwrap().join("circuit");
     let mut contents = Vec::new();
     { // has to be scoped so that contents can be accessed after written to
         let buffer = Cursor::new(&mut contents);
@@ -63,7 +62,5 @@ async fn main() {
     let mut writer = BufWriter::new(file);
     serde_json::to_writer_pretty(&mut writer, &circuit_data).unwrap();
     writer.flush().unwrap();
-
-    //println!("{:?}", serde_json::to_string(&circuit_data).unwrap());
 
 }
