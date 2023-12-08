@@ -40,9 +40,7 @@ async fn main() {
     file.read_to_string(&mut data).unwrap();
     let proof_data: Value = serde_json::from_str(&data).unwrap();
 
-    let proof = &proof_data["proof"]["data"].as_str().unwrap();
     let public = &proof_data["public"]["data"].as_array().unwrap();
-
     //decode the instance from string to a field element
     let instance_str = public[0][0].as_str().unwrap();
     let field_instance = Fr::from_bytes(&general_purpose::STANDARD.decode(instance_str).unwrap().try_into().unwrap()).unwrap();
@@ -74,22 +72,14 @@ async fn main() {
     let setup = ParamsKZG::<Bn256>::read(&mut setup_bufreader).expect("can't read setup");
 
     let verification_key = &proof_data["verification_key"]["data"].as_str().unwrap();
-    let b64_data = general_purpose::STANDARD.decode(verification_key).unwrap();
+    let mut b64_data = general_purpose::STANDARD.decode(verification_key).unwrap();
     let vk: VerifyingKey<G1Affine> = VerifyingKey::from_bytes::<GateCircuitBuilder<Fr>>(&b64_data[..], SerdeFormat::RawBytesUnchecked).unwrap();
 
-
-    // std::env::set_var("RUST_BACKTRACE","1");
-    // std::env::set_var("LOOKUP_BITS","12");
-
-    // let setup = gen_srs(13);
-
-    // let input = CircuitInput::<Fr>::default(); 
-    // let circuit = input.create_circuit(GateThreadBuilder::keygen(), None);
-
-    // let vk = keygen_vk(&setup, &circuit).expect("vk should not fail");
-    // let instances = circuit.instance();
-    // let mut transcript =  Blake2bRead::<_, G1Affine, Challenge255<_>>::init(&proof[..]);
-    // let strategy = SingleStrategy::new(&setup);
+    let proof = &proof_data["proof"]["data"].as_str().unwrap();
+    b64_data = general_purpose::STANDARD.decode(proof).unwrap();
+    let mut transcript =  Blake2bRead::<_, G1Affine, Challenge255<_>>::init(&b64_data[..]);
+    
+    let strategy = SingleStrategy::new(&setup);
 
     // assert!(verify_proof::<
     //     KZGCommitmentScheme<Bn256>,
