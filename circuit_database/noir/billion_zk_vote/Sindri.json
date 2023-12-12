@@ -1,5 +1,0 @@
-{
-    "circuit_type": "noir",
-    "name": "billion-zk-vote",
-    "proving_scheme": "barretenberg"
-}
