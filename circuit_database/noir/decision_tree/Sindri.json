@@ -1,0 +1,5 @@
+{
+    "circuit_type": "noir",
+    "name": "decision-tree",
+    "proving_scheme": "barretenberg"
+}

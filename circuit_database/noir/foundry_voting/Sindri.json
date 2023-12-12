@@ -1,0 +1,5 @@
+{
+    "circuit_type": "noir",
+    "name": "foundry-voting",
+    "proving_scheme": "barretenberg"
+}

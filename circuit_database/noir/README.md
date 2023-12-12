@@ -1,3 +1,9 @@
-# Noir Circuits
+# Valid Noir sample data
 
-N/A
+
+
+### Noir
+| Name | Size (DEGREE) | Original Source | Functionality | 
+| - | - | - | - | 
+|  |  | []() |  |
+|  |  | []() |   |

@@ -1,0 +1,5 @@
+{
+    "circuit_type": "noir",
+    "name": "neq",
+    "proving_scheme": "barretenberg"
+}
