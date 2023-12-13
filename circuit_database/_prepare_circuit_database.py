@@ -1,9 +1,9 @@
 #! /usr/bin/env python
 import os
 import pathlib
+import shutil
 import sys
 import tarfile
-import zipfile
 from glob import glob
 
 global QUIET
@@ -27,7 +27,7 @@ def compress_dirs(source_dirs: list[str] | list[pathlib.Path], dry_run: bool = F
     `<source_dir>.tar.gz` and `<source_dir>.zip`.
     ```txt
     tar -zcvf <source_dir>.tar.gz source_dir
-    zip -r    <source_dir>.zip    source_dir
+    cd <source_dir>; zip -r ../<source_dir>.zip .; cd ..
     ```
     """
     print(f"\nBEGIN: (Re)compressing {len(source_dirs)} circuit(s)")
@@ -37,18 +37,19 @@ def compress_dirs(source_dirs: list[str] | list[pathlib.Path], dry_run: bool = F
 
         targz_file, zip_file = get_compressed_file_paths(source_dir)
 
+        # Create tarfile
         if not dry_run:
             with tarfile.open(targz_file, "w:gz") as tar:
                 tar.add(source_dir, arcname=targz_file.name)
         if not QUIET:
             print(f"       {targz_file}")
 
+        # Create zipfile
         if not dry_run:
-            with zipfile.ZipFile(zip_file, mode="w") as archive:
-                for file_path in pathlib.Path(source_dir).iterdir():
-                    archive.write(file_path, arcname=file_path.name)
+            shutil.make_archive(zip_file.with_suffix(""), "zip", source_dir)
         if not QUIET:
             print(f"       {zip_file}")
+
     print(f"\nSUCCESS. Compressed {len(source_dirs)} circuit(s).")
 
 
