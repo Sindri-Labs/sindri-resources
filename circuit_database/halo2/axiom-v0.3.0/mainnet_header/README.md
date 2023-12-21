@@ -5,7 +5,7 @@ This circuit was adapted from the [axiom-eth repository](https://github.com/axio
 If you wish to use `goerli` instead of `mainnet`, change `sindri.json` to
 ```json
 {
-  "$schema": "https://forge.sindri.app/api/v1/sindri-manifest-schema.json",
+  "$schema": "https://sindri.app/api/v1/sindri-manifest-schema.json",
   "name": "axiom-goerli-header",
   "circuitType": "halo2",
   "className": "axiom_eth::block_header::EthBlockHeaderChainCircuit",

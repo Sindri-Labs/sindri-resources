@@ -7,7 +7,7 @@ from sindri_labs.sindri import Sindri  # pip install sindri-labs
 
 # NOTE: Provide your API Key and API Url
 API_KEY = os.getenv("SINDRI_API_KEY", "")
-API_URL = os.getenv("SINDRI_API_URL", "https://forge.sindri.app/api/")
+API_URL = os.getenv("SINDRI_API_URL", "https://sindri.app/api/")
 
 # Paths to auxiliary files
 model_vocab_file_path = "vocab.txt"
