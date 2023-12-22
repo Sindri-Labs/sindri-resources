@@ -5,6 +5,6 @@ Both are formatted as 81 digit-long strings made up of the digits "0" - "9".
 
 Source: https://github.com/web3-master/zksnark-sudoku
 
-Refer to the [Sindri Circom tutorial](https://sindri-labs.github.io/docs/how-to-guides/frameworks/circom/) for more information on this circuit.
+Refer to the [Sindri Circom tutorial](https://sindri.app/docs/how-to-guides/frameworks/circom/) for more information on this circuit.
 The tutorial also contains instructions for running the `compile_and_prove.py` script as well as `verify.py`.
  

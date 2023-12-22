@@ -3,7 +3,7 @@ This directory contains quick-start code in multiple languages for interfacing w
 
 # Setup
 You will need a Sindri API key in order to run the scripts.
-The Sindri Docs explain [how to obtain your API key](https://sindri-labs.github.io/docs/topic-guides/access-management/#api-authentication).
+The Sindri Docs explain [how to obtain your API key](https://sindri.app/docs/topic-guides/access-management/#api-authentication).
 
 You can then set the `SINDRI_API_KEY` environment variable with your API key.
 
@@ -12,7 +12,7 @@ You can then set the `SINDRI_API_KEY` environment variable with your API key.
 [`sdk_quickstart.py`](./sdk_quickstart.py) is for users that are just getting started using Sindri's API.
 It utilizes the [Sindri Python SDK](https://pypi.org/project/sindri-labs/), which abstracts Sindri API calls into a simple interface.
 
-Refer to the Sindri documentation for quickly [getting started with the Python SDK](https://sindri-labs.github.io/docs/getting-started/api-sdk/).
+Refer to the Sindri documentation for quickly [getting started with the Python SDK](https://sindri.app/docs/getting-started/api-sdk/).
 
 # Quick-Start Scripts
 
