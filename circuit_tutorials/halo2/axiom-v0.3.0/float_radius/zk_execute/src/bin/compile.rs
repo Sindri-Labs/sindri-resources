@@ -19,7 +19,7 @@ use serde_json::Value;
 async fn main() {
 
     let api_key: String = env::var("SINDRI_API_KEY").unwrap();
-    let api_url_prefix: &str = "https://forge.sindri.app/api/";
+    let api_url_prefix: &str = "https://sindri.app/api/";
     let api_version: &str = "v1/";
     let api_url: String = api_url_prefix.to_owned()  + api_version;
 

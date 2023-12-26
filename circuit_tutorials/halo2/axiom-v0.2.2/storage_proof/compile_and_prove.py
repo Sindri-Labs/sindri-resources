@@ -5,7 +5,7 @@ from sindri_labs.sindri import Sindri  # pip install sindri-labs
 
 # NOTE: Provide your API Key and API Url
 API_KEY = os.getenv("SINDRI_API_KEY", "")
-API_URL = os.getenv("SINDRI_API_URL", "https://forge.sindri.app/api/")
+API_URL = os.getenv("SINDRI_API_URL", "https://sindri.app/api/")
 
 # Initialize Sindri API SDK
 sindri = Sindri(API_KEY, api_url=API_URL, verbose_level=1)

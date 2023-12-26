@@ -9,7 +9,7 @@ const tar = require("tar");
 
 // NOTE: Provide your API key here.
 const API_KEY = process.env.SINDRI_API_KEY || "";
-const API_URL_PREFIX = process.env.SINDRI_API_URL || "https://forge.sindri.app/api/";
+const API_URL_PREFIX = process.env.SINDRI_API_URL || "https://sindri.app/api/";
 
 const API_VERSION = "v1";
 const API_URL = API_URL_PREFIX.concat(API_VERSION);

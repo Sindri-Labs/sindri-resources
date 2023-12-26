@@ -110,13 +110,13 @@ def remove_compressed_artifacts(
 
 def _print_help_message() -> None:
     print("\nTo run compression/removal, you must use the --compress OR the --remove flags:")
-    print("  python3 prepare_circuit_database.py --compress")
-    print("  python3 prepare_circuit_database.py --remove")
+    print("  python3 _prepare_circuit_database.py --compress")
+    print("  python3 _prepare_circuit_database.py --remove")
     print("\nAdd the --dry-run flag to perform a dry run:")
-    print("  python3 prepare_circuit_database.py --compress --dry-run")
-    print("  python3 prepare_circuit_database.py --remove --dry-run")
+    print("  python3 _prepare_circuit_database.py --compress --dry-run")
+    print("  python3 _prepare_circuit_database.py --remove --dry-run")
     print("\nAdd the --quiet flag to suppress verbose stdout:")
-    print("  python3 prepare_circuit_database.py --compress --quiet")
+    print("  python3 _prepare_circuit_database.py --compress --quiet")
     print()
 
 

@@ -12,7 +12,7 @@ The `README.md` within each directory will contain more detailed information.
  ┗ 📜README.md
 ```
 
-**Check out the [Sindri Documentation](https://sindri-labs.github.io/docs/introduction/) for more information, guides, interactive tutorials, FAQs, and more!**
+**Check out the [Sindri Documentation](https://sindri.app/docs/introduction/) for more information, guides, interactive tutorials, FAQs, and more!**
 
 ### Circuit Database
 Sample circuits in multiple frameworks for getting started with the Sindri API. Every circuit should work as-is.

@@ -73,7 +73,7 @@ async fn poll_status(
 async fn main() {
 
     let api_key: &str = option_env!("SINDRI_API_KEY").unwrap_or("");
-    let api_url_prefix: &str = option_env!("SINDRI_API_URL").unwrap_or("https://forge.sindri.app/api/");
+    let api_url_prefix: &str = option_env!("SINDRI_API_URL").unwrap_or("https://sindri.app/api/");
     
     let api_version: &str = "v1/";
     let api_url: String = api_url_prefix.to_owned()  + api_version;

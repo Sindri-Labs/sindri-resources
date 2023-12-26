@@ -1,5 +1,5 @@
 {
-  "$schema": "https://forge.sindri.app/api/v1/sindri-manifest-schema.json",
+  "$schema": "https://sindri.app/api/v1/sindri-manifest-schema.json",
   "name": "multiply",
   "circuitType": "halo2",
   "className": "mult_example::mult_circ::MyCircuit",

@@ -15,4 +15,4 @@ The most "influential" node in the network is last in the sorted list of `Verifi
 ```
 
 ### Instructions
-Refer to the [Sindri Noir Tutorial](https://sindri-labs.github.io/docs/how-to-guides/frameworks/noir/) for more information on this circuit and instructions for running the `compile.mjs` script.
+Refer to the [Sindri Noir Tutorial](https://sindri.app/docs/how-to-guides/frameworks/noir/) for more information on this circuit and instructions for running the `compile.mjs` script.
