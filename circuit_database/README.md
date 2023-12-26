@@ -41,14 +41,14 @@ options:
   -q, --quiet     Suppress verbose stdout (default: False)
 
 To run compression/removal, you must use the --compress OR the --remove flags:
-  python3 prepare_circuit_database.py --compress
-  python3 prepare_circuit_database.py --remove
+  python3 _prepare_circuit_database.py --compress
+  python3 _prepare_circuit_database.py --remove
 
 Add the --dry-run flag to perform a dry run:
-  python3 prepare_circuit_database.py --compress --dry-run
-  python3 prepare_circuit_database.py --remove --dry-run
+  python3 _prepare_circuit_database.py --compress --dry-run
+  python3 _prepare_circuit_database.py --remove --dry-run
 
 Add the --quiet flag to suppress verbose stdout:
-  python3 prepare_circuit_database.py --compress --quiet
+  python3 _prepare_circuit_database.py --compress --quiet
 ```
 
