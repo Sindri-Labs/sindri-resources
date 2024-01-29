@@ -3,8 +3,7 @@ module exponentiate
 go 1.19
 
 require (
-	github.com/consensys/gnark v0.8.0
-	github.com/consensys/gnark-crypto v0.9.1
+	github.com/consensys/gnark v0.8.1
 )
 
 require (
