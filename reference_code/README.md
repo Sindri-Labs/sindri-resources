@@ -7,6 +7,10 @@ The Sindri Docs explain [how to obtain your API key](https://sindri.app/docs/top
 
 You can then set the `SINDRI_API_KEY` environment variable with your API key.
 
+# Verifiers
+
+This directory contains scripts and demonstrations generating, deploying, and interacting with smart contracts that verify proofs from Sindri's API.
+
 # SDK Quickstart
 
 [`sdk_quickstart.py`](./sdk_quickstart.py) is for users that are just getting started using Sindri's API.

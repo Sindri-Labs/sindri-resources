@@ -1,0 +1,15 @@
+/build
+**/verifier.sol
+.DS_Store
+node_modules
+.env
+coverage
+coverage.json
+typechain
+typechain-types
+calldata.txt
+
+# Hardhat files
+cache
+artifacts
+
