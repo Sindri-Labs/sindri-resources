@@ -1,6 +1,6 @@
 /build
 **/verifier.sol
-
+.DS_Store
 node_modules
 .env
 coverage
