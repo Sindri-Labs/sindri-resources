@@ -6,6 +6,8 @@ In particular, if you'd like to swap out the circuit for any other circuits in o
 
 ## Installation & Authorization
 
+**This walkthrough assumes you have Node v18 or later and python v3.10 or later.**
+
 In order to build the solidity code generator and other helpful utilities (converting Sindri API return data into solidity compatible calldata), you'll need to install dependencies and build:
 ```
 npm install
