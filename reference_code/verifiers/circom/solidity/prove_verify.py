@@ -1,15 +1,21 @@
+import argparse
 import json
 import os
 import subprocess
 from sindri_labs.sindri import Sindri  # pip install sindri-labs
 
+parser = argparse.ArgumentParser(description="Process circuit_id argument.")
+parser.add_argument("--circuit_id", type=str, help="The circuit ID to use")
+args = parser.parse_args()
+
+
 # Initialize an instance of the Sindri API SDK
 API_KEY = os.getenv("SINDRI_API_KEY", "")
 sindri = Sindri(API_KEY)
 
-proof_input_file_path = "../multiplier2/input.json"
-with open(proof_input_file_path, "r") as f:
-    proof_id = sindri.prove_circuit("260f8728-2d72-4763-8514-b3251ffcf505", f.read())
+PROOF_INPUT_FILE_PATH = os.path.abspath(os.path.join("..","..","..","..", "circuit_database", "circom", "multiplier2","input.json")) 
+with open(PROOF_INPUT_FILE_PATH, "r") as f:
+    proof_id = sindri.prove_circuit(args.circuit_id, f.read())
 
 proof_details = sindri.get_proof(proof_id)
 
