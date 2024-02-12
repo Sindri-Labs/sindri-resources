@@ -2,5 +2,6 @@
   "$schema": "https://sindri.app/api/v1/sindri-manifest-schema.json",
   "circuitType": "noir",
   "name": "neq",
-  "provingScheme": "barretenberg"
+  "provingScheme": "barretenberg",
+  "noirVersion": "0.17.0"
 }
