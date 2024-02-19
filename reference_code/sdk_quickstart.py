@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 import os
-from sindri_labs.sindri import Sindri  # pip install sindri-labs
+from sindri.sindri import Sindri  # pip install sindri
 
 # Obtain your API Key from an environment variable
 API_KEY = os.getenv("SINDRI_API_KEY", "")

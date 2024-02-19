@@ -40,7 +40,7 @@ _________________________________________________________________
    ```bash
    export SINDRI_API_KEY=<YOUR_API_KEY>
    ```
-1. Install requirements: `pip install sindri-labs`
+1. Install requirements: `pip install sindri`
 
 ### Run
 Running the following command will create a circuit and prove it (i.e. the model defined in the `circuit/`) using the Python Sindri SDK.
