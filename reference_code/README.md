@@ -14,7 +14,7 @@ This directory contains scripts and demonstrations generating, deploying, and in
 # SDK Quickstart
 
 [`sdk_quickstart.py`](./sdk_quickstart.py) is for users that are just getting started using Sindri's API.
-It utilizes the [Sindri Python SDK](https://pypi.org/project/sindri-labs/), which abstracts Sindri API calls into a simple interface.
+It utilizes the [Sindri Python SDK](https://pypi.org/project/sindri/), which abstracts Sindri API calls into a simple interface.
 
 Refer to the Sindri documentation for quickly [getting started with the Python SDK](https://sindri.app/docs/getting-started/api-sdk/).
 

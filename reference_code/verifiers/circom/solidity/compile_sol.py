@@ -2,7 +2,7 @@ import os
 import json
 import subprocess
 
-from sindri_labs.sindri import Sindri  # pip install sindri-labs
+from sindri.sindri import Sindri  # pip install sindri
 
 
 # Initialize an instance of the Sindri API SDK

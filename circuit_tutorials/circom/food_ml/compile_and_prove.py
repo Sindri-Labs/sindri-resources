@@ -3,7 +3,7 @@ import json
 import os
 import sys
 
-from sindri_labs.sindri import Sindri  # pip install sindri-labs
+from sindri.sindri import Sindri  # pip install sindri
 
 # NOTE: Provide your API Key and API Url
 API_KEY = os.getenv("SINDRI_API_KEY", "")

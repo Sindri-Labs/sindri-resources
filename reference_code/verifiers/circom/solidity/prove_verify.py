@@ -2,7 +2,7 @@ import argparse
 import json
 import os
 import subprocess
-from sindri_labs.sindri import Sindri  # pip install sindri-labs
+from sindri.sindri import Sindri  # pip install sindri
 
 parser = argparse.ArgumentParser(description="Process circuit_id argument.")
 parser.add_argument("--circuit_id", type=str, help="The circuit ID to use")
