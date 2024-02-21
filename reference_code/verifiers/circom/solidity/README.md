@@ -33,7 +33,7 @@ pip install sindri
 
 **Non-linux Users**
 
-Lines 28 and 42 of `prove_verify.py` refer to the linux builds. Replace `./build/verify-linux` with `./build/solidity-gen-macos` or `./build/solidity-gen-win.exe` on line 28 according to your operating system. You will also need to replace `./build/insertAndTest-linux` with `./build/insertAndTest-macos` or `./build/insertAndTest-win.exe` on line 42 according to your operating system.
+Line 22 of `compile_sol.py` refers to the linux build of our solidity verifier. Replace that with `./build/solidity-gen-macos` or `./build/solidity-gen-win.exe` according to your operating system.
 
 When you run the following script, a Circom circuit is uploaded to Sindri.
 Since there are no proving and verification keys contained in the upload, Sindri runs a mock key generation process to produce those keys (for testing and development purposes).
@@ -49,7 +49,7 @@ After the script completes, you should see a contract calls `verifier.sol` in th
 
 **Non-linux Users**
 
-Lines 22 and 36 of `prove_verify.py` refers to the linux builds. Replace them with `./build/solidity-gen-macos` or `./build/solidity-gen-win.exe` according to your operating system.
+Lines 28 and 42 of `prove_verify.py` refer to the linux builds. Replace `./build/verify-linux` with `./build/solidity-gen-macos` or `./build/solidity-gen-win.exe` on line 28 according to your operating system. You will also need to replace `./build/insertAndTest-linux` with `./build/insertAndTest-macos` or `./build/insertAndTest-win.exe` on line 42 according to your operating system.
 
 ```
 python3 prove_verify.py --circuit_id "uuid-from-previous-step"
