@@ -3,8 +3,10 @@
   "name": "float-radius",
   "circuitType": "halo2",
   "className": "radius_circuit::circuit_def::CircuitInput",
+  "curve": "bn254",
   "degree": 13,
   "halo2Version": "axiom-v0.3.0",
   "packageName": "radius-circuit",
-  "threadBuilder": "GateThreadBuilder"
+  "threadBuilder": "GateThreadBuilder",
+  "provingScheme": "shplonk"
 }

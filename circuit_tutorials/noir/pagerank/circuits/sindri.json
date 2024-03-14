@@ -2,6 +2,7 @@
   "$schema": "https://sindri.app/api/v1/sindri-manifest-schema.json",
   "name": "pagerank",
   "circuitType": "noir",
+  "curve": "bn254",
   "provingScheme": "barretenberg",
   "noirVersion": "0.17.0"
 }

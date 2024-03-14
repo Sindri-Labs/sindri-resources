@@ -3,8 +3,10 @@
   "name": "axiom-mainnet-header",
   "circuitType": "halo2",
   "className": "axiom_eth::block_header::EthBlockHeaderChainCircuit",
+  "curve": "bn254",
   "degree": 19,
   "halo2Version": "axiom-v0.3.0",
   "packageName": "axiom-eth",
-  "threadBuilder": "RlcThreadBuilder"
+  "threadBuilder": "RlcThreadBuilder",
+  "provingScheme": "shplonk"
 }
