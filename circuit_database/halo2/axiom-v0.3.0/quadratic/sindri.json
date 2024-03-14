@@ -3,8 +3,10 @@
   "name": "quadratic",
   "circuitType": "halo2",
   "className": "quadratic_circuit::circuit_def::CircuitInput",
+  "curve": "bn254",
   "degree": 10,
   "halo2Version": "axiom-v0.3.0",
   "packageName": "quadratic-circuit",
-  "threadBuilder": "GateThreadBuilder"
+  "threadBuilder": "GateThreadBuilder",
+  "provingScheme": "shplonk"
 }

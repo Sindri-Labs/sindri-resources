@@ -3,7 +3,9 @@
   "name": "multiply",
   "circuitType": "halo2",
   "className": "mult_example::mult_circ::MyCircuit",
+  "curve": "bn254",
   "degree": 15,
   "halo2Version": "axiom-v0.2.2",
-  "packageName": "mult-example"
+  "packageName": "mult-example",
+  "provingScheme": "shplonk"
 }

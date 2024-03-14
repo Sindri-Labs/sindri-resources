@@ -3,7 +3,9 @@
   "name": "axiom-storage-proof",
   "circuitType": "halo2",
   "className": "axiom_eth::storage::EthBlockStorageCircuit",
+  "curve": "bn254",
   "degree": 17,
   "halo2Version": "axiom-v0.2.2",
-  "packageName": "axiom-eth"
+  "packageName": "axiom-eth",
+  "provingScheme": "shplonk"
 }

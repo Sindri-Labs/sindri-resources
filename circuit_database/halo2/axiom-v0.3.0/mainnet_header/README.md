@@ -9,10 +9,12 @@ If you wish to use `goerli` instead of `mainnet`, change `sindri.json` to
   "name": "axiom-goerli-header",
   "circuitType": "halo2",
   "className": "axiom_eth::block_header::EthBlockHeaderChainCircuit",
+  "curve": "bn254",
   "degree": 14,
   "halo2Version": "axiom-v0.3.0",
   "packageName": "axiom-eth",
-  "threadBuilder": "RlcThreadBuilder"
+  "threadBuilder": "RlcThreadBuilder",
+  "provingScheme": "shplonk"
 }
 ```
 and `config.json` to
