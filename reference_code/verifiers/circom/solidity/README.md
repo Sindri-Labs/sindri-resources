@@ -23,7 +23,7 @@ export SINDRI_API_KEY=<YOUR_API_KEY>
 ```
 
 Finally, ensure that you have the `sindri` python SDK installed.
-The [Python SDK Quickstart](https://sindri.app/docs/getting-started/api-sdk/#python-sdk) contains installation instructions and a high-level walkthrough of the functionality of this package, but the following will suffice if you have pip installed:
+The [Python SDK Quickstart](https://sindri.app/docs/getting-started/python-sdk/#python-sdk) contains installation instructions and a high-level walkthrough of the functionality of this package, but the following will suffice if you have pip installed:
 
 ```
 pip install sindri
