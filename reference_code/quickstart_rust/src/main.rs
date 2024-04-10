@@ -5,29 +5,12 @@ use std::{
 };
 use flate2::Compression;
 use flate2::write::GzEncoder;
-use serde::Deserialize;
 use reqwest::{
     Client, 
     header::{HeaderMap, HeaderValue},
     multipart::Part
 };
-
-// Structs to decode JSON endpoint responses
-#[derive(Debug,Clone,Deserialize)]
-pub struct CircuitResponse {
-    circuit_id: String,
-}
-
-#[derive(Debug,Clone,Deserialize)]
-pub struct ProofResponse {
-    proof_id: String,
-}
-
-#[derive(Debug,Clone,Deserialize)]
-pub struct PollResponse {
-    status: String,
-    public: Option<Vec<String>>
-}
+use serde_json::Value;
 
 // Functions which return Reqwest Header
 fn headers_json(api_key: &str) -> HeaderMap {
@@ -43,7 +26,7 @@ async fn poll_status(
     api_url: &str,
     api_key: &str,
     timeout: i64
-) -> PollResponse {
+) -> Value {
     let client = Client::new();
     for i in 1..timeout {
 
@@ -55,9 +38,9 @@ async fn poll_status(
         .unwrap();
         assert_eq!(&response.status().as_u16(), &200u16, "Expected status code 201");
     
-        let data = response.json::<PollResponse>().await.unwrap();
-        let status = &data.status;
-        if ["Failed", "Ready"].contains(&status.as_str()) {
+        let data = response.json::<Value>().await.unwrap();
+        let status = &data["status"].to_string();
+        if ["Ready", "Failed"].iter().any(|&s| status.as_str().contains(s))  {
             println!("Polling exited after {} seconds with status: {}", i, &status);
             return data
         }
@@ -99,7 +82,8 @@ async fn main() {
         .await
         .unwrap();
     assert_eq!(&response.status().as_u16(), &201u16, "Expected status code 201");
-    let circuit_id = response.json::<CircuitResponse>().await.unwrap().circuit_id; 
+    let response_body = response.json::<Value>().await.unwrap();
+    let circuit_id = response_body["circuit_id"].as_str().unwrap(); 
 
     // Poll circuit detail until it has a status of Ready or Failed
     let circuit_data = poll_status(
@@ -107,7 +91,7 @@ async fn main() {
         &api_url,
         api_key,
         600).await;
-    if circuit_data.status == "Failed" {
+    if circuit_data["status"].as_str().unwrap().contains("Failed") {
         println!("Circuit compilation failed.");
         std::process::exit(1);
     }
@@ -127,7 +111,8 @@ async fn main() {
         .unwrap();
     assert_eq!(&response.status().as_u16(), &201u16, "Expected status code 201");
     
-    let proof_id = response.json::<ProofResponse>().await.unwrap().proof_id;
+    let response_body = response.json::<Value>().await.unwrap();
+    let proof_id = response_body["proof_id"].as_str().unwrap();
 
     // Poll proof detail until it has a status of Ready or Failed
     let proof_data = poll_status(
@@ -135,13 +120,13 @@ async fn main() {
         &api_url,
         api_key,
         600).await;
-    if &proof_data.status == "Failed" {
+    if proof_data["status"].as_str().unwrap().contains("Failed") {
         println!("Proving failed.");
         std::process::exit(1);
     }
 
     // Retrieve output from the proof.
-    let output_signal = proof_data.public.unwrap_or(["none".to_owned()].to_vec());
-    println!("Circuit proof output signal: {}", output_signal.first().unwrap());
+    let output_signal = &proof_data["public"];
+    println!("Circuit proof output signal: {}", output_signal);
 
 }
