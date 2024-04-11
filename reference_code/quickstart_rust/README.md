@@ -1,9 +1,9 @@
 # Rust Quickstart
 
-The code in `src/main.rs` will create a circuit, upload, and initiate compilation. Then from that compiled circuit, it will initiate a proof. From this directory, you can call
-```bash
-cargo run
-```
-which builds the executable and runs it.
+This rust quickstart provides a minimal example of compiling and proving a circuit with Sindri's API via the [reqwest](https://docs.rs/reqwest/latest/reqwest/) HTTP request client.
 
-**DISCLAIMER:** This code does minimal return code processing and could be improved to return proofs or keys to a user.
+## Usage 
+Assuming you are in the `/reference_code/quickstart_rust/` directory, you can build and run the main the package via 
+```
+SINDRI_API_KEY=<your-api-key> cargo run
+```
