@@ -53,7 +53,7 @@ async fn main() {
 
     // download SRS if it doesn't exist in ./data already
     if !std::path::Path::new("./data/kzg_bn254_15.srs").is_file() {
-        let srs_link = "https://axiom-crypto.s3.amazonaws.com/params/kzg_bn254_15.srs";
+        let srs_link = "https://axiom-crypto.s3.amazonaws.com/challenge_0085/kzg_bn254_15.srs";
         let response = reqwest::get(srs_link).await.unwrap();
         let mut file = std::fs::File::create("./data/kzg_bn254_15.srs").unwrap();
         let mut content =  Cursor::new(response.bytes().await.unwrap());
