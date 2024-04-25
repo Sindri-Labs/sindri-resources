@@ -8,6 +8,7 @@ autobins = false
 name = "single_storage_proof"
 
 [dependencies]
+zeroize="=1.7.0"
 itertools = "0.10"
 lazy_static = "1.4.0"
 serde = { version = "1.0", default-features = false, features = ["derive"] }
