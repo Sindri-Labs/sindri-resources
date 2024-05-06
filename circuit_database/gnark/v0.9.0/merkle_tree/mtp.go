@@ -7,7 +7,6 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-	"time"
 
 	"github.com/consensys/gnark-crypto/ecc"
 	"github.com/consensys/gnark/backend/witness"
@@ -89,8 +88,6 @@ func FromJson(pathInput string) witness.Witness {
 	if err != nil {
 		panic(err)
 	}
-	duration := time.Duration(5) * time.Second
-	time.Sleep(duration)
 
 	root, _ := new(big.Int).SetString(data["Root"].(string), 10)
 	proofIndex, _ := new(big.Int).SetString(data["ProofIndex"].(string), 10)
