@@ -21,7 +21,7 @@ use halo2_proofs::{
     },
     plonk::{Circuit,ConstraintSystem, Error}
 };
-use std::fs::File;
+use std::{fs::File, io::Read};
 
 const ARITY: usize = 2;
 const WIDTH: usize = 3;
