@@ -1,0 +1,8 @@
+{
+  "name": "dot_product",
+  "circuitType": "halo2",
+  "className": "vector_multiply::circuit_def::VectorMultiplier",
+  "degree": 5,
+  "halo2Version": "pse-v0.3.0",
+  "packageName": "vector_multiply"
+}
