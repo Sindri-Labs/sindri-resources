@@ -206,7 +206,7 @@ dependencies = [
  "bitvec",
  "ff",
  "group",
- "halo2_proofs 0.3.0 (git+https://github.com/privacy-scaling-explorations/halo2?tag=v0.3.0)",
+ "halo2_proofs",
  "halo2curves",
  "lazy_static",
  "rand",
@@ -217,23 +217,7 @@ dependencies = [
 [[package]]
 name = "halo2_proofs"
 version = "0.3.0"
-source = "git+https://github.com/privacy-scaling-explorations/halo2?tag=v0.3.0#73408a140737d8336490452193b21f5a7a94e7de"
-dependencies = [
- "blake2b_simd",
- "ff",
- "group",
- "halo2curves",
- "rand_chacha",
- "rand_core",
- "rayon",
- "sha3",
- "tracing",
-]
-
-[[package]]
-name = "halo2_proofs"
-version = "0.3.0"
-source = "git+https://github.com/privacy-scaling-explorations/halo2.git?rev=v0.3.0#73408a140737d8336490452193b21f5a7a94e7de"
+source = "git+https://github.com/privacy-scaling-explorations/halo2.git?tag=v0.3.0#73408a140737d8336490452193b21f5a7a94e7de"
 dependencies = [
  "blake2b_simd",
  "ff",
@@ -311,10 +295,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "90ed8c1e510134f979dbc4f070f87d4313098b704861a105fe34231c70a3901c"
 
 [[package]]
-name = "mtp_try"
+name = "merkle_verifier"
 version = "0.1.0"
 dependencies = [
- "halo2_proofs 0.3.0 (git+https://github.com/privacy-scaling-explorations/halo2.git?rev=v0.3.0)",
+ "halo2_poseidon",
+ "halo2_proofs",
+ "serde",
  "serde_json",
  "shielder",
 ]
@@ -531,7 +517,7 @@ source = "git+https://github.com/Cardinal-Cryptography/client-side-proving-bench
 dependencies = [
  "console_error_panic_hook",
  "halo2_poseidon",
- "halo2_proofs 0.3.0 (git+https://github.com/privacy-scaling-explorations/halo2?tag=v0.3.0)",
+ "halo2_proofs",
  "rand_core",
 ]
 

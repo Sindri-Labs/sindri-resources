@@ -15,7 +15,10 @@ use halo2_poseidon::poseidon::{
 };
 use halo2_proofs::{
     circuit::{Layouter, SimpleFloorPlanner, Value},
-    halo2curves::bn256::Fr,
+    halo2curves::{
+        bn256::Fr,
+        serde::SerdeObject
+    },
     plonk::{Circuit,ConstraintSystem, Error}
 };
 use std::fs::File;
@@ -144,27 +147,44 @@ impl<F: FieldExt> Circuit<F> for MTPCircuit<F>
     }
 }
 
+#[derive(serde::Serialize, serde::Deserialize)]
+struct InputJSONSchema {
+    root: Vec<u8>,
+    leaf: Vec<u8>,
+    path: Vec<Vec<Vec<u8>>>,
+}
+fn convert_u8(raw_input: &Vec<u8>) -> Fr {
+    Fr::from_raw_bytes(raw_input).expect("field conversion failed")
+}
+
 impl MTPCircuit<Fr> {
-
     // Specific functions required for compatibility with Sindri
-    pub fn from_json(
-        json_loc: &str,
-    ) -> (Self, Vec<Vec<Fr>>) {
+    pub fn from_json(json_loc: &str) -> (Self, Vec<Vec<Fr>>) {
+        let mut file = File::open(json_loc).expect("Unable to open input JSON file");
+        let mut contents = String::new();
+        file.read_to_string(&mut contents)
+            .expect("Unable to read input JSON file");
+        let data: InputJSONSchema = serde_json::from_str(&contents).expect("JSON parse error");
 
-        let (root, leaf, path) = generate_example_path::<Fr, WIDTH, ARITY, TREE_HEIGHT>();
-        println!("{:?}", &root); 
-        let leaf = Value::known(leaf);
-        let path = {
-            let mut value_path = [[Value::<Fr>::default(); ARITY]; TREE_HEIGHT];
-            for level in 0..TREE_HEIGHT {
-                for node in 0..ARITY {
-                    value_path[level][node] = Value::known(path[level][node]);
-                }
-            }
-            value_path
-        };
-        println!("{:?}", &path);
-    
+        let root: Fr = convert_u8(&data.root);
+        // Field elements below are wrapped in Value struct to mask their true assignment
+        let leaf: Value<Fr> = Value::known(convert_u8(&data.leaf));
+
+        let mut path: [[Value<Fr>; 2]; 40] = data
+            .path
+            .into_iter()
+            .map(|instance_column| {
+                instance_column
+                    .iter()
+                    .map(|strhex| Value::known(convert_u8(strhex)))
+                    .collect::<Vec<_>>()
+                    .try_into()
+                    .expect("Path element does not have correct length.")
+            })
+            .collect::<Vec<_>>()
+            .try_into()
+            .expect("Path does not have correct length");
+
         // Create circuit from inputs
         (MTPCircuit { path, leaf }, vec![vec![root]])
     }
@@ -176,5 +196,4 @@ impl MTPCircuit<Fr> {
             leaf: Value::unknown(),
         }
     }
-
 }
