@@ -18,4 +18,3 @@
 | Name | Size (DEGREE) | Original Source | Functionality |
 | ---- | ---- | --------------- | ------------- |
 | vector_multiplication | 5 | [PSE's Examples](https://github.com/privacy-scaling-explorations/halo2/blob/v0.3.0/halo2_proofs/examples/vector-mul.rs) | Computes the public dot product of two private input vectors |
-| merkle_tree | 8 | Adapted from [Cardinal Cryptography's Shielder Circuits](https://github.com/Cardinal-Cryptography/client-side-proving-benchmarks/tree/main) | Produces a ZKP verifying the validity of a merkle tree proof | 

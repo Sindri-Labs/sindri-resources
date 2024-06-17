@@ -1,8 +1,0 @@
-{
-  "name": "merkle_tree",
-  "circuitType": "halo2",
-  "className": "merkle_verifier::MTPCircuit",
-  "degree": 11,
-  "halo2Version": "pse-v0.3.0",
-  "packageName": "merkle_verifier"
-}
