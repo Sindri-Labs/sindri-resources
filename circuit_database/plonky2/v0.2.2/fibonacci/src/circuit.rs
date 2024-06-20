@@ -65,8 +65,8 @@ impl MyFibCircuit {
         let mut pw = PartialWitness::new();
 
         // user needs to provide the correct input type
-        for (i, target) in input_targets.iter().enumerate() {
-            pw.set_target(*target, F::from_u64(data.inputs[i]));
+        for i in data.inputs.len() {
+            pw.set_target(input_targets[i], F::from_u64(data.inputs[i]));
         }
 
         pw
