@@ -1,8 +1,0 @@
-{
-    "name": "merkle_tree",
-    "circuitType": "plonky2",
-    "className": "Fibonacci_Circuit::MyCircuit",
-    "halo2Version": "plonky2-v0.2.2",
-    "packageName": "Fibonacci_circuit"
-  }
-  

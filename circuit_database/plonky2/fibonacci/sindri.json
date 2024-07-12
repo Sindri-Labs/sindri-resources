@@ -1,0 +1,8 @@
+{
+    "name": "fibonacci_circuit",
+    "circuitType": "plonky2",
+    "structName": "fibonacci::FibonacciCircuit",
+    "plonky2Version": "v0.2.2",
+    "packageName": "fibonacci"
+  }
+  

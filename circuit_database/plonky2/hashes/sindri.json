@@ -1,0 +1,8 @@
+{
+    "name": "hash_circuit",
+    "circuitType": "plonky2",
+    "structName": "hash_circuit::HashCircuit",
+    "plonky2Version": "v0.2.2",
+    "packageName": "hash_circuit"
+  }
+  

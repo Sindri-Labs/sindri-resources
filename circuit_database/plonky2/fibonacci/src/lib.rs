@@ -1,16 +1,24 @@
-use super::{C, D, F};
-
+use plonky2::{iop::target::Target, plonk::config::{GenericConfig, PoseidonGoldilocksConfig}};
 use plonky2::field::types::Field;
 use plonky2::iop::witness::{PartialWitness, WitnessWrite};
 use plonky2::plonk::circuit_builder::CircuitBuilder;
-use plonky2::plonk::circuit_data::{CircuitConfig, VerifierCircuitData, CircuitData};
+use plonky2::plonk::circuit_data::{CircuitConfig, VerifierOnlyCircuitData, CommonCircuitData};
 use plonky2::util::serialization::{Buffer, GateSerializer, IoResult, Read, WitnessGeneratorSerializer, Write, DefaultGateSerializer, DefaultGeneratorSerializer};
+use plonky2::plonk::proof::ProofWithPublicInputs;
+use serde::{Deserialize, Serialize};
+use std::fs;
 
 pub const INITIAL_INPUTS: usize = 2;
 pub const PUBLIC_OUTPUTS: usize = 1;
+pub const D: usize = 2;
 
-pub struct MyFibCircuit {
-    pub data: CircuitData<F, C, D>
+pub type C = PoseidonGoldilocksConfig;
+pub type F = <C as GenericConfig<D>>::F;
+
+pub struct FibonacciCircuit{
+    pub proof: ProofWithPublicInputs<F, C, D>,
+    pub verifier_only: VerifierOnlyCircuitData<C, D>,
+    pub common: CommonCircuitData<F, D>,
 }
 
 //user needs to specify the correct input type.  Should match the type in the from_json function
@@ -19,14 +27,9 @@ pub struct InputData {
     pub inputs: Vec<u64>
 }
 
-impl MyFibCircuit {
-    pub fn config() -> CircuitConfig {
+impl FibonacciCircuit {
+    pub fn prove(path: &str) -> Self {
         let config = CircuitConfig::standard_recursion_config();
-        config
-    }
-
-    pub fn build(config: CircuitConfig) -> Self {
-
         let mut builder = CircuitBuilder::<F, D>::new(config);
 
         // The arithmetic circuit.
@@ -45,30 +48,30 @@ impl MyFibCircuit {
         builder.register_public_input(initial_b);
         builder.register_public_input(cur_target);
 
-        // Provide initial values.
-        // let mut pw = PartialWitness::new();
-        // pw.set_target(initial_a, F::ZERO);
-        // pw.set_target(initial_b, F::ONE);
-
         let data = builder.build::<C>();
-
-        Self{data}
-    }
-
-    pub fn from_json(path: &str) -> PartialWitness<F> {
-        let mut data: String = String::new();
-        let mut file = std::fs::File::open(path).unwrap();
-        let _ = file.read_to_string(&mut data).unwrap();
-        let data: InputData = serde_json::from_str(&data).unwrap();
         
-        let input_targets = self.data.prover_only.public_inputs;
-        let mut pw = PartialWitness::new();
+        // We construct the partial witness using inputs from the JSON file
+        let input_data = from_json(path);
+        let input_targets = data.prover_only.public_inputs.clone();
 
-        // user needs to provide the correct input type
-        for i in data.inputs.len() {
-            pw.set_target(input_targets[i], F::from_u64(data.inputs[i]));
+        let mut pw = PartialWitness::new();
+        for i in 0..input_data.len() {
+            pw.set_target(input_targets[i], F::from_canonical_u64(input_data[i]));
         }
 
-        pw
-    }
+        let proof_with_pis = data.prove(pw).unwrap();
+
+        Self {
+            proof: proof_with_pis,
+            verifier_only: data.verifier_only,
+            common: data.common,
+        }
+    }    
+}
+
+fn from_json(path: &str) -> Vec<u64> {
+    let inputs = fs::read_to_string(path).unwrap();
+    let data: InputData = serde_json::from_str(&inputs).unwrap();
+    
+    data.inputs
 }
