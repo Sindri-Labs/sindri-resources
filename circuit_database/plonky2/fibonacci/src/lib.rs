@@ -69,7 +69,7 @@ impl FibonacciCircuit {
     }    
 }
 
-fn from_json(path: &str) -> Vec<u64> {
+pub fn from_json(path: &str) -> Vec<u64> {
     let inputs = fs::read_to_string(path).unwrap();
     let data: InputData = serde_json::from_str(&inputs).unwrap();
     
