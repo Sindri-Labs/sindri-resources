@@ -2,7 +2,8 @@
     "name": "fibonacci_circuit",
     "circuitType": "plonky2",
     "structName": "fibonacci::FibonacciCircuit",
-    "plonky2Version": "v0.2.2",
+    "plonky2Version": "0.2.2",
+    "proving_scheme": "plonky2",
     "packageName": "fibonacci"
   }
   
