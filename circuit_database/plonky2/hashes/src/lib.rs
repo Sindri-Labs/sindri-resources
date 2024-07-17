@@ -33,7 +33,7 @@ pub struct InputData {
 }
 
 // user is responsible for ensuring that the input are deserialized and converted into the correct types
-fn from_json(path: &str) -> [F; 4] {
+pub fn from_json(path: &str) -> [F; 4] {
     let inputs = std::fs::read_to_string(path).unwrap();
     let mut data: InputData = serde_json::from_str(&inputs).unwrap();
 
