@@ -18,6 +18,7 @@ CIRCUIT_PARENT_DIRS = [
     "halo2/axiom-v0.2.2/",
     "halo2/axiom-v0.3.0/",
     "noir/",
+    "plonky2/"
 ]
 
 
