@@ -1,8 +1,9 @@
 {
-    "name": "fibonacci_circuit",
-    "circuitType": "plonky2",
-    "structName": "fibonacci::FibonacciCircuit",
-    "plonky2Version": "0.2.2",
-    "provingScheme": "plonky2",
-    "packageName": "fibonacci"
-  }
+  "$schema": "https://sindri.app/api/v1/sindri-manifest-schema.json",
+  "name": "fibonacci_circuit",
+  "circuitType": "plonky2",
+  "structName": "fibonacci::FibonacciCircuit",
+  "plonky2Version": "0.2.2",
+  "provingScheme": "plonky2",
+  "packageName": "fibonacci"
+}
