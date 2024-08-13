@@ -1,4 +1,5 @@
 {
+  "$schema": "https://sindri.app/api/v1/sindri-manifest-schema.json",
   "name": "fibonacci_circuit",
   "circuitType": "plonky2",
   "structName": "fibonacci::FibonacciCircuit",
