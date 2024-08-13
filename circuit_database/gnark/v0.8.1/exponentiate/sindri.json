@@ -6,5 +6,6 @@
   "curve": "bn254",
   "gnarkVersion": "v0.8.1",
   "packageName": "exponentiate",
+  "proverHashToFieldName": "",
   "provingScheme": "groth16"
 }
