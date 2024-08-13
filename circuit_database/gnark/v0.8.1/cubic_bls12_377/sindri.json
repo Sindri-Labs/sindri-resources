@@ -6,5 +6,6 @@
   "curve": "bls12-377",
   "gnarkVersion": "v0.8.1",
   "packageName": "cubic",
+  "proverHashToFieldName": "",
   "provingScheme": "groth16"
 }
