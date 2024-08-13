@@ -1,9 +1,9 @@
 {
-    "name": "hash_circuit",
-    "circuitType": "plonky2",
-    "structName": "hash_circuit::HashCircuit",
-    "plonky2Version": "0.2.2",
-    "provingScheme": "plonky2",
-    "packageName": "hash_circuit"
-  }
+  "name": "hash_circuit",
+  "circuitType": "plonky2",
+  "structName": "hash_circuit::HashCircuit",
+  "plonky2Version": "0.2.2",
+  "provingScheme": "plonky2",
+  "packageName": "hash_circuit"
+}
   
