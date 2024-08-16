@@ -33,19 +33,19 @@ pub struct JsonProofData {
 #[tokio::main]
 async fn main() {
     // Uploads the circuit to Sindri
-    use_rust_compile_script().await;
+    compile_circuit().await;
 
     // Sends an input to the circuit 
     // This input is a vector of 1024 leaves and an index to prove
     let input_path: &str = "input_1024.json";
-    use_rust_prove_circuit_script(input_path).await;
+    prove_circuit(input_path).await;
 
     // Verifies the proof
     let proof_path: &str = "./data/prove_out.json";
     verify_proof().await;
 }
 
-async fn use_rust_compile_script() {
+async fn compile_circuit() {
     dotenv().expect("Failed to read .env file");
     let api_key: String = std::env::var("SINDRI_API_KEY").unwrap();
     let api_url_prefix: &str = "https://sindri.app/api/";
@@ -98,7 +98,7 @@ async fn use_rust_compile_script() {
     writer.flush().unwrap();
 }
 
-async fn use_rust_prove_circuit_script(json_input_path: &str) {
+async fn prove_circuit(json_input_path: &str) {
     {
         dotenv().expect("Failed to read .env file");
         let api_key: String = std::env::var("SINDRI_API_KEY").unwrap();
