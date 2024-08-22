@@ -6,5 +6,5 @@
     "joltVersion": "0.1.0",
     "stdEnabled": "true",
     "packageName": "fibonacci",
-    "guestFunctionName": "fib"
+    "guestFunction": "fib"
   }
