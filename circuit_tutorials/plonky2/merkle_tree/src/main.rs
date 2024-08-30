@@ -42,7 +42,7 @@ async fn main() {
 
     // Verifies the proof
     let proof_path: &str = "./data/prove_out.json";
-    verify_proof().await;
+    verify_proof(proof_path);
 }
 
 async fn compile_circuit() {
@@ -52,13 +52,13 @@ async fn compile_circuit() {
     let api_version: &str = "v1/";
     let api_url: String = api_url_prefix.to_owned()  + api_version;
 
-    let circuit_dir = std::env::current_dir().unwrap().join("merkle_tree");
+    // let circuit_dir = std::env::current_dir().unwrap().join("merkle_tree_circuit");
     let mut contents = Vec::new();
     { // has to be scoped so that contents can be accessed after written to
         let buffer = std::io::Cursor::new(&mut contents);
         let enc = GzEncoder::new(buffer, Compression::default());
         let mut tar = tar::Builder::new(enc);
-        tar.append_dir_all("merkle-tree/",circuit_dir).unwrap();
+        tar.append_dir_all("merkle_tree","./merkle_tree_circuit").unwrap();
     }
 
     let part = Part::bytes(contents).file_name("filename.filetype");
