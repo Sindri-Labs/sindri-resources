@@ -1,0 +1,10 @@
+{
+    "name": "fibonacci",
+    "circuitType": "jolt",
+    "provingScheme": "jolt",
+    "commitmentScheme": "hyrax",
+    "joltVersion": "0.1.0",
+    "stdEnabled": "true",
+    "packageName": "fibonacci",
+    "guestFunction": "fib"
+  }
