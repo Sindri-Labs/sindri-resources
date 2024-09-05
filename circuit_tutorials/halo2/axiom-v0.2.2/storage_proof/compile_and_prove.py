@@ -5,10 +5,9 @@ from sindri import Sindri  # pip install sindri
 
 # NOTE: Provide your API Key and API Url
 API_KEY = os.getenv("SINDRI_API_KEY", "")
-API_URL = os.getenv("SINDRI_API_URL", "https://sindri.app/api/")
 
 # Initialize Sindri API SDK
-sindri = Sindri(API_KEY, api_url=API_URL, verbose_level=1)
+sindri = Sindri(API_KEY, verbose_level=1)
 
 # Create the circuit
 circuit_upload_path = "circuit/"

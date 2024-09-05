@@ -41,6 +41,7 @@ snark-verifier-sdk = { git = "https://github.com/axiom-crypto/snark-verifier.git
 
 # generating circuit inputs from blockchain
 ethers-providers = { version = "1.0.2", optional = true }  
+tokio-util = "=0.7.0"
 tokio = { version = "1.23.0", default-features = false, features = ["rt", "rt-multi-thread"], optional = true }
 
 [dev-dependencies]
