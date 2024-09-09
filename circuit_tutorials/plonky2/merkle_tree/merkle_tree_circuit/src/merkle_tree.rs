@@ -1,5 +1,3 @@
-// Simple Merkle Tree impl
-
 use itertools::Itertools;
 use num::Integer;
 use plonky2::field::goldilocks_field::GoldilocksField;
