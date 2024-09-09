@@ -37,11 +37,11 @@ pub struct JsonProofData {
 
 #[tokio::main]
 async fn main() {
-    // Uploads the circuit to Sindri
+    // Uploads the circuit code to Sindri
     compile_circuit().await;
 
-    // Sends an input to the circuit
-    // This input is a vector of 1024 leaves and an index to prove
+    // Uploads an input to the circuit consisting of a vector of 1024 leaves and an index value
+    // Proof artifacts are saved locally in a /data/ directory
     let input_path: &str = "input_1024.json";
     prove_circuit(input_path).await;
 
@@ -57,7 +57,6 @@ async fn compile_circuit() {
     let api_version: &str = "v1/";
     let api_url: String = api_url_prefix.to_owned() + api_version;
 
-    // let circuit_dir = std::env::current_dir().unwrap().join("merkle_tree_circuit");
     let mut contents = Vec::new();
     {
         // has to be scoped so that contents can be accessed after written to
