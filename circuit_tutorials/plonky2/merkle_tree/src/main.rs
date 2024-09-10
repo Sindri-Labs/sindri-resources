@@ -9,7 +9,7 @@ use reqwest::{
     Client,
 };
 use serde::Deserialize;
-use serde_json::{json, Value};
+use serde_json::Value;
 use std::fs::File;
 use std::io::{BufWriter, Read, Write};
 use std::time::Duration;
@@ -19,10 +19,7 @@ use plonky2::plonk::circuit_data::{
 };
 use plonky2::plonk::proof::ProofWithPublicInputs;
 use plonky2::util::serialization::DefaultGateSerializer;
-use plonky2::{
-    iop::target::Target,
-    plonk::config::{GenericConfig, PoseidonGoldilocksConfig},
-};
+use plonky2::plonk::config::{GenericConfig, PoseidonGoldilocksConfig};
 
 pub const D: usize = 2;
 pub type C = PoseidonGoldilocksConfig;
