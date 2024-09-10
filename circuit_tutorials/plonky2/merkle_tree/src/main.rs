@@ -63,7 +63,7 @@ async fn compile_circuit() {
         let buffer = std::io::Cursor::new(&mut contents);
         let enc = GzEncoder::new(buffer, Compression::default());
         let mut tar = tar::Builder::new(enc);
-        tar.append_dir_all("merkle_tree", "./merkle_tree_circuit")
+        tar.append_dir_all("merkle_tree", "./circuit")
             .unwrap();
     }
 
