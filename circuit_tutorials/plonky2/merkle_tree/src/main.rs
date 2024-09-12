@@ -17,11 +17,11 @@ use std::time::Duration;
 use plonky2::plonk::circuit_data::{
     CommonCircuitData, VerifierCircuitData, VerifierOnlyCircuitData,
 };
+use plonky2::plonk::config::{GenericConfig, PoseidonGoldilocksConfig};
 use plonky2::plonk::proof::ProofWithPublicInputs;
 use plonky2::util::serialization::DefaultGateSerializer;
-use plonky2::plonk::config::{GenericConfig, PoseidonGoldilocksConfig};
 
-let const API_URL: String = "https://sindri.app/api/v1/";
+const API_URL: String = "https://sindri.app/api/v1/";
 
 pub const D: usize = 2;
 pub type C = PoseidonGoldilocksConfig;
@@ -63,8 +63,7 @@ async fn compile_circuit(header: HeaderMap) {
         let buffer = std::io::Cursor::new(&mut contents);
         let enc = GzEncoder::new(buffer, Compression::default());
         let mut tar = tar::Builder::new(enc);
-        tar.append_dir_all("merkle_tree", "./circuit")
-            .unwrap();
+        tar.append_dir_all("merkle_tree", "./circuit").unwrap();
     }
 
     let part = Part::bytes(contents).file_name("filename.filetype");
@@ -90,13 +89,8 @@ async fn compile_circuit(header: HeaderMap) {
     println!("Circuit ID: {:?}", &circuit_id);
 
     // Poll circuit detail until it has a status of Ready or Failed
-    let circuit_data = poll_status(
-        format!("circuit/{circuit_id}/detail"),
-        &API_URL,
-        &api_key,
-        600,
-    )
-    .await;
+    let circuit_data = poll_circuit_status(header, circuit_id).await;
+
     if circuit_data["status"].as_str().unwrap().contains("Failed") {
         println!("Circuit compilation failed.");
         std::process::exit(1);
@@ -111,53 +105,50 @@ async fn compile_circuit(header: HeaderMap) {
 }
 
 async fn prove_circuit(json_input_path: &str, header: HeaderMap) {
-    {
-        println!("Reading circuit details locally");
-        let mut file = File::open("./data/compile_out.json").unwrap();
-        let mut data = String::new();
-        file.read_to_string(&mut data).unwrap();
-        let circuit_data: Value = serde_json::from_str(&data).unwrap();
-        let circuit_id = &circuit_data["circuit_id"].as_str().unwrap();
-        let circuit_id = circuit_id;
+    println!("Reading circuit details locally");
+    let mut file = File::open("./data/compile_out.json").unwrap();
+    let mut data = String::new();
+    file.read_to_string(&mut data).unwrap();
+    let circuit_data: Value = serde_json::from_str(&data).unwrap();
+    let circuit_id = &circuit_data["circuit_id"].as_str().unwrap();
+    let circuit_id = circuit_id;
 
-        // Initiate proof generation.
-        println!("Reading proof input from input.json file");
-        let mut proof_input_file = File::open(json_input_path).unwrap();
-        let mut proof_input = String::new();
-        proof_input_file.read_to_string(&mut proof_input).unwrap();
-        let map = serde_json::json!({"proof_input": proof_input});
+    // Initiate proof generation.
+    println!("Reading proof input from input.json file");
+    let mut proof_input_file = File::open(json_input_path).unwrap();
+    let mut proof_input = String::new();
+    proof_input_file.read_to_string(&mut proof_input).unwrap();
+    let map = serde_json::json!({"proof_input": proof_input});
 
-        println!("Requesting a proof");
-        let client = Client::new();
-        let response = client
-            .post(format!("{API_URL}circuit/{circuit_id}/prove"))
-            .headers(header)
-            .json(&map)
-            .send()
-            .await
-            .unwrap();
-        assert_eq!(
-            &response.status().as_u16(),
-            &201u16,
-            "Expected status code 201"
-        );
-        let response_body = response.json::<Value>().await.unwrap();
-        let proof_id = response_body["proof_id"].as_str().unwrap();
+    println!("Requesting a proof");
+    let client = Client::new();
+    let response = client
+        .post(format!("{API_URL}circuit/{circuit_id}/prove"))
+        .headers(header.clone())
+        .json(&map)
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(
+        &response.status().as_u16(),
+        &201u16,
+        "Expected status code 201"
+    );
+    let response_body = response.json::<Value>().await.unwrap();
+    let proof_id = response_body["proof_id"].as_str().unwrap();
 
-        // Poll proof detail until it has a status of Ready or Failed
-        let proof_data =
-            poll_status(format!("proof/{proof_id}/detail"), &API_URL, &api_key, 600).await;
-        if proof_data["status"].as_str().unwrap().contains("Failed") {
-            println!("Proving failed.");
-            std::process::exit(1);
-        }
-
-        println!("Saving proof details locally");
-        let file = File::create("./data/prove_out.json").unwrap();
-        let mut writer = BufWriter::new(file);
-        serde_json::to_writer_pretty(&mut writer, &proof_data).unwrap();
-        writer.flush().unwrap();
+    // Poll proof detail until it has a status of Ready or Failed
+    let proof_data = poll_proof_status(header, proof_id).await;
+    if proof_data["status"].as_str().unwrap().contains("Failed") {
+        println!("Proving failed.");
+        std::process::exit(1);
     }
+
+    println!("Saving proof details locally");
+    let file = File::create("./data/prove_out.json").unwrap();
+    let mut writer = BufWriter::new(file);
+    serde_json::to_writer_pretty(&mut writer, &proof_data).unwrap();
+    writer.flush().unwrap();
 }
 
 fn verify_proof(input: &str) {
@@ -202,12 +193,26 @@ fn headers_json(api_key: &str) -> HeaderMap {
     headers_json
 }
 
-async fn poll_status(endpoint: String, api_url: &str, api_key: &str, timeout: i64) -> Value {
+async fn poll_circuit_status(header: HeaderMap, cicuit_id: &str) -> Value {
+    let enpoint = "circuit/{circuit_id}/detail";
+    timeout = 600;
+    let return_value = poll_status(endpoint, &API_URL, header, timeout).await;
+    return_value
+}
+
+async fn poll_proof_status(header: HeaderMap, proof_id: &str) -> Value {
+    let enpoint = "proof/{proof_id}/detail";
+    timeout = 600;
+    let return_value = poll_status(endpoint, &API_URL, header, timeout).await;
+    return_value
+}
+
+async fn poll_status(endpoint: String, api_url: &str, header: HeaderMap, timeout: i64) -> Value {
     let client = Client::new();
     for _i in 1..timeout {
         let response = client
             .get(format!("{api_url}{endpoint}"))
-            .headers(headers_json(api_key))
+            .headers(header)
             .send()
             .await
             .unwrap();
