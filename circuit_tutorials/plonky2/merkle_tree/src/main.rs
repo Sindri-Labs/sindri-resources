@@ -21,6 +21,8 @@ use plonky2::plonk::proof::ProofWithPublicInputs;
 use plonky2::util::serialization::DefaultGateSerializer;
 use plonky2::plonk::config::{GenericConfig, PoseidonGoldilocksConfig};
 
+let const API_URL: String = "https://sindri.app/api/v1/";
+
 pub const D: usize = 2;
 pub type C = PoseidonGoldilocksConfig;
 pub type F = <C as GenericConfig<D>>::F;
@@ -34,26 +36,27 @@ pub struct JsonProofData {
 
 #[tokio::main]
 async fn main() {
+    // Obtain the user's API key from the .env file
+    dotenv().expect("Failed to read .env file");
+    let api_key: String = std::env::var("SINDRI_API_KEY").unwrap();
+
+    // Create a headers map with the API key.
+    let header = headers_json(&api_key);
+
     // Uploads the circuit code to Sindri
-    compile_circuit().await;
+    compile_circuit(header.clone()).await;
 
     // Uploads an input to the circuit consisting of a vector of 1024 leaves and an index value
     // Proof artifacts are saved locally in a /data/ directory
     let input_path: &str = "input_1024.json";
-    prove_circuit(input_path).await;
+    prove_circuit(input_path, header).await;
 
     // Verifies the proof
     let proof_path: &str = "./data/prove_out.json";
     verify_proof(proof_path);
 }
 
-async fn compile_circuit() {
-    dotenv().expect("Failed to read .env file");
-    let api_key: String = std::env::var("SINDRI_API_KEY").unwrap();
-    let api_url_prefix: &str = "https://sindri.app/api/";
-    let api_version: &str = "v1/";
-    let api_url: String = api_url_prefix.to_owned() + api_version;
-
+async fn compile_circuit(header: HeaderMap) {
     let mut contents = Vec::new();
     {
         // has to be scoped so that contents can be accessed after written to
@@ -71,8 +74,8 @@ async fn compile_circuit() {
     println!("Compiling circuit");
     let client = Client::new();
     let response = client
-        .post(format!("{api_url}circuit/create"))
-        .headers(headers_json(&api_key))
+        .post(format!("{API_URL}circuit/create"))
+        .headers(header)
         .multipart(upload)
         .send()
         .await
@@ -89,7 +92,7 @@ async fn compile_circuit() {
     // Poll circuit detail until it has a status of Ready or Failed
     let circuit_data = poll_status(
         format!("circuit/{circuit_id}/detail"),
-        &api_url,
+        &API_URL,
         &api_key,
         600,
     )
@@ -107,15 +110,8 @@ async fn compile_circuit() {
     writer.flush().unwrap();
 }
 
-async fn prove_circuit(json_input_path: &str) {
+async fn prove_circuit(json_input_path: &str, header: HeaderMap) {
     {
-        dotenv().expect("Failed to read .env file");
-        let api_key: String = std::env::var("SINDRI_API_KEY").unwrap();
-        let api_url_prefix: &str = "https://sindri.app/api/";
-
-        let api_version: &str = "v1/";
-        let api_url: String = api_url_prefix.to_owned() + api_version;
-
         println!("Reading circuit details locally");
         let mut file = File::open("./data/compile_out.json").unwrap();
         let mut data = String::new();
@@ -134,8 +130,8 @@ async fn prove_circuit(json_input_path: &str) {
         println!("Requesting a proof");
         let client = Client::new();
         let response = client
-            .post(format!("{api_url}circuit/{circuit_id}/prove"))
-            .headers(headers_json(&api_key))
+            .post(format!("{API_URL}circuit/{circuit_id}/prove"))
+            .headers(header)
             .json(&map)
             .send()
             .await
@@ -150,7 +146,7 @@ async fn prove_circuit(json_input_path: &str) {
 
         // Poll proof detail until it has a status of Ready or Failed
         let proof_data =
-            poll_status(format!("proof/{proof_id}/detail"), &api_url, &api_key, 600).await;
+            poll_status(format!("proof/{proof_id}/detail"), &API_URL, &api_key, 600).await;
         if proof_data["status"].as_str().unwrap().contains("Failed") {
             println!("Proving failed.");
             std::process::exit(1);
