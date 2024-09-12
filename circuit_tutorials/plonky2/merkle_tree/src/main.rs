@@ -21,7 +21,7 @@ use plonky2::plonk::config::{GenericConfig, PoseidonGoldilocksConfig};
 use plonky2::plonk::proof::ProofWithPublicInputs;
 use plonky2::util::serialization::DefaultGateSerializer;
 
-const API_URL: String = "https://sindri.app/api/v1/";
+const API_URL: &'static str = "https://sindri.app/api/v1/";
 
 pub const D: usize = 2;
 pub type C = PoseidonGoldilocksConfig;
@@ -75,7 +75,7 @@ async fn compile_circuit(header: HeaderMap) {
     let client = Client::new();
     let response = client
         .post(format!("{API_URL}circuit/create"))
-        .headers(header)
+        .headers(header.clone())
         .multipart(upload)
         .send()
         .await
@@ -198,18 +198,18 @@ fn headers_json(api_key: &str) -> HeaderMap {
 }
 
 // This function polls the status of the circuit until it is Ready or Failed.
-async fn poll_circuit_status(header: HeaderMap, cicuit_id: &str) -> Value {
-    let enpoint = "circuit/{circuit_id}/detail";
-    timeout = 600;
-    let return_value = poll_status(endpoint, &API_URL, header, timeout).await;
+async fn poll_circuit_status(header: HeaderMap, circuit_id: &str) -> Value {
+    let endpoint = format!("circuit/{circuit_id}/detail");
+    let timeout = 600;
+    let return_value = poll_status(&endpoint, &API_URL, header, timeout).await;
     return_value
 }
 
 // This function polls the status of the proof until it is Ready or Failed.
 async fn poll_proof_status(header: HeaderMap, proof_id: &str) -> Value {
-    let enpoint = "proof/{proof_id}/detail";
-    timeout = 600;
-    let return_value = poll_status(endpoint, &API_URL, header, timeout).await;
+    let endpoint = format!("proof/{proof_id}/detail");
+    let timeout = 600;
+    let return_value = poll_status(&endpoint, &API_URL, header, timeout).await;
     return_value
 }
 
@@ -217,12 +217,12 @@ async fn poll_proof_status(header: HeaderMap, proof_id: &str) -> Value {
 // The function will return the data in JSON for either case.
 // If the status is ready, the function will return a JSON file containing circuit or proof data.
 // If the status is failed, the function will return a JSON file containing an error message.
-async fn poll_status(endpoint: String, api_url: &str, header: HeaderMap, timeout: i64) -> Value {
+async fn poll_status(endpoint: &str, api_url: &str, header: HeaderMap, timeout: i64) -> Value {
     let client = Client::new();
     for _i in 1..timeout {
         let response = client
             .get(format!("{api_url}{endpoint}"))
-            .headers(header)
+            .headers(header.clone())
             .send()
             .await
             .unwrap();
