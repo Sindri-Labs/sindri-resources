@@ -15,7 +15,7 @@ pub struct MerkleTree {
 }
 
 impl MerkleTree {
-    // From list of hashes with length len, take each pair and hash them, resulting in a new vector of hashes of length len/2
+    // From list of hashes with length len, take each pair and hash them, resulting in a new vector of hashes of length len/2.
     fn next_level_hashes(
         current_level: Vec<HashOut<GoldilocksField>>,
     ) -> Vec<HashOut<GoldilocksField>> {
@@ -30,9 +30,9 @@ impl MerkleTree {
 
     // Create a Merkle Tree given 2^n leaves.
     pub fn build(leaves: Vec<GoldilocksField>) -> Self {
-        // This panics if length is not a power of 2
+        // This panics if length is not a power of 2.
         let count_levels = log2_strict(leaves.len());
-        // To get the first level, hash all leaves
+        // To get the first level, hash all leaves.
         let level0: Vec<HashOut<GoldilocksField>> = leaves
             .into_iter()
             .map(|leaf| PoseidonHash::hash_or_noop(&[leaf]))
@@ -56,15 +56,15 @@ impl MerkleTree {
         }
     }
 
-    // Returns count_levels elements that together with the leaf show that a leaf is part of this Merkle Tree, given the root
-    // starts at the element at the lowest level and goes up
+    // Returns count_levels elements that together with the leaf show that a leaf is part of this Merkle Tree, given the root.
+    // starts at the element at the lowest level and goes up.
     pub fn get_merkle_proof(self, leaf_index: usize) -> Vec<HashOut<GoldilocksField>> {
         assert!(leaf_index < self.tree[0].len());
 
         let mut proof_hashes = Vec::new();
         let mut updated_index = leaf_index;
 
-        // Grab the correct hash per level
+        // Grab the correct hash per level.
         for i in 0..(self.count_levels) {
             let level_i: &Vec<HashOut<GoldilocksField>> = &self.tree[i];
             let selected_hash = if updated_index.is_odd() {
@@ -92,17 +92,17 @@ impl MerkleTree {
     }
 }
 
-// Returns true if the given proof indeed leads to the same root when hashing the leaf with the given hashes consequently
+// Returns true if the given proof indeed leads to the same root when hashing the leaf with the given hashes consequently.
 pub fn verify_merkle_proof(
     leaf: GoldilocksField,
     leaf_index: usize,
     root: HashOut<GoldilocksField>,
     hashes: Vec<HashOut<GoldilocksField>>,
 ) -> bool {
-    // Step 1: hash leaf
+    // Step 1: hash leaf.
     let leaf_hashed: HashOut<GoldilocksField> = PoseidonHash::hash_or_noop(&[leaf]);
 
-    // Repeat: take 1 hash from list and current hash, hash together
+    // Repeat: take 1 hash from list and current hash, hash together.
     let mut next_hash: HashOut<GoldilocksField> = leaf_hashed;
     let mut updated_index = leaf_index;
     for i in 0..hashes.len() {
@@ -114,7 +114,7 @@ pub fn verify_merkle_proof(
         updated_index = updated_index / 2;
     }
 
-    // Finally: compare final hash with root
+    // Finally: compare final hash with root.
     next_hash == root
 }
 
@@ -139,20 +139,6 @@ mod tests {
         .to_vec();
         let _tree: MerkleTree = MerkleTree::build(leaves);
 
-        // println!( "{:?}", tree.count_levels);
-        // println!( "{:?}", tree.tree);
-        // println!( "{:?}", tree.root);
-        /*
-        Output looks something like this:
-
-        2
-        level0
-        [[HashOut { elements: [2890852870, 0, 0, 0] }, HashOut { elements: [156728478, 0, 0, 0] }, HashOut { elements: [2876514289, 0, 0, 0] }, HashOut { elements: [984286162, 0, 0, 0] }],
-        level1
-        [HashOut { elements: [6678006133445961348, 15827935749738443865, 6295652393730592048, 1546515167911236130] }, HashOut { elements: [6698018865469624861, 12486244005715193285, 11330639022572315007, 6059804404595156248] }]]
-        root
-        HashOut { elements: [13451271846715771774, 4069913004933160254, 14528216580130305557, 9716424959297545638] }
-        */
         Ok(())
     }
 
@@ -183,27 +169,6 @@ mod tests {
         .to_vec();
         let _tree: MerkleTree = MerkleTree::build(leaves);
 
-        // println!( "{:?}", tree.count_levels);
-        // println!( "{:?}", tree.tree);
-        // println!( "{:?}", tree.root);
-        /*
-        Output looks something like this:
-
-        level
-        4
-
-        16 hashes
-        [[HashOut { elements: [14786323743454721611, 0, 0, 0] }, HashOut { elements: [976503040092093812, 0, 0, 0] }, HashOut { elements: [4644130751253292674, 0, 0, 0] }, HashOut { elements: [6522877527545910706, 0, 0, 0] }, HashOut { elements: [11021172818651636092, 0, 0, 0] }, HashOut { elements: [12048403458499719587, 0, 0, 0] }, HashOut { elements: [11457874926809001558, 0, 0, 0] }, HashOut { elements: [14982007443548219923, 0, 0, 0] }, HashOut { elements: [4546369223935415035, 0, 0, 0] }, HashOut { elements: [7205140577604465038, 0, 0, 0] }, HashOut { elements: [4644130751253292674, 0, 0, 0] }, HashOut { elements: [4208177174652750506, 0, 0, 0] }, HashOut { elements: [16147116534354400672, 0, 0, 0] }, HashOut { elements: [18147003476480002882, 0, 0, 0] }, HashOut { elements: [14133393155459789216, 0, 0, 0] }, HashOut { elements: [9890944065319669426, 0, 0, 0] }],
-        8 hashes
-        [HashOut { elements: [16072672881132969138, 16679487992876356669, 4319836168073005766, 14599992432910949662] }, HashOut { elements: [13939588529466633382, 10763620781372339433, 2004324520800166618, 12719277447629989832] }, HashOut { elements: [14656282042201240311, 6170970616712589521, 11157357638961986056, 5438125353060943827] }, HashOut { elements: [2852357662721872796, 9295427221128388695, 16660079770794313894, 16593848747552204277] }, HashOut { elements: [1050226065911802874, 3351649260676358938, 8999655484267522522, 8103734492761011635] }, HashOut { elements: [13846094456198376205, 9253307167504386126, 4161612500674764592, 7803567864857746324] }, HashOut { elements: [12908760732062415960, 7139572648574712447, 5556204547814336347, 3348534187924876571] }, HashOut { elements: [3098588497934611450, 6742117982852617524, 916011858354471608, 2853499230617662209] }],
-        4 hashes
-        [HashOut { elements: [2804654470754882522, 10755905498140000489, 4068725548728740598, 3390508811108791323] }, HashOut { elements: [12809105246780417325, 17913287784403914705, 15645466341003679334, 9087376211576685650] }, HashOut { elements: [47027546173659393, 10025915649153530159, 13833576669443475941, 16760048762533095483] }, HashOut { elements: [9702041242754623164, 9442892912940285811, 2205638039663440432, 4535189628500499303] }],
-        2 hashes
-        [HashOut { elements: [13714743953980303059, 8312649863783971264, 16925076622785735252, 9754399915922106354] }, HashOut { elements: [14079844864384152521, 6499705357519308869, 16026207645313349904, 15079809878245341298] }]]
-
-        root
-        HashOut { elements: [2659148958598424285, 16496267010313658247, 12216516055477211974, 15749220035779350537] }
-        */
         Ok(())
     }
 
