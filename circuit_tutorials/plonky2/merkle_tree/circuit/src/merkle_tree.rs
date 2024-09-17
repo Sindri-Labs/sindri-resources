@@ -21,10 +21,8 @@ impl MerkleTree {
     ) -> Vec<HashOut<GoldilocksField>> {
         let temp: Vec<&[HashOut<GoldilocksField>]> =
             current_level.chunks(2).into_iter().collect_vec();
-        let next_level: Vec<HashOut<GoldilocksField>> = temp
-            .into_iter()
-            .map(|x| PoseidonHash::two_to_one(x[0], x[1]))
-            .collect();
+        let next_level: Vec<HashOut<GoldilocksField>> =
+            temp.into_iter().map(|x| PoseidonHash::two_to_one(x[0], x[1])).collect();
         next_level
     }
 
@@ -33,10 +31,8 @@ impl MerkleTree {
         // This panics if length is not a power of 2.
         let count_levels = log2_strict(leaves.len());
         // To get the first level, hash all leaves.
-        let level0: Vec<HashOut<GoldilocksField>> = leaves
-            .into_iter()
-            .map(|leaf| PoseidonHash::hash_or_noop(&[leaf]))
-            .collect();
+        let level0: Vec<HashOut<GoldilocksField>> =
+            leaves.into_iter().map(|leaf| PoseidonHash::hash_or_noop(&[leaf])).collect();
 
         let mut levels = Vec::new();
         levels.push(level0);
@@ -49,11 +45,7 @@ impl MerkleTree {
         // Final hash for root.
         let last_hashes: Vec<HashOut<GoldilocksField>> = levels.clone().last().unwrap().to_vec();
         let root = PoseidonHash::two_to_one(last_hashes[0], last_hashes[1]);
-        MerkleTree {
-            count_levels: count_levels,
-            tree: levels.clone(),
-            root: root,
-        }
+        MerkleTree { count_levels: count_levels, tree: levels.clone(), root: root }
     }
 
     // Returns count_levels elements that together with the leaf show that a leaf is part of this Merkle Tree, given the root.
@@ -281,18 +273,8 @@ mod tests {
         let res_leaf_15 = tree.clone().get_merkle_proof(15);
 
         // Assert correct proofs
-        assert!(verify_merkle_proof(
-            leaves[0],
-            0,
-            tree.root,
-            res_leaf_0.clone()
-        ));
-        assert!(verify_merkle_proof(
-            leaves[1],
-            1,
-            tree.root,
-            res_leaf_1.clone()
-        ));
+        assert!(verify_merkle_proof(leaves[0], 0, tree.root, res_leaf_0.clone()));
+        assert!(verify_merkle_proof(leaves[1], 1, tree.root, res_leaf_1.clone()));
         assert!(verify_merkle_proof(leaves[2], 2, tree.root, res_leaf_2));
         assert!(verify_merkle_proof(leaves[3], 3, tree.root, res_leaf_3));
         assert!(verify_merkle_proof(leaves[4], 4, tree.root, res_leaf_4));
@@ -310,33 +292,13 @@ mod tests {
 
         // Assert incorrect proof fails
         // wrong leaf
-        assert!(!verify_merkle_proof(
-            leaves[1],
-            0,
-            tree.root,
-            res_leaf_0.clone()
-        ));
+        assert!(!verify_merkle_proof(leaves[1], 0, tree.root, res_leaf_0.clone()));
         // wrong index
-        assert!(!verify_merkle_proof(
-            leaves[0],
-            1,
-            tree.root,
-            res_leaf_0.clone()
-        ));
+        assert!(!verify_merkle_proof(leaves[0], 1, tree.root, res_leaf_0.clone()));
         // wrong proof
-        assert!(!verify_merkle_proof(
-            leaves[0],
-            0,
-            tree.root,
-            res_leaf_1.clone()
-        ));
+        assert!(!verify_merkle_proof(leaves[0], 0, tree.root, res_leaf_1.clone()));
         // wrong root
-        assert!(!verify_merkle_proof(
-            leaves[0],
-            0,
-            tree.tree[0][0],
-            res_leaf_0.clone()
-        ));
+        assert!(!verify_merkle_proof(leaves[0], 0, tree.tree[0][0], res_leaf_0.clone()));
 
         Ok(())
     }

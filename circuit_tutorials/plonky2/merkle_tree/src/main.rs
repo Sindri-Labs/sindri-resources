@@ -80,11 +80,7 @@ async fn compile_circuit(header: HeaderMap) {
         .send()
         .await
         .unwrap();
-    assert_eq!(
-        &response.status().as_u16(),
-        &201u16,
-        "Expected status code 201"
-    );
+    assert_eq!(&response.status().as_u16(), &201u16, "Expected status code 201");
     let response_body = response.json::<Value>().await.unwrap();
     let circuit_id = response_body["circuit_id"].as_str().unwrap();
     println!("Circuit ID: {:?}", &circuit_id);
@@ -131,11 +127,7 @@ async fn prove_circuit(json_input_path: &str, header: HeaderMap) {
         .send()
         .await
         .unwrap();
-    assert_eq!(
-        &response.status().as_u16(),
-        &201u16,
-        "Expected status code 201"
-    );
+    assert_eq!(&response.status().as_u16(), &201u16, "Expected status code 201");
     let response_body = response.json::<Value>().await.unwrap();
     let proof_id = response_body["proof_id"].as_str().unwrap();
 
@@ -164,9 +156,7 @@ fn verify_proof(input: &str) {
 
     let proof_bytes = general_purpose::STANDARD.decode(proof_data.proof).unwrap();
     let common_bytes = general_purpose::STANDARD.decode(proof_data.common).unwrap();
-    let verifier_only_bytes = general_purpose::STANDARD
-        .decode(proof_data.verifier_data)
-        .unwrap();
+    let verifier_only_bytes = general_purpose::STANDARD.decode(proof_data.verifier_data).unwrap();
 
     let default_gate_serializer = DefaultGateSerializer;
 
@@ -175,10 +165,8 @@ fn verify_proof(input: &str) {
     let proof = ProofWithPublicInputs::<F, C, D>::from_bytes(proof_bytes, &common).unwrap();
     let verifier_data = VerifierOnlyCircuitData::<C, D>::from_bytes(verifier_only_bytes).unwrap();
 
-    let verifier: VerifierCircuitData<F, C, D> = VerifierCircuitData {
-        verifier_only: verifier_data,
-        common: common,
-    };
+    let verifier: VerifierCircuitData<F, C, D> =
+        VerifierCircuitData { verifier_only: verifier_data, common: common };
 
     match verifier.verify(proof) {
         Ok(_) => println!("Proof has been verified!"),
@@ -226,19 +214,12 @@ async fn poll_status(endpoint: &str, api_url: &str, header: HeaderMap, timeout: 
             .send()
             .await
             .unwrap();
-        assert_eq!(
-            &response.status().as_u16(),
-            &200u16,
-            "Expected status code 201"
-        );
+        assert_eq!(&response.status().as_u16(), &200u16, "Expected status code 201");
 
         // If the response is Ready or Failed, break the loop and return the data
         let data = response.json::<Value>().await.unwrap();
         let status = &data["status"].to_string();
-        if ["Ready", "Failed"]
-            .iter()
-            .any(|&s| status.as_str().contains(s))
-        {
+        if ["Ready", "Failed"].iter().any(|&s| status.as_str().contains(s)) {
             return data;
         }
 
