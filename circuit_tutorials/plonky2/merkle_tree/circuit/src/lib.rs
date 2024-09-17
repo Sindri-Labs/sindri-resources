@@ -107,7 +107,7 @@ impl MerkleTreeCircuit {
         // The prove method is called on the circuit_data struct to return a proof with public inputs.
         let proof_with_pis = circuit_data.prove(pw).unwrap();
 
-        // It's best practice to verify the proof after creating it
+        // It's best practice to verify the proof after creating it.
         let verified = circuit_data.verify(proof_with_pis.clone()).unwrap();
         println!("Verified: {:?}", verified);
 
