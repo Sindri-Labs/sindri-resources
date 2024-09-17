@@ -15,7 +15,8 @@ pub struct MerkleTree {
 }
 
 impl MerkleTree {
-    // From list of hashes with length len, take each pair and hash them, resulting in a new vector of hashes of length len/2.
+    // From list of hashes with length len, take each pair and hash them, resulting in a new vector 
+    // of hashes of length len/2.
     fn next_level_hashes(
         current_level: Vec<HashOut<GoldilocksField>>,
     ) -> Vec<HashOut<GoldilocksField>> {
@@ -48,8 +49,9 @@ impl MerkleTree {
         MerkleTree { count_levels: count_levels, tree: levels.clone(), root: root }
     }
 
-    // Returns count_levels elements that together with the leaf show that a leaf is part of this Merkle Tree, given the root.
-    // starts at the element at the lowest level and goes up.
+    // Returns count_levels elements that together with the leaf show that a leaf is part of this 
+    // Merkle Tree, given the root.
+    // Starts at the element at the lowest level and goes up.
     pub fn get_merkle_proof(self, leaf_index: usize) -> Vec<HashOut<GoldilocksField>> {
         assert!(leaf_index < self.tree[0].len());
 
@@ -84,7 +86,8 @@ impl MerkleTree {
     }
 }
 
-// Returns true if the given proof indeed leads to the same root when hashing the leaf with the given hashes consequently.
+// Returns true if the given proof indeed leads to the same root when hashing the leaf with the 
+// given hashes consequently.
 pub fn verify_merkle_proof(
     leaf: GoldilocksField,
     leaf_index: usize,
