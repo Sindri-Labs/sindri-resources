@@ -53,8 +53,8 @@ impl InputData {
     }
 }
 
-// Users should rename the struct depending on the circuit they are proving, but the fields of 
-// this struct remain the same.
+// Users should rename the struct depending on the circuit they are proving, but the fields of the 
+// struct must remain unchanged. 
 pub struct MerkleTreeCircuit {
     pub proof: ProofWithPublicInputs<F, C, D>,
     pub verifier_only: VerifierOnlyCircuitData<C, D>,
@@ -62,8 +62,8 @@ pub struct MerkleTreeCircuit {
 }
 
 // Users only implement one method called "prove" for their circuit struct.
-// The prove method should include importing the InputData struct, creating the circuit, creating
-//  the partial witness, and proving the circuit.
+// The prove method should include importing the InputData struct, creating the circuit, creating 
+// the partial witness, and proving the circuit.
 impl MerkleTreeCircuit {
     pub fn prove(path: &str) -> Self {
         let input_data = InputData::from_json(path);
@@ -104,7 +104,7 @@ impl MerkleTreeCircuit {
             pw.set_target(expected_public_inputs[i], tree.root.elements[i]);
         }
 
-        // The prove method is called on circuit_data to return a proof with public inputs.
+        // The prove method is called on the circuit_data struct to return a proof with public inputs.
         let proof_with_pis = circuit_data.prove(pw).unwrap();
 
         // It's best practice to verify the proof after creating it
@@ -129,7 +129,7 @@ pub fn verify_merkle_proof_circuit(
     CircuitData<plonky2::field::goldilocks_field::GoldilocksField, PoseidonGoldilocksConfig, 2>,
     Vec<HashOutTarget>,
 ) {
-    // Public inputs corresponding to nodes in the Merkle path are specified have to specified as 
+    // Public inputs corresponding to nodes in the Merkle path must be specified as 
     // HashOutTarget types.
     let mut targets: Vec<plonky2::hash::hash_types::HashOutTarget> = Vec::new();
 
@@ -151,11 +151,19 @@ pub fn verify_merkle_proof_circuit(
     let mut next_hash: plonky2::hash::hash_types::HashOutTarget;
     if leaf_index % 2 == 0 {
         next_hash = builder.hash_or_noop::<PoseidonHash>(
-            [leaf_to_prove.elements.to_vec(), merkle_proof_elm.elements.to_vec()].concat(),
+            [
+                leaf_to_prove.elements.to_vec(),
+                merkle_proof_elm.elements.to_vec(),
+            ]
+            .concat(),
         );
     } else {
         next_hash = builder.hash_or_noop::<PoseidonHash>(
-            [merkle_proof_elm.elements.to_vec(), leaf_to_prove.elements.to_vec()].concat(),
+            [
+                merkle_proof_elm.elements.to_vec(),
+                leaf_to_prove.elements.to_vec(),
+            ]
+            .concat(),
         );
     }
 
@@ -169,11 +177,19 @@ pub fn verify_merkle_proof_circuit(
 
         if current_layer_index % 2 == 0 {
             next_hash = builder.hash_or_noop::<PoseidonHash>(
-                [next_hash.elements.to_vec(), merkle_proof_elm.elements.to_vec()].concat(),
+                [
+                    next_hash.elements.to_vec(),
+                    merkle_proof_elm.elements.to_vec(),
+                ]
+                .concat(),
             );
         } else {
             next_hash = builder.hash_or_noop::<PoseidonHash>(
-                [merkle_proof_elm.elements.to_vec(), next_hash.elements.to_vec()].concat(),
+                [
+                    merkle_proof_elm.elements.to_vec(),
+                    next_hash.elements.to_vec(),
+                ]
+                .concat(),
             );
         }
         current_layer_index = current_layer_index / 2;
