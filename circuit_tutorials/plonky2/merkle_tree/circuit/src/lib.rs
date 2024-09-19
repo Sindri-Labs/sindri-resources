@@ -144,7 +144,8 @@ pub fn verify_merkle_proof_circuit(
     let leaf_to_prove = builder.add_virtual_hash();
     targets.push(leaf_to_prove);
 
-    // The first hashing step occurs outside of the loop, since it uses the leaf_to_prove as an input.
+    // The first hashing step occurs outside of the loop, since it uses the leaf_to_prove as 
+    // an input.
     let merkle_proof_elm = builder.add_virtual_hash();
     targets.push(merkle_proof_elm);
 
