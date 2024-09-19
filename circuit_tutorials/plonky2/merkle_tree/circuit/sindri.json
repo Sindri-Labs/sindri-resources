@@ -1,0 +1,8 @@
+{
+  "name": "merkle_tree_circuit",
+  "circuitType": "plonky2",
+  "structName": "merkle_tree::MerkleTreeCircuit",
+  "plonky2Version": "0.2.2",
+  "provingScheme": "plonky2",
+  "packageName": "merkle_tree"
+}

@@ -1,0 +1,38 @@
+{
+  "circuit_id": "414ae280-ecc3-4993-ad82-e68a0fcb3463",
+  "circuit_name": "merkle_tree_circuit",
+  "circuit_type": "plonky2",
+  "compute_time": "P0DT00H00M30.348045S",
+  "compute_time_sec": 30.348045,
+  "compute_times": {
+    "clean_up": 3.10582,
+    "compile": 11.48554,
+    "precompilation_checks": 15.16629,
+    "save_results": 0.59039,
+    "total": 30.34805
+  },
+  "date_created": "2024-09-12T22:48:50.156Z",
+  "error": null,
+  "file_size": 2983650,
+  "has_smart_contract_verifier": false,
+  "has_verification_key": false,
+  "meta": {},
+  "num_proofs": 0,
+  "plonky2_version": "0.2.2",
+  "project_name": "merkle_tree_circuit",
+  "proving_scheme": "plonky2",
+  "public": false,
+  "queue_time": "P0DT00H00M01.322882S",
+  "queue_time_sec": 1.322882,
+  "status": "Ready",
+  "struct_name": "merkle_tree::MerkleTreeCircuit",
+  "tags": [
+    "latest"
+  ],
+  "team": "roy-sindri",
+  "team_avatar_url": "https://gravatar.com/avatar/758874998f5bd0c393da094e1967a72b?s=400&d=identicon&r=x",
+  "team_slug": "roy-sindri",
+  "uploaded_file_name": "filename.filetype",
+  "verification_key": null,
+  "warnings": null
+}
