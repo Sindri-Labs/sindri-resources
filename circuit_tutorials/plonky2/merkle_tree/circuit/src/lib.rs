@@ -112,7 +112,7 @@ impl MerkleTreeCircuit {
         println!("Verified: {:?}", verified);
 
         // Sindri always returns this information for every Plonky2 circuit.
-        // The proof, the verifier data, and the common data contain all the infomration required 
+        // The proof, the verifier data, and the common data contain all the information required
         // by a verifier to verify the proof.
         Self {
             proof: proof_with_pis,
