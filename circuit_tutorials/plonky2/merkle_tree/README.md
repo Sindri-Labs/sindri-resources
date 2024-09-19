@@ -2,6 +2,8 @@
 
 This Rust script uploads and proves a Plonky2 circuit that verifies a Merkle inclusion proof for a 1024-leaf Merkle tree.
 
+The code used to construct Merkle trees in `circuit/src/merkle_tree.rs` is cloned from Hashcloak's [Merkle tree repository](https://github.com/hashcloak/plonky2-merkle-trees/blob/master/src/simple_merkle_tree/simple_merkle_tree.rs)
+
 To run the code, change the `sample.env` to `.env` and enter your Sindri API Key. From the root of the `merkle_tree` directory, run:
 ```bash
 cargo run --release
