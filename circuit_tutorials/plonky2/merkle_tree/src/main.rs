@@ -105,7 +105,7 @@ async fn compile_circuit(header: HeaderMap) {
     writer.flush().unwrap();
 }
 
-// This function proves the circuit using the input data provided by the user and saves the proof in the /data/ directory.
+// This function proves the circuit using the input data provided by the user.
 async fn prove_circuit(json_input_path: &str, header: HeaderMap) {
     println!("Reading circuit details locally");
     let mut file = File::open("./data/compile_out.json").unwrap();
