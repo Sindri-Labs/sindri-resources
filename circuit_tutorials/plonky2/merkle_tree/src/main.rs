@@ -56,8 +56,7 @@ async fn main() {
     verify_proof(proof_path);
 }
 
-// This function uploads the circuit to Sindri for compilation and outputs the circuit details as 
-// a JSON file in the the /data/ directory.
+// This function uploads the circuit to Sindri for compilation.
 async fn compile_circuit(header: HeaderMap) {
     let mut contents = Vec::new();
     // This block is scoped that contents can be accessed after written to.
