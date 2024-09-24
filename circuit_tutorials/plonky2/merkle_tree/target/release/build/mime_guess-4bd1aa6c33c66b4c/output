@@ -1,0 +1,1 @@
+cargo:rustc-env=MIME_TYPES_GENERATED_PATH=/home/royrotstein/Sindri/sindri-resources/circuit_tutorials/plonky2/merkle_tree/target/release/build/mime_guess-4bd1aa6c33c66b4c/out/mime_types_generated.rs

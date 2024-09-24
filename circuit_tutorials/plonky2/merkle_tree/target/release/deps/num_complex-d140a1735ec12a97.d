@@ -1,0 +1,10 @@
+/home/royrotstein/Sindri/sindri-resources/circuit_tutorials/plonky2/merkle_tree/target/release/deps/libnum_complex-d140a1735ec12a97.rmeta: /home/royrotstein/.cargo/registry/src/index.crates.io-6f17d22bba15001f/num-complex-0.4.6/src/lib.rs /home/royrotstein/.cargo/registry/src/index.crates.io-6f17d22bba15001f/num-complex-0.4.6/src/cast.rs /home/royrotstein/.cargo/registry/src/index.crates.io-6f17d22bba15001f/num-complex-0.4.6/src/pow.rs /home/royrotstein/.cargo/registry/src/index.crates.io-6f17d22bba15001f/num-complex-0.4.6/src/crand.rs
+
+/home/royrotstein/Sindri/sindri-resources/circuit_tutorials/plonky2/merkle_tree/target/release/deps/libnum_complex-d140a1735ec12a97.rlib: /home/royrotstein/.cargo/registry/src/index.crates.io-6f17d22bba15001f/num-complex-0.4.6/src/lib.rs /home/royrotstein/.cargo/registry/src/index.crates.io-6f17d22bba15001f/num-complex-0.4.6/src/cast.rs /home/royrotstein/.cargo/registry/src/index.crates.io-6f17d22bba15001f/num-complex-0.4.6/src/pow.rs /home/royrotstein/.cargo/registry/src/index.crates.io-6f17d22bba15001f/num-complex-0.4.6/src/crand.rs
+
+/home/royrotstein/Sindri/sindri-resources/circuit_tutorials/plonky2/merkle_tree/target/release/deps/num_complex-d140a1735ec12a97.d: /home/royrotstein/.cargo/registry/src/index.crates.io-6f17d22bba15001f/num-complex-0.4.6/src/lib.rs /home/royrotstein/.cargo/registry/src/index.crates.io-6f17d22bba15001f/num-complex-0.4.6/src/cast.rs /home/royrotstein/.cargo/registry/src/index.crates.io-6f17d22bba15001f/num-complex-0.4.6/src/pow.rs /home/royrotstein/.cargo/registry/src/index.crates.io-6f17d22bba15001f/num-complex-0.4.6/src/crand.rs
+
+/home/royrotstein/.cargo/registry/src/index.crates.io-6f17d22bba15001f/num-complex-0.4.6/src/lib.rs:
+/home/royrotstein/.cargo/registry/src/index.crates.io-6f17d22bba15001f/num-complex-0.4.6/src/cast.rs:
+/home/royrotstein/.cargo/registry/src/index.crates.io-6f17d22bba15001f/num-complex-0.4.6/src/pow.rs:
+/home/royrotstein/.cargo/registry/src/index.crates.io-6f17d22bba15001f/num-complex-0.4.6/src/crand.rs:

@@ -1,0 +1,1 @@
+/home/royrotstein/Sindri/sindri-resources/circuit_tutorials/plonky2/merkle_tree/target/release/sindri-script: /home/royrotstein/Sindri/sindri-resources/circuit_tutorials/plonky2/merkle_tree/src/main.rs
