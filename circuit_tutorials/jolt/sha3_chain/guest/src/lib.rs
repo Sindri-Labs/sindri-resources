@@ -4,7 +4,6 @@ pub use utils::{Input, Output};
 
 use sha3::{Digest, Keccak256};
 
-
 #[jolt::provable]
 fn sha3_chain(pre_image: Input) -> Output {
     let mut hash = pre_image.input;
@@ -15,7 +14,7 @@ fn sha3_chain(pre_image: Input) -> Output {
         hash = Into::<[u8; 32]>::into(*res);
     }
 
-    let output = Output {output: hash};
-    
+    let output = Output { output: hash };
+
     output
 }

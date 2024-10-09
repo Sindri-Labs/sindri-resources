@@ -5,12 +5,13 @@ use reqwest::{
     Client,
 };
 use serde_json::Value;
-use std::fs::File;
-use std::io::{BufWriter, Read, Write};
-use std::time::Duration;
+use std::{
+    fs::File,
+    io::{BufWriter, Read, Write},
+    time::Duration,
+};
 
 const API_URL: &'static str = "http://127.0.0.1:80/api/v1/";
-
 
 // This function uploads the circuit to Sindri for compilation.
 pub async fn compile_guest_code(header: HeaderMap) {

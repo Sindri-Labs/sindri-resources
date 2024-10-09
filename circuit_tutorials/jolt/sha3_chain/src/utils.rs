@@ -5,9 +5,7 @@ use serde::{Deserialize, Serialize};
 use common::rv_trace::ELFInstruction;
 use jolt::{
     field::JoltField,
-    jolt::vm::{
-        rv32i_vm::{RV32IJoltProof},
-        JoltCommitments},
+    jolt::vm::{rv32i_vm::RV32IJoltProof, JoltCommitments},
     poly::commitment::commitment_scheme::CommitmentScheme,
 };
 

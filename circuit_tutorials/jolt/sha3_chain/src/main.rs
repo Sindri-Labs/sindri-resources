@@ -1,20 +1,16 @@
-mod utils;
 mod sindri;
+mod utils;
 
 use ark_bn254::{Bn254, Fr};
 use dotenvy::dotenv;
-use serde_json::Value;
-use std::fs::File;
-use std::io::Read;
-use sindri::{compile_guest_code, prove_guest_code, headers_json};
-use utils::{JsonProofData, deserialize_jolt_proof_data_from_base64};
 use jolt::{
-    jolt::vm::{
-        rv32i_vm::RV32IJoltVM,
-        Jolt,
-    },
-    poly::commitment::hyperkzg::HyperKZG
+    jolt::vm::{rv32i_vm::RV32IJoltVM, Jolt},
+    poly::commitment::hyperkzg::HyperKZG,
 };
+use serde_json::Value;
+use sindri::{compile_guest_code, headers_json, prove_guest_code};
+use std::{fs::File, io::Read};
+use utils::{deserialize_jolt_proof_data_from_base64, JsonProofData};
 
 #[tokio::main]
 async fn main() {
@@ -41,12 +37,10 @@ async fn main() {
     file.read_to_string(&mut contents).unwrap();
     let proof_details: Value = serde_json::from_str(&contents).unwrap();
 
-    let json_data: JsonProofData =
-        serde_json::from_value(proof_details["proof"].clone()).unwrap();
+    let json_data: JsonProofData = serde_json::from_value(proof_details["proof"].clone()).unwrap();
 
     let (jolt_proof_struct, jolt_preprocessing_struct) =
         deserialize_jolt_proof_data_from_base64::<Fr, HyperKZG<Bn254>>(json_data);
-    
 
     let preprocessing = RV32IJoltVM::preprocess(
         jolt_preprocessing_struct.bytecode,
@@ -55,8 +49,6 @@ async fn main() {
         1 << 20,
         1 << 22,
     );
-
-    println!("created preprocessing struct");
 
     let verification_result = RV32IJoltVM::verify(
         preprocessing,
