@@ -42,6 +42,8 @@ async fn main() {
     let (jolt_proof_struct, jolt_preprocessing_struct) =
         deserialize_jolt_proof_data_from_base64::<Fr, HyperKZG<Bn254>>(json_data);
 
+    // The preprocessing struct is constructed the same way here as it is during
+    // proof generation.
     let preprocessing = RV32IJoltVM::preprocess(
         jolt_preprocessing_struct.bytecode,
         jolt_preprocessing_struct.memory_init,
@@ -57,9 +59,10 @@ async fn main() {
         None,
     );
 
-    // This data corresponds to the public inputs to the zkVM.  It contains the
-    // inputs and outputs of the guest code, a boolean field indicating whether the
-    // guest code panicked during execution, and the memory layout of the zkVM.
+    // This data corresponds to the public inputs for the zkVM.  It contains the
+    // inputs and outputs of the program computed in the guest code, a boolean field
+    // indicating whether the guest code panicked during execution, and the
+    // memory layout of the zkVM.
     let public_data = proof_details["public"].clone();
 
     if verification_result.is_ok() {
