@@ -46,6 +46,7 @@ async fn main() {
 
     let (jolt_proof_struct, jolt_preprocessing_struct) =
         deserialize_jolt_proof_data_from_base64::<Fr, HyperKZG<Bn254>>(json_data);
+    
 
     let preprocessing = RV32IJoltVM::preprocess(
         jolt_preprocessing_struct.bytecode,
@@ -54,6 +55,8 @@ async fn main() {
         1 << 20,
         1 << 22,
     );
+
+    println!("created preprocessing struct");
 
     let verification_result = RV32IJoltVM::verify(
         preprocessing,

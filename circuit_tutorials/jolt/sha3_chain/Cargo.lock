@@ -698,7 +698,7 @@ dependencies = [
 [[package]]
 name = "common"
 version = "0.2.0"
-source = "git+https://github.com/a16z/jolt#2e9002d74753d02a8f4ef442184acbeafc220b0d"
+source = "git+https://github.com/a16z/jolt?rev=55c577f5a859eee843fd88d1d14bd2127b3ddd1d#55c577f5a859eee843fd88d1d14bd2127b3ddd1d"
 dependencies = [
  "ark-serialize 0.4.2",
  "serde",
@@ -1618,7 +1618,7 @@ checksum = "49f1f14873335454500d59611f1cf4a4b0f786f9ac11f4312a78e4cf2566695b"
 [[package]]
 name = "jolt-core"
 version = "0.1.0"
-source = "git+https://github.com/a16z/jolt#2e9002d74753d02a8f4ef442184acbeafc220b0d"
+source = "git+https://github.com/a16z/jolt?rev=55c577f5a859eee843fd88d1d14bd2127b3ddd1d#55c577f5a859eee843fd88d1d14bd2127b3ddd1d"
 dependencies = [
  "alloy-primitives",
  "alloy-rs",
@@ -3245,7 +3245,7 @@ checksum = "8df9b6e13f2d32c91b9bd719c00d1958837bc7dec474d94952798cc8e69eeec3"
 [[package]]
 name = "tracer"
 version = "0.2.0"
-source = "git+https://github.com/a16z/jolt#2e9002d74753d02a8f4ef442184acbeafc220b0d"
+source = "git+https://github.com/a16z/jolt?rev=55c577f5a859eee843fd88d1d14bd2127b3ddd1d#55c577f5a859eee843fd88d1d14bd2127b3ddd1d"
 dependencies = [
  "common",
  "fnv",

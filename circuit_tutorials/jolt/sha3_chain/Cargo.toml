@@ -16,8 +16,8 @@ rmp-serde = "1.3.0"
 serde = { version = "1.0.209", features = ["derive"] }
 hex = "0.4.3"
 
-jolt = { package = "jolt-core", git = "https://github.com/a16z/jolt"}
-common = { package = "common", git = "https://github.com/a16z/jolt"}
+jolt = { package = "jolt-core", git = "https://github.com/a16z/jolt", rev="55c577f5a859eee843fd88d1d14bd2127b3ddd1d"}
+common = { package = "common", git = "https://github.com/a16z/jolt", rev="55c577f5a859eee843fd88d1d14bd2127b3ddd1d"}
 ark-serialize = { version = "0.4.2", default-features = false, features = [
     "derive"
 ] }
