@@ -14,7 +14,7 @@ use utils::{deserialize_jolt_proof_data_from_base64, JsonProofData};
 
 #[tokio::main]
 async fn main() {
-    // Obtain the user's API key from the .env file
+    // Obtain the user's API key from the .env file.
     dotenv().expect("Failed to read .env file");
     let api_key: String = std::env::var("SINDRI_API_KEY").unwrap();
 
@@ -30,7 +30,7 @@ async fn main() {
     let input_path: &str = "input.json";
     prove_guest_code(input_path, header).await;
 
-    // Verifies the proof.
+    // Import the data necessary for verifying a Jolt proof.
     let proof_path: &str = "./data/prove_out.json";
     let mut file = File::open(proof_path).unwrap();
     let mut contents = String::new();
@@ -39,11 +39,12 @@ async fn main() {
 
     let json_data: JsonProofData = serde_json::from_value(proof_details["proof"].clone()).unwrap();
 
+    // Separate out the proof and preprocessing components from the JSON data into their respective structs.
     let (jolt_proof_struct, jolt_preprocessing_struct) =
         deserialize_jolt_proof_data_from_base64::<Fr, HyperKZG<Bn254>>(json_data);
 
     // The preprocessing struct is constructed the same way here as it is during
-    // proof generation.
+    // proof generation in the Jolt zkVM.
     let preprocessing = RV32IJoltVM::preprocess(
         jolt_preprocessing_struct.bytecode,
         jolt_preprocessing_struct.memory_init,
