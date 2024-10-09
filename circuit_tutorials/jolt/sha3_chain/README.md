@@ -5,7 +5,7 @@ This Rust script provides a template for using the Jolt zkVM with the Sindri API
 The guest code used in this tutorial is adapted from the Sha3-chain example from the [Jolt zkVM examples repository](https://github.com/a16z/jolt/tree/main/examples/sha3-chain/guest).
 
 ### Guest Code Input and Output
-In order for the guest code to be compatible with Sindri, users must define an `Input` struct and an `Output` struct.  This can be done within the guest code's `lib.rs` file, though by convention these structs are usually defined in a separate `utils.rs` file and subsequently imported into `lib.rs`.  This tutorial uses the latter approach.  Regardless of how users choose to structure their guest code, it is vital that that the `Intput` and `Output` structs have public visibility from inside `lib.rs`.  This is done by importing the two structs as follows:
+In order for the guest code to be compatible with Sindri, users must define an `Input` struct and an `Output` struct.  This can be done within the guest code's `lib.rs` file, though by convention these structs are usually defined in a separate `utils.rs` file and subsequently imported into `lib.rs`.  This tutorial uses the latter approach.  Regardless of how users choose to structure their guest code, it is vital that that the `Input` and `Output` structs have public visibility from inside `lib.rs`.  This is done by importing the two structs as follows:
 ```Rust
 pub mod utils;
 pub use utils::{Input, Output};
