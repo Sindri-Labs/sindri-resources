@@ -1,3 +1,6 @@
+mod utils;
+mod sindri;
+
 use ark_bn254::{Bn254, Fr, G1Projective};
 use ark_serialize::{CanonicalDeserialize, CanonicalSerialize};
 use base64::{engine::general_purpose, Engine as _};
@@ -69,7 +72,7 @@ async fn main() {
     // inputs and outputs of the guest code, a boolean field indicating whether the
     // guest code panicked during execution, and the memory layout of the zkVM.
     let public_data = proof_details["public"].clone();
-    
+
     if verification_result.is_ok() {
         println!("Proof is valid");
         println!("zkVM public inputs: {}", public_data);
