@@ -1,0 +1,10 @@
+{
+  "name": "fib-std",
+  "circuitType": "jolt",
+  "provingScheme": "jolt",
+  "commitmentScheme": "hyperkzg",
+  "joltVersion": "0.1.0",
+  "stdEnabled": true,
+  "packageName": "fibonacci",
+  "guestFunction": "fib"
+}
