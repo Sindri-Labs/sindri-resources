@@ -1,3 +1,17 @@
+use flate2::{write::GzEncoder, Compression};
+use reqwest::{
+    header::{HeaderMap, HeaderValue},
+    multipart::Part,
+    Client,
+};
+use serde_json::Value;
+use std::fs::File;
+use std::io::{BufWriter, Read, Write};
+use std::time::Duration;
+
+const API_URL: &'static str = "http://127.0.0.1:80/api/v1/";
+
+
 // This function uploads the circuit to Sindri for compilation.
 pub async fn compile_guest_code(header: HeaderMap) {
     let mut contents = Vec::new();
@@ -6,14 +20,14 @@ pub async fn compile_guest_code(header: HeaderMap) {
         let buffer = std::io::Cursor::new(&mut contents);
         let enc = GzEncoder::new(buffer, Compression::default());
         let mut tar = tar::Builder::new(enc);
-        tar.append_dir_all("merkle_tree", "./circuit").unwrap();
+        tar.append_dir_all("guest", "./guest").unwrap();
     }
 
     let part = Part::bytes(contents).file_name("filename.filetype");
     let upload = reqwest::multipart::Form::new().part("files", part);
 
     // Create a new circuit.
-    println!("Compiling circuit");
+    println!("Compiling guest code");
     let client = Client::new();
     let response = client
         .post(format!("{API_URL}circuit/create"))
@@ -35,14 +49,12 @@ pub async fn compile_guest_code(header: HeaderMap) {
         std::process::exit(1);
     }
 
-    println!("Saving circuit details locally");
+    println!("Saving guest code details locally");
     std::fs::create_dir_all("./data").unwrap();
     let file = File::create("./data/compile_out.json").unwrap();
     let mut writer = BufWriter::new(file);
     serde_json::to_writer_pretty(&mut writer, &circuit_data).unwrap();
     writer.flush().unwrap();
-
-    circuit_id.to_string()
 }
 
 // This function proves the circuit using the input data provided by the user.
@@ -91,7 +103,7 @@ pub async fn prove_guest_code(json_input_path: &str, header: HeaderMap) {
 
 // This function creates a header map with the API key and sets Accept header to
 // application/json.
-fn headers_json(api_key: &str) -> HeaderMap {
+pub fn headers_json(api_key: &str) -> HeaderMap {
     let mut headers_json = HeaderMap::new();
     headers_json.insert("Accept", "application/json".parse().unwrap());
     headers_json.insert(

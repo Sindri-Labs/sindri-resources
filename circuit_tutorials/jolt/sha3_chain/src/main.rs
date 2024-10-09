@@ -1,32 +1,26 @@
 mod utils;
 mod sindri;
 
-use ark_bn254::{Bn254, Fr, G1Projective};
-use ark_serialize::{CanonicalDeserialize, CanonicalSerialize};
-use base64::{engine::general_purpose, Engine as _};
+use ark_bn254::{Bn254, Fr};
 use dotenvy::dotenv;
-use serde::{Deserialize, Serialize};
-use serde_json;
-use sindri::{compile_guest_code, prove_guest_code};
-use utils::{JoltProofStruct, JsonProofStruct, PreprocessingStruct};
-
-use common::rv_trace::{ELFInstruction, JoltDevice};
+use serde_json::Value;
+use std::fs::File;
+use std::io::Read;
+use sindri::{compile_guest_code, prove_guest_code, headers_json};
+use utils::{JsonProofData, deserialize_jolt_proof_data_from_base64};
 use jolt::{
-    field::JoltField,
     jolt::vm::{
-        rv32i_vm::{RV32IJoltProof, RV32IJoltVM},
-        Jolt, JoltCommitments, JoltPreprocessing,
+        rv32i_vm::RV32IJoltVM,
+        Jolt,
     },
-    poly::commitment::{
-        commitment_scheme::CommitmentScheme, hyperkzg::HyperKZG, zeromorph::Zeromorph,
-    },
+    poly::commitment::hyperkzg::HyperKZG
 };
 
 #[tokio::main]
 async fn main() {
     // Obtain the user's API key from the .env file
     dotenv().expect("Failed to read .env file");
-    let api_key: String = std::env::var("API_KEY").unwrap();
+    let api_key: String = std::env::var("SINDRI_API_KEY").unwrap();
 
     // Create a headers map with the API key.
     let header = headers_json(&api_key);
@@ -38,7 +32,7 @@ async fn main() {
     // and a usize value. Proof artifacts are saved as a JSON file in the /data/
     // directory.
     let input_path: &str = "input.json";
-    prove_circuit(input_path, header).await;
+    prove_guest_code(input_path, header).await;
 
     // Verifies the proof.
     let proof_path: &str = "./data/prove_out.json";
@@ -47,7 +41,7 @@ async fn main() {
     file.read_to_string(&mut contents).unwrap();
     let proof_details: Value = serde_json::from_str(&contents).unwrap();
 
-    let json_data: JsonProofStruct =
+    let json_data: JsonProofData =
         serde_json::from_value(proof_details["proof"].clone()).unwrap();
 
     let (jolt_proof_struct, jolt_preprocessing_struct) =

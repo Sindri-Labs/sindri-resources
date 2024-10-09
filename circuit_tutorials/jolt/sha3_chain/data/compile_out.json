@@ -1,0 +1,41 @@
+{
+  "circuit_id": "ab724047-c097-4e08-b519-92eb0eaae526",
+  "circuit_name": "sha3_chain",
+  "circuit_type": "jolt",
+  "commitment_scheme": "hyperkzg",
+  "compute_time": "P0DT00H02M35.624749S",
+  "compute_time_sec": 155.624749,
+  "compute_times": {
+    "clean_up": 0.12895,
+    "compile": 129.55005,
+    "compile_guest": 25.40828,
+    "save_results": 0.53747,
+    "total": 155.62475
+  },
+  "date_created": "2024-10-09T17:06:22.633Z",
+  "error": null,
+  "file_size": 91341666,
+  "guest_function": "sha3_chain",
+  "has_smart_contract_verifier": false,
+  "has_verification_key": false,
+  "jolt_version": "0.1.0",
+  "meta": {},
+  "num_proofs": 0,
+  "package_name": "sha3-chain",
+  "project_name": "sha3_chain",
+  "proving_scheme": "jolt",
+  "public": false,
+  "queue_time": "P0DT00H00M00.104517S",
+  "queue_time_sec": 0.104517,
+  "status": "Ready",
+  "std_enabled": true,
+  "tags": [
+    "latest"
+  ],
+  "team": "devadmin",
+  "team_avatar_url": "https://gravatar.com/avatar/c4ca4238a0b923820dcc509a6f75849b?s=400&d=identicon&r=x",
+  "team_slug": "devadmin",
+  "uploaded_file_name": "filename.filetype",
+  "verification_key": null,
+  "warnings": null
+}
