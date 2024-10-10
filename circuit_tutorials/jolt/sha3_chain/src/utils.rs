@@ -38,10 +38,10 @@ pub struct PreprocessingStruct {
     pub memory_init: Vec<(u64, u8)>,
 }
 
-// This function is deserializes the base64 encoded proof data and returns the
+// This function deserializes the base64 encoded proof data and returns the
 // JoltProofStruct and PreprocessingStruct. The bytecode and memory_init fields
 // are used to recreate the preprocessing struct which was used to generate the
-// proof.  This struct is similar to a verification key in other proving
+// proof. This struct is similar to a verification key in other proving
 // frameworks.
 pub fn deserialize_jolt_proof_data_from_base64<F, PCS>(
     json_data: JsonProofData,
