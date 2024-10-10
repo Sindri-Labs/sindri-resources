@@ -1,0 +1,41 @@
+{
+  "circuit_id": "3d3a6030-a5f0-42ff-aff4-5a62f7c8622a",
+  "circuit_name": "sha3_chain",
+  "circuit_type": "jolt",
+  "commitment_scheme": "hyperkzg",
+  "compute_time": "P0DT00H03M17.193562S",
+  "compute_time_sec": 197.193562,
+  "compute_times": {
+    "clean_up": 0.33334,
+    "compile": 184.15972,
+    "compile_guest": 10.78194,
+    "save_results": 1.91856,
+    "total": 197.19356
+  },
+  "date_created": "2024-10-10T06:14:07.258Z",
+  "error": null,
+  "file_size": 91557417,
+  "guest_function": "sha3_chain",
+  "has_smart_contract_verifier": false,
+  "has_verification_key": false,
+  "jolt_version": "0.1.0",
+  "meta": {},
+  "num_proofs": 0,
+  "package_name": "sha3-chain",
+  "project_name": "sha3_chain",
+  "proving_scheme": "jolt",
+  "public": false,
+  "queue_time": "P0DT00H00M00.466658S",
+  "queue_time_sec": 0.466658,
+  "status": "Ready",
+  "std_enabled": true,
+  "tags": [
+    "latest"
+  ],
+  "team": "roy-sindri",
+  "team_avatar_url": "https://gravatar.com/avatar/758874998f5bd0c393da094e1967a72b?s=400&d=identicon&r=x",
+  "team_slug": "roy-sindri",
+  "uploaded_file_name": "filename.filetype",
+  "verification_key": null,
+  "warnings": null
+}
