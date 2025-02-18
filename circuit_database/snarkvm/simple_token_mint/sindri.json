@@ -1,0 +1,6 @@
+{
+  "name": "simple_token_mint",
+  "circuitType": "snarkvm",
+  "functionName": "mint",
+  "network": "mainnet"
+}

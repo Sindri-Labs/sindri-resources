@@ -1,0 +1,6 @@
+{
+  "name": "battleship_initialize_board",
+  "circuitType": "snarkvm",
+  "functionName": "initialize_board",
+  "network": "mainnet"
+}

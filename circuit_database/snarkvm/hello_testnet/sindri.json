@@ -1,0 +1,6 @@
+{
+  "name": "hello_testnet",
+  "circuitType": "snarkvm",
+  "functionName": "hello",
+  "network": "testnet"
+}
